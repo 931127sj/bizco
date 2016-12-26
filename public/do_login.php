@@ -27,6 +27,10 @@ if($user_info_rows <= 0){
 	msg("존재하지 않는 아이디 혹은 비밀번호 입니다.");
 	back();
 	exit();
+} else if($user_info_data["ack"] == 0) {
+    msg("아직 참가승인이 되지 않았습니다.");
+    back();
+    exit();
 } else {
 
 

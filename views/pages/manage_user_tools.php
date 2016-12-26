@@ -47,6 +47,9 @@ $current_step = 'manage_user_tools';
                         <? } else { ?>
                             <a class="mini ui button secondary" href="/public/do_level_to_general.php?user_idx=<?=$row['idx']?>">관리자 권한 제거</a>
                         <? } ?>
+                        <? if($row['ack'] == 0) { ?>
+                            <a class="mini ui button blue" href="/public/do_ack_to_user.php?user_idx=<?=$row['idx']?>">참가 승인</a>
+                        <? }?>
                      <? } // session level 6 ?>
                     <? } // row level 8 ?>
                 </td>
