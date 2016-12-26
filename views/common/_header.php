@@ -6,6 +6,9 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
 	$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
 	$usr_data = mysql_fetch_array($usr);
 
+	$alarm_query = mysql_query("SELECT * FROM `user_alarm` WHERE `to_user_idx` = ".$_SESSION["idx"]);
+	$alarm_count = mysql_num_rows($alarm_query);
+
     // 나중에 dankook이 아닌 동적으로 처리를 해야합니다.
     $qs_count = mysql_query("SELECT
         (SELECT count(idx) FROM `article` WHERE `company_id` = 'dankook' AND `board_id` = 'program_notice') as program_notice,
