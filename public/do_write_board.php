@@ -9,6 +9,11 @@ $youtube 	= $_POST['youtube'];
 $article_id = $_POST['article_id'];
 $company_id = $_POST['company_id'];
 
+$user_idx = $_SESSION['idx'];
+$user_name = $_SESSION['name'];
+
+$datetime = date("Y-m-d H:i:s",time());
+
 if(! $title) {
 	msg('제목을 입력해주세요');
 	back();
@@ -78,11 +83,11 @@ $board = mysql_query("SELECT * FROM  `board` WHERE  `board_id` =  '$board_id'");
 $board_data = mysql_fetch_array($board);
 if($board_data['type'] == "curriculum") {
 
-	$max_pri_query = mysql_query("SELECT * 
-								FROM  `article` 
+	$max_pri_query = mysql_query("SELECT *
+								FROM  `article`
 								WHERE  `board_id` =  '$board_id'
 								AND  `step_id` =$step_id
-								ORDER BY  `article`.`priority` DESC 
+								ORDER BY  `article`.`priority` DESC
 								LIMIT 0 , 1");
 
 	$max_pri_data = mysql_fetch_array($max_pri_query);
@@ -108,9 +113,29 @@ if($_POST['type'] =="edit") {
 						`priority`
 						)
 						VALUES (
-						NULL ,  '{$company_id}',  '$board_id', '$step_id',  '".$_SESSION['idx']."',  '$title',  '$content',  '".date("Y-m-d H:i:s",time())."',  '$youtube',  '$duration', '$priority'
+						NULL ,  '{$company_id}',  '$board_id', '$step_id',  '$user_idx',  '$title',  '$content',  '{$datetime}',  '$youtube',  '$duration', '$priority'
 						);
 						");
+
+	if($board_type == 'team'){
+		 $article_idx = mysql_insert_id();
+		 $alarm_query = mysql_query("SELECT `idx`, `name` FROM `user` WHERE `team_idx` = '{$board_id}' and `idx` != ".$_SESSION['idx']);
+		 while($alarm_data = mysql_fetch_array($alarm_query)){
+			 mysql_query("INSERT INTO `user_alarm`(
+				 						`to_user_idx`,
+										`to_user_name`,
+										`from_user_idx`,
+										`from_user_name`,
+										`type`,
+										`article_idx`,
+										`datetime`,
+										`read_chk`
+			 							)
+			 							VALUES(
+										'".$alarm_data['idx']."', '".$alarm_data['name']."', '{$user_idx}', '{$user_name}', 'team', '{$article_idx}', '{$datetime}', '1'
+										);");
+		}
+	}
 }
 
 
@@ -123,7 +148,7 @@ if($board_type	 == "bm") {
 		$dq = mysql_query("DELETE FROM `board_extend_data` WHERE `article_idx` = ".$article_id);
 		$article_no = $_POST['article_id'];
 	}
-	
+
 	for($i = 0; $i < sizeof($ex); $i++) {
 		$rq = mysql_query("INSERT INTO  `board_extend_data` (
 							`idx` ,
@@ -139,7 +164,7 @@ if($board_type	 == "bm") {
 
 }
 
-/////////////////////////  파일업로드 
+/////////////////////////  파일업로드
 $write_time = date("Ymdhis");
 $rand_num = rand();
 $file[0] = upload_file("attach1", $article_no, $write_time, $rand_num, 0);
@@ -150,7 +175,7 @@ for($i = 0; $i <= 2; $i++) {
 	if($file[$i] != false) {
 		$ex_name = array_pop(explode('.', strtolower($file[$i])));
 		$file_name = $article_no."_".$write_time."_".$rand_num."_".$i.".".$ex_name;
-		
+
 		$query = mysql_query("INSERT INTO  `startup`.`attach` (
 								`idx` ,
 								`article_idx` ,
@@ -200,51 +225,51 @@ function covtime($youtube_time) {
     $minutes_overflow = floor(($min_init)/60);
 
     $hours = $parts[0][0] + $minutes_overflow;
- 
+
     return ($hours * 3600) + ($minutes * 60) + $seconds;
 
-    
+
 }
 
-function upload_file($form_id, $article_idx, $write_time, $rand_num, $file_num) {	
-	// uploads디렉토리에 파일을 업로드합니다. 
-	
+function upload_file($form_id, $article_idx, $write_time, $rand_num, $file_num) {
+	// uploads디렉토리에 파일을 업로드합니다.
+
 	//msg(var_dump($_FILES[$form_id]));
 	//msg($_FILES[$form_id]['name']);
 
 	 if($_FILES[$form_id]['name'] == "") {
 	 	return false;
 	 }
-	 
+
 	 $ex_name = array_pop(explode('.', strtolower($_FILES[$form_id]['name'])));
 	 $file_name = $article_idx."_".$write_time."_".$rand_num."_".$file_num.".".$ex_name;
-	 
-	 $uploaddir = '../data/attach/'; 
-	 $uploadfile = $uploaddir.$file_name; 
-	 
-	 if("500000000" < $_FILES[$form_id]['size']){ 
-	      //msg( "업로드 파일이 지정된 파일크기보다 큽니다.\n"); 
+
+	 $uploaddir = '../data/attach/';
+	 $uploadfile = $uploaddir.$file_name;
+
+	 if("500000000" < $_FILES[$form_id]['size']){
+	      //msg( "업로드 파일이 지정된 파일크기보다 큽니다.\n");
 	      return false;
-	 } else { 
-	     if(($_FILES[$form_id]['error'] > 0) || ($_FILES[$form_id]['size'] <= 0)){ 
+	 } else {
+	     if(($_FILES[$form_id]['error'] > 0) || ($_FILES[$form_id]['size'] <= 0)){
 	     	//msg("ERROR : ".$_FILES[$form_id]['error']."\nSIZE : ".$_FILES[$form_id]['size']."\n NAME : ".$_FILES[$form_id]['name']."\n");
-	          //msg( "파일 업로드에 실패하였습니다."); 
+	          //msg( "파일 업로드에 실패하였습니다.");
 	          return false;
-	     } else { 
-	          // HTTP post로 전송된 것인지 체크합니다. 
-	          if(!is_uploaded_file($_FILES[$form_id]['tmp_name'])) { 
-	                //msg( "HTTP로 전송된 파일이 아닙니다."); 
+	     } else {
+	          // HTTP post로 전송된 것인지 체크합니다.
+	          if(!is_uploaded_file($_FILES[$form_id]['tmp_name'])) {
+	                //msg( "HTTP로 전송된 파일이 아닙니다.");
 	                return false;
-	          } else { 
-	                // move_uploaded_file은 임시 저장되어 있는 파일을 ./uploads 디렉토리로 이동합니다. 
-	                if (move_uploaded_file($_FILES[$form_id]['tmp_name'], $uploadfile)) { 
-	                     ///msg( "성공적으로 업로드 되었습니다.\n"); 
-	                } else { 
-	                     //msg( "파일 업로드 실패입니다.\n"); 
+	          } else {
+	                // move_uploaded_file은 임시 저장되어 있는 파일을 ./uploads 디렉토리로 이동합니다.
+	                if (move_uploaded_file($_FILES[$form_id]['tmp_name'], $uploadfile)) {
+	                     ///msg( "성공적으로 업로드 되었습니다.\n");
+	                } else {
+	                     //msg( "파일 업로드 실패입니다.\n");
 	                     return false;
-	                } 
-	          } 
-	     } 
-	 } 
-	 return $_FILES[$form_id]['name']; 
+	                }
+	          }
+	     }
+	 }
+	 return $_FILES[$form_id]['name'];
 }

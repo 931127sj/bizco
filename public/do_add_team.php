@@ -1,20 +1,20 @@
 <?php
 require '_common.php';
 
-$team_name	= $_POST['team_name'];
-$team_member= $_POST['team_member'];
-$bm			= $_POST['bm'];
-$award		= $_POST['contest'];
-$history	= $_POST['career'];
-$ability	= $_POST['skills'];
-$progress	= $_POST['process'];
+$team_name	 = $_POST['team_name'];
+$team_member = $_POST['team_member'];
+$bm					 = $_POST['bm'];
+$award			 = $_POST['contest'];
+$history		 = $_POST['career'];
+$ability		 = $_POST['skills'];
+$progress		 = $_POST['process'];
 
 if($team_name == NULL || $team_member == NULL || $bm == NULL) {
 	msg("필수정보를 모두 입력하세요.");
 	back();
 	exit();
-}		 
-					 
+}
+
 $datetime = date("Y-m-d H:i:s",time());
 
 /*
@@ -26,18 +26,18 @@ else
 if($_POST['type'] == "edit") {
 	mysql_query("DELETE FROM `team` WHERE `team`.`idx` = ".$_POST['idx']);
 }
-*/	
+*/
 
 if($_POST['type'] == "edit")
 {
-	$result = mysql_query("UPDATE `team` 
+	$result = mysql_query("UPDATE `team`
 	SET name = '{$team_name}' ,
-	members = '{$team_member}' , 
-	bm_idx = '{$bm}' , 
-	award = '{$award}' , 
-	history = '{$history}' , 
+	members = '{$team_member}' ,
+	bm_idx = '{$bm}' ,
+	award = '{$award}' ,
+	history = '{$history}' ,
 	ability = '{$ability}' ,
-	progress = '{$progress}' 
+	progress = '{$progress}'
 	where idx = {$_POST['idx']}" );
 }
 else
@@ -59,8 +59,11 @@ else
 			NULL ,  'dankook',  '$team_name',  '".$_SESSION['idx']."','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime'
 			);
 			");
+
+	$team_idx = mysql_insert_id();
+	mysql_query("UPDATE `user` SET `team_idx` = '{$team_idx}' WHERE idx = ".$_SESSION['idx']);
 }
-	
+
 if($result) {
 	msg("팀 등록에 성공하였습니다.");
 	req_redirect_js("team_list");
