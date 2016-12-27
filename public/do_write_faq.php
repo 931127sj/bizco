@@ -5,6 +5,7 @@ require '_common.php';
 $query = mysql_query("SELECT * from article where company_id = 'dankook' and board_id = 'faq'");
 
 $user_idx = $_SESSION['idx'];
+$user_name = $_SESSION['name'];
 $content  = $_POST['content'];
 
 // echo $content;
@@ -15,7 +16,7 @@ $rs = mysql_fetch_array($query);
 // 없는건 Insert
 if ($rs === 0) {
     $datetime = date("Y-m-d H:i:s",time());
-    $result = mysql_query("INSERT INTO  `article` (`idx`, `company_id`, `board_id`, `user_idx`, `title`, `content`, `write_datetime`, `youtube_link`) VALUES (NULL, 'dankook', 'faq', '$user_idx', 'FAQ', '$content', '$datetime', '');");
+    $result = mysql_query("INSERT INTO  `article` (`idx`, `company_id`, `board_id`, `user_idx`, `title`, `content`, `write_datetime`, `youtube_link`, `user_name`) VALUES (NULL, 'dankook', 'faq', '$user_idx', 'FAQ', '$content', '$datetime', '', '$user_name');");
    	msg("등록되었습니다.");
     req_move("faq_view");
 }

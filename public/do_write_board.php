@@ -110,10 +110,11 @@ if($_POST['type'] =="edit") {
 						`write_datetime` ,
 						`youtube_link`,
 						`youtube_duration_sec`,
-						`priority`
+						`priority`,
+						`user_name`
 						)
 						VALUES (
-						NULL ,  '{$company_id}',  '$board_id', '$step_id',  '$user_idx',  '$title',  '$content',  '{$datetime}',  '$youtube',  '$duration', '$priority'
+						NULL ,  '{$company_id}',  '$board_id', '$step_id',  '$user_idx',  '$title',  '$content',  '{$datetime}',  '$youtube',  '$duration', '$priority', '$user_name'
 						);
 						");
 

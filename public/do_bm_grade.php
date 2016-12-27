@@ -5,13 +5,14 @@ $score = $_POST['score'];
 $summary = $_POST['summary'];
 $opinion = $_POST['opinion'];
 $user_idx = $_SESSION['idx'];
+$user_name = $_SESSION['name'];
 $datetime = date("Y-m-d H:i:s",time());
 
 
 
 if($score == '' || $summary == '' || $opinion == '') {
 	msg("모든 항목을 입력하세요");
-	back();	
+	back();
 	exit();
 }
 $result = mysql_query("INSERT INTO  `bm_grade` (
@@ -21,10 +22,11 @@ $result = mysql_query("INSERT INTO  `bm_grade` (
 `score` ,
 `summary` ,
 `opinion` ,
-`grade_datetime`
+`grade_datetime`,
+`user_name`
 )
 VALUES (
-NULL ,  '$article_id',   '$user_idx',  '$score',  '$summary', '$opinion', '$datetime'
+NULL ,  '$article_id',   '$user_idx',  '$score',  '$summary', '$opinion', '$datetime', '$user_name'
 );");
 
 msg("첫인상평가 등록이 완료되었습니다.");

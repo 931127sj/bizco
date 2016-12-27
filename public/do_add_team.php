@@ -9,6 +9,9 @@ $history		 = $_POST['career'];
 $ability		 = $_POST['skills'];
 $progress		 = $_POST['process'];
 
+$user_idx		= $_SESSION['idx'];
+$user_name	= $_SESSION['name'];
+
 if($team_name == NULL || $team_member == NULL || $bm == NULL) {
 	msg("필수정보를 모두 입력하세요.");
 	back();
@@ -53,10 +56,11 @@ else
 			`history` ,
 			`ability` ,
 			`progress` ,
-			`add_datetime`
+			`add_datetime`,
+			`leader_name`
 			)
 			VALUES (
-			NULL ,  'dankook',  '$team_name',  '".$_SESSION['idx']."','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime'
+			NULL ,  'dankook',  '$team_name',  '$user_idx','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime', '$user_name'
 			);
 			");
 

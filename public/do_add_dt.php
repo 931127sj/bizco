@@ -28,7 +28,7 @@ function generateRandomString($length = 10) {
 }
 
 function uploadImage($param, $dir) {
-	
+
 	$uid = generateRandomString();
 
 	if (isset($_FILES[$param]) && !$_FILES[$param]['error']) {
@@ -73,7 +73,7 @@ function uploadImage($param, $dir) {
 				$msg ='시스템 오류가 발생하였습니다.';
 				break;
 		} // switch
-		
+
 		msg($msg);
 		back();
 		exit();
@@ -116,7 +116,7 @@ function uploadImage($param, $dir) {
 	}
 	$thumb->save();
 	*/
-	
+
 	return $uid.".".$ex;
 }
 
@@ -125,6 +125,8 @@ $youtube_link = $_POST['youtube_link'];
 $link = $_POST['link'];
 $idea = $_POST['idea'];
 $test = $_POST['test'];
+$user_idx = $_SESSION['idx'];
+$user_name = $_SESSION['name'];
 // 이미지 업로드 처리 구현 필요
 
 
@@ -137,10 +139,11 @@ $result = mysql_query("INSERT INTO  `design_thinking`(
 						`image` ,
 						`image2` ,
 						`youtube_link` ,
-						`datetime`
+						`datetime`,
+            `user_name`
 						)
 						VALUES (
-						'".$_SESSION['idx']."', '$problem_cause',  '$img1', '$img2', '$youtube_link', now()
+						'$user_idx', '$problem_cause',  '$img1', '$img2', '$youtube_link', now(), '$user_name'
 						);
 						");
 $dt_idx = mysql_insert_id();
@@ -194,5 +197,5 @@ for($i = 0; $i < count($test); $i++){
 						'$dt_idx', '".$test[$i]."',  'test'
 						);
 						");
-}			
+}
 req_redirect_js("dt_list");

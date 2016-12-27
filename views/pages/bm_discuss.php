@@ -3,11 +3,13 @@
 $board_id = $_GET['board_id'];
 $article_id = $_GET['article_id'];
 $user_idx = $_SESSION['idx'];
+
 $article_query = mysql_query("SELECT *
 FROM  `article`
 WHERE  `idx` =$article_id
 AND  `company_id` =  'dankook'
 AND  `board_id` =  '$board_id'");
+
 $article_data = mysql_fetch_array($article_query);
 
 $extend_query = mysql_query("SELECT *

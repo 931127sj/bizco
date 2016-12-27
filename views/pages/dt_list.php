@@ -16,8 +16,7 @@ if ($order === 'hot') {
 } else {
     $order_query = "ORDER BY  `article`.`idx` DESC";
 }
-$article_query = mysql_query("SELECT *
-                              FROM  `design_thinking`");
+$article_query = mysql_query("SELECT * FROM  `design_thinking` ORDER BY `idx` DESC");
 
 ?>
 <div class="clearfix">

@@ -19,7 +19,7 @@ if ($q) {
     		$search_user .= " OR `article`.`user_idx`={$search_user_data['idx']}";
     	}
     }
-    
+
     $search_query = " AND (`article`.`title` like '%".mysql_escape_string($q)."%' OR `article`.`content` like '%".mysql_escape_string($q)."%' {$search_user}) ";
 }
 
@@ -65,7 +65,7 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
 <?
     $count = 1;
     $bm_total = mysql_num_rows($article_query);
-    
+
     if($bm_total == 0){
     	?>
             <div class="event bm">
@@ -79,10 +79,8 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
             </div>
     <?
     }
-    
+
     while($article_data = mysql_fetch_array($article_query)) {
-        $list_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$article_data['user_idx']);
-        $list_user_data = mysql_fetch_array($list_user_query);
         $score_query    = mysql_query("SELECT *
                                        FROM  `bm_grade`
                                        WHERE  `article_idx` =".$article_data['idx']."
@@ -91,12 +89,12 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
         <? if($count > 1) { ?><div class="ui divider"></div><? } ?>
         <div class="event bm">
             <div class="label">
-                <img src="<?=get_profile_url($list_user_data['idx']);  ?>">
+                <img src="<?=get_profile_url($article_data['user_idx']);  ?>">
             </div>
             <div class="content">
                 <div class="summary">
                     <a class="user">
-                        <?=$list_user_data['name']?>
+                        <?=$article_data['user_name']?>
                     </a><a href="/public/bm_grade?board_id=<?=$board_id?>&article_id=<?=$article_data['idx'] ?>"> “<?=xssHtmlProtect($article_data['title'])?>”</a>
                     <div class="date">
                         <?=dateToSNSString($article_data['write_datetime'])?>

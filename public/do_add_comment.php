@@ -25,10 +25,11 @@ $result = mysql_query("INSERT INTO  `comment` (
 						`user_idx` ,
 						`parent_idx` ,
 						`datetime` ,
-						`content`
+						`content`,
+						`user_name`
 						)
 						VALUES (
-						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx',   '$datetime',  '$content'
+						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx',   '$datetime',  '$content', '$user_name'
 						);
 						");
 

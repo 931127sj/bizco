@@ -3,6 +3,7 @@ require '_common.php';
 $article_id = $_POST['article_id'];
 $content = $_POST['content'];
 $user_idx = $_SESSION['idx'];
+$user_name = $_SESSION['name'];
 $parent_idx = $_POST['parent_idx'];
 $datetime = date("Y-m-d H:i:s",time());
 if($content == '') {
@@ -23,10 +24,11 @@ $result = mysql_query("INSERT INTO  `comment` (
 						`parent_idx` ,
 						`type` ,
 						`datetime` ,
-						`content`
+						`content`,
+						`user_name`
 						)
 						VALUES (
-						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx', 'discuss',  '$datetime',  '$content'
+						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx', 'discuss',  '$datetime',  '$content', '$user_name'
 						);
 						");
 
