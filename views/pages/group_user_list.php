@@ -1,5 +1,7 @@
 <?
 $where = '';
+$company_id = $_SESSION['company'];
+
 $q = $_GET['q'];
 $_SESSION['current_menu'] = "user";
 if ($q) {
@@ -9,7 +11,7 @@ if ($q) {
 //////////// SERVER
 $user_query = mysql_query("SELECT *
 FROM  `user`
-WHERE level < 4 AND `company_id` ='dankook' {$where}");
+WHERE level < 4 AND `company_id` ='{$company_id}' {$where}");
 ?>
 
 <h2 class="ui header">참가자 리스트</h2>
@@ -47,7 +49,7 @@ WHERE level < 4 AND `company_id` ='dankook' {$where}");
 		}
 	}
 ?>
-<? while($user_data =  mysql_fetch_array($user_query)) { 
+<? while($user_data =  mysql_fetch_array($user_query)) {
     $bm_query = "SELECT *
     FROM `article`
     WHERE `board_id` = 'business_model'
@@ -71,7 +73,7 @@ WHERE level < 4 AND `company_id` ='dankook' {$where}");
                         <?
                     }
                 ?>
-               
+
                 <div class="description">
                     <p>
                         프로필을 확인하세요.<br>

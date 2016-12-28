@@ -6,6 +6,7 @@ $user_idx = $_SESSION['idx'];
 $user_name = $_SESSION['name'];
 $parent_idx = $_POST['comment_id'];
 $datetime = date("Y-m-d H:i:s",time());
+$company_id = $_SESSION['company'];
 
 $to_user_idx = $_POST['to_user_idx'];
 $to_user_query = mysql_query("SELECT `name` FROM `user` WHERE idx = {$to_user_idx}");
@@ -29,7 +30,7 @@ $result = mysql_query("INSERT INTO  `comment` (
 						`user_name`
 						)
 						VALUES (
-						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx',   '$datetime',  '$content', '$user_name'
+						NULL ,  '$company_id',  '$article_id',  '$user_idx', '$parent_idx',   '$datetime',  '$content', '$user_name'
 						);
 						");
 

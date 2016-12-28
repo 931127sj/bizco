@@ -1,4 +1,11 @@
+<?php
 
+require_once '_common.php';
+
+$query = mysql_query("SELECT * from user where idx = '".$_SESSION['idx']."'");
+$result = mysql_fetch_array($query);
+
+?>
 
 <style>
 .file-upload {
@@ -39,14 +46,7 @@
                 <img src="<?=get_profile_url($_SESSION['idx']);  ?>">
             </div>
             <div class="content">
-            <?php
 
-            require_once '_common.php';
-
-            $query = mysql_query("SELECT * from user where idx = '".$_SESSION['idx']."'");
-            $result = mysql_fetch_array($query);
-
-            ?>
                 <h1 class="ui header"><?=$result['name']?></h1>
                 <div class="meta">
                     <span><i class="bookmark icon" style="margin-right:0.4em;"></i><?=$result['position']?></span> <a href="#">@<?=$result['team_id']?></a>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="meta clearfix">
                     <div class="ui label teal"><?=$result['part']?></div>
-                    
+
                 </div>
                 <div class="clearfix">
 
@@ -71,7 +71,7 @@
 
                     <button class="ui button basic float--right" onclick="$('.modal.small.info').modal('show');"><i class="ui icon laptop"></i> 정보수정</button>
 
-                    
+
                     <!--<button class="ui button basic primary float--right"><i class="ui icon cloud upload"></i> 프로필사진 변경</button>-->
                 </div>
             </div>
@@ -99,13 +99,13 @@
         <p>
             <?=$result['skills']?>
         </p>
-        
+
         <div class="ui divider"></div>
         <h3 class="ui header">사업에 필요한 자원</h3>
         <p>
             <?=$result['business_resource']?>
         </p>
-        
+
 
     </div>
 </div>
@@ -200,7 +200,7 @@
                 "business_resource" : $("#business_resource").val(),
                 "history" : $("#history").val(),
                 "skills" : $("#skills").val()
-                
+
             },
             success : function (result) {
                 if(result == "success"){

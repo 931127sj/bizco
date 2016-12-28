@@ -1,5 +1,7 @@
 <?
 $_SESSION['current_menu'] = "team";
+$company_id = $_SESSION['company'];
+
 ///////////////////SERVER
 $board_id = $_GET['id'];
 $q        = $_GET['q']; // 검색어
@@ -11,7 +13,7 @@ $my_team = $my_team_data['team_idx'];
 
 /////////////////////BOARD CONTENT
 if ($q) {
-	$search_query = " WHERE (`team`.`name` like '%".mysql_escape_string($q)."%') ";
+	$search_query = " AND (`team`.`name` like '%".mysql_escape_string($q)."%') ";
 } else {
 	$search_query = "";
 }
@@ -36,7 +38,7 @@ if ($q) {
     <div class="ui large feed">
 <?
     $count = 1;
-	$team_query = mysql_query("SELECT * FROM  `team` {$search_query} ORDER BY `idx` DESC");
+	$team_query = mysql_query("SELECT * FROM  `team` WHERE `company_id`='$company_id' {$search_query} ORDER BY `idx` DESC");
 
 	$team_total = mysql_num_rows($team_query);
 	if($team_total == 0){

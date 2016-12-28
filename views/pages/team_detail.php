@@ -3,10 +3,12 @@
 $board_id   = $_GET['board_id'];
 $article_id = $_GET['article_id'];
 $user_idx   = $_SESSION['idx'];
+$company_id = $_SESSION['company'];
+
 $article_query = mysql_query("SELECT *
                               FROM  `article`
                               WHERE  `idx` =$article_id
-                              AND  `company_id` =  'dankook'
+                              AND  `company_id` =  '$company_id'
                               AND  `board_id` =  '$board_id'");
 $article_data = mysql_fetch_array($article_query);
 
@@ -42,7 +44,7 @@ while($extend_data = mysql_fetch_array($extend_query)) {
             <i class="info circle icon"></i>
             기획자 정보
         </a>
-        
+
         <h3 class="ui header" style="margin:0;"><?=$article_data['title']?></h3>
         <div class="meta">
             <span><?=xssHtmlProtect($ex['message'])?></span>

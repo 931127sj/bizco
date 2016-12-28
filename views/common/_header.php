@@ -100,6 +100,11 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
              <a class="item admin" href="/public/manage_step">
                 스탭/과제 관리
             </a>
+						<? if($_SESSION['level'] >= 7){ ?>
+						<a class="item admin" href="/public/manage_company">
+               프로그램 관리
+            </a>
+						<? } ?>
         </div>
     </div>
     <? } ?>

@@ -1,13 +1,15 @@
 <?php
 $q = $_GET['q'];
+$company_id = $_SESSION['company'];
 
 if ($q)
-    $search_query = "WHERE (`name` like '%".mysql_escape_string($q)."%' OR `email` like '%".mysql_escape_string($q)."%')";
+    $search_query = "AND (`name` like '%".mysql_escape_string($q)."%' OR `email` like '%".mysql_escape_string($q)."%')";
 else
     $search_query = "";
 
 $qs = mysql_query("SELECT `user`.*
                    FROM `user`
+                   WHERE `company_id` = '$company_id'
                    $search_query
                    ORDER BY `user`.`idx`");
 $current_step = 'manage_user_tools';

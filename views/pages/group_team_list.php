@@ -1,9 +1,11 @@
 <?
 $_SESSION['current_menu'] = "user";
+$company_id = $_SESSION['company'];
+
 //////////// SERVER
 $user_query = mysql_query("SELECT *
 FROM  `user`
-WHERE  `company_id` ='dankook'");
+WHERE  `company_id` ='$company_id'");
 ?>
 
 <h2 class="ui header">참가팀 리스트</h2>

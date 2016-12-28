@@ -7,13 +7,14 @@ $start_date		=	$_POST['start_date'];
 $end_date		=	$_POST['end_date'];
 $step_explain	=	$_POST['step_explain'];
 $bm_link		=	$_POST['bm_link'];
+$company_id = $_SESSION['company'];
 $check_arr = ['step_seq', 'step_name', 'start_date', 'end_date', 'step_explain'];
 
 for($i = 0; $i < sizeof($check_arr); $i++){
 
 	if(strlen($_POST[$check_arr[$i]]) == 0){
-		msg($check_arr[$i]."À» ÀÔ·ÂÇÏ¼¼¿ä");
-		back();	
+		msg($check_arr[$i]."ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½");
+		back();
 		exit();
 	}
 }
@@ -24,11 +25,12 @@ $result = mysql_query("INSERT INTO  `curriculum_step`(
 						`start_date` ,
 						`end_date` ,
 						`step_explain` ,
-						`bm_link`
+						`bm_link`,
+						`company_id`
 						)
 						VALUES (
-						'$step_seq',  '$step_name',  '$start_date',  '$end_date', '$step_explain', '$bm_link'
+						'$step_seq',  '$step_name',  '$start_date',  '$end_date', '$step_explain', '$bm_link', '$company_id'
 						);
 						");
-						
+
 req_redirect_js("manage_step");

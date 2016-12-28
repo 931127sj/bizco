@@ -1,6 +1,7 @@
 ﻿<?
 // 메뉴지정
 $complete_homework = true;
+$company_id = $_SESSION['company'];
 
 
 // 내 현재step 단계 가져오기
@@ -37,6 +38,7 @@ if($step > $my_step && $_SESSION['level'] < 4) {
 
 $step_query = mysql_query("SELECT *
 FROM  `curriculum_step`
+WHERE `company_id` = '$company_id'
 ORDER BY  `curriculum_step`.`step_seq` ASC ");
 $step_all_count = mysql_num_rows($step_query);
 
@@ -71,6 +73,7 @@ $step_all_count = mysql_num_rows($step_query);
 $now_step_query = mysql_query("SELECT *
 FROM  `curriculum_step`
 WHERE step_seq = '$step'
+AND `company_id` = '$company_id'
 ORDER BY  `curriculum_step`.`step_seq` ASC ");
 $now_step_data = mysql_fetch_array($now_step_query);
 
@@ -133,7 +136,8 @@ if($now_step_data['bm_link'] == 1) {
 	// 전체 BM
 	$bm_list_query = mysql_query("SELECT *
 								FROM  `article`
-								WHERE  `board_id` =  'business_model'");
+								WHERE  `board_id` =  'business_model'
+                AND `company_id` = '$company_id'");
 	$bm_list_count = mysql_num_rows($bm_list_query);
     //$bm_list_count(전체 비엠)
 
@@ -179,7 +183,7 @@ if($now_step_data['bm_link'] == 1) {
 		$article_query = mysql_query("SELECT *
 									  FROM  `article`
 									  WHERE  `idx` =$article_id
-									  AND  `company_id` =  'dankook'
+									  AND  `company_id` =  '$company_id'
 									  AND  `board_id` =  'business_model'");
 		$article_data = mysql_fetch_array($article_query);
 

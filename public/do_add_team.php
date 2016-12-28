@@ -8,6 +8,7 @@ $award			 = $_POST['contest'];
 $history		 = $_POST['career'];
 $ability		 = $_POST['skills'];
 $progress		 = $_POST['process'];
+$company_id = $_SESSION['company'];
 
 $user_idx		= $_SESSION['idx'];
 $user_name	= $_SESSION['name'];
@@ -60,7 +61,7 @@ else
 			`leader_name`
 			)
 			VALUES (
-			NULL ,  'dankook',  '$team_name',  '$user_idx','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime', '$user_name'
+			NULL ,  '$company_id',  '$team_name',  '$user_idx','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime', '$user_name'
 			);
 			");
 

@@ -127,6 +127,7 @@ $idea = $_POST['idea'];
 $test = $_POST['test'];
 $user_idx = $_SESSION['idx'];
 $user_name = $_SESSION['name'];
+$company_id = $_SESSION['company'];
 // 이미지 업로드 처리 구현 필요
 
 
@@ -135,6 +136,7 @@ $img2 = uploadImage('img2','dt_thumb');
 
 $result = mysql_query("INSERT INTO  `design_thinking`(
 						`user_idx`,
+            `company_id`,
 						`problem_cause` ,
 						`image` ,
 						`image2` ,
@@ -143,7 +145,7 @@ $result = mysql_query("INSERT INTO  `design_thinking`(
             `user_name`
 						)
 						VALUES (
-						'$user_idx', '$problem_cause',  '$img1', '$img2', '$youtube_link', now(), '$user_name'
+						'$user_idx', '$company_id', '$problem_cause',  '$img1', '$img2', '$youtube_link', now(), '$user_name'
 						);
 						");
 $dt_idx = mysql_insert_id();

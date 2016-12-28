@@ -21,13 +21,15 @@ $current_step = 'manage_user_tools';
     <table class="ui celled compact striped table">
     <colgroup>
     	<col width="*" />
+			<col width="15%" />
     	<col width="15%" />
-    	<col width="33%" />
+    	<col width="25%" />
     	<col width="15%" />
     </colgroup>
         <thead>
             <tr>
                 <th>프로그램</th>
+								<th>프로그램 ID</th>
                 <th>참가자 수</th>
                 <th>관리자</th>
                 <th></th>
@@ -35,8 +37,8 @@ $current_step = 'manage_user_tools';
         </thead>
         <tbody>
             <? while ($cdata = mysql_fetch_array($cquery)) {
-            		$entry = mysql_num_rows(mysql_query("SELECT `idx` 
-            											FROM `user` 
+            		$entry = mysql_num_rows(mysql_query("SELECT `idx`
+            											FROM `user`
             											WHERE `company_id` = '{$cdata['company_id']}'"));
             		$admin = mysql_fetch_array(mysql_query("SELECT `idx`, `name`, `email`
             												FROM `user`
@@ -44,6 +46,7 @@ $current_step = 'manage_user_tools';
             ?>
             <tr>
                 <td><?=$cdata['name']?></td>
+								<td><?=$cdata['company_id']?></td>
                 <td><?=$entry?> 명</td>
                 <td>
                 <?

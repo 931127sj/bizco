@@ -1,5 +1,6 @@
 <?php
 $q = $_GET['q'];
+$company_id = $_SESSION['company'];
 
 if ($q)
     $search_query = "AND (`user`.`name` like '%".mysql_escape_string($q)."%' OR `user`.`email` like '%".mysql_escape_string($q)."%')";
@@ -33,7 +34,7 @@ $qs = mysql_query("SELECT `user`.`idx` as `user_idx`,
                    AND `homework`.`user_idx` = `user`.`idx`
                    LEFT JOIN `curriculum_step` as `cs`
                    ON `cs`.`idx` = `article`.`step_id`
-                   WHERE `user`.`company_id` = 'dankook'
+                   WHERE `user`.`company_id` = '$company_id'
                    $search_query
                    GROUP BY `user`.`idx`, `article`.`idx`
                    ORDER BY `user`.`idx`, `cs`.`step_seq`, `article`.`idx` ASC");

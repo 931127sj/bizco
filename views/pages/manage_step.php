@@ -21,8 +21,9 @@
 		<?php
 
 			require_once '_common.php';
-
-			$query = mysql_query("SELECT * from curriculum_step where 1 order by step_seq asc ");
+      
+      $company_id = $_SESSION['company'];
+			$query = mysql_query("SELECT * from curriculum_step where `company_id` = '$company_id' order by step_seq asc ");
 
 			while($row = mysql_fetch_array($query)){
 
@@ -52,7 +53,7 @@
                     <td class="text-align--center">
                         <button class="mini ui basic button blue" value="<?=$cur_row['idx']?>" onClick="edit_article(<?=$cur_row['idx']?>)">수정</button>
                         <button class="mini ui basic button red" value="<?=$cur_row['idx']?>" onClick="del_article(<?=$cur_row['idx']?>)">삭제</button>
-                       
+
                         <div class="ui mini icon basic buttons">
                             <button class="ui button" onClick="location.replace('/public/do_modify_priority.php?type=0&id=<?=$cur_row['idx'] ?>')">
                                 <i class="arrow up icon"></i>
@@ -61,7 +62,7 @@
                                 <i class="arrow down icon"></i>
                             </button>
                         </div>
-                       
+
                     </td>
                 </tr>
                 <?

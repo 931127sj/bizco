@@ -6,6 +6,8 @@ $user_idx = $_SESSION['idx'];
 $user_name = $_SESSION['name'];
 $parent_idx = $_POST['parent_idx'];
 $datetime = date("Y-m-d H:i:s",time());
+$company_id = $_SESSION['company'];
+
 if($content == '') {
 	msg("댓글을 입력하세요");
 	back();
@@ -28,7 +30,7 @@ $result = mysql_query("INSERT INTO  `comment` (
 						`user_name`
 						)
 						VALUES (
-						NULL ,  'dankook',  '$article_id',  '$user_idx', '$parent_idx', 'discuss',  '$datetime',  '$content', '$user_name'
+						NULL ,  '$company_id',  '$article_id',  '$user_idx', '$parent_idx', 'discuss',  '$datetime',  '$content', '$user_name'
 						);
 						");
 

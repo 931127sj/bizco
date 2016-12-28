@@ -1,5 +1,6 @@
 <?
 $_SESSION['current_menu'] = "bm";
+$company_id = $_SESSION['company'];
 ///////////////////SERVER
 $board_id = $_GET['id'];
 $q        = $_GET['q']; // 검색어
@@ -37,7 +38,7 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
                               AND `be_data`.`extend_idx` = 'message'
                               LEFT JOIN `view_bm_recruit_count` as `bm_count`
                               on `bm_count`.`article_idx` = `article`.`idx`
-                              WHERE  `article`.`company_id` =  'dankook'
+                              WHERE  `article`.`company_id` =  '$company_id'
                               AND  `article`.`board_id` =  'business_model'
 							  {$search_query}
                               GROUP BY `article`.`idx`

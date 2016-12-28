@@ -1,5 +1,7 @@
 <?
 $_SESSION['current_menu'] = "dt";
+$company_id = $_SESSION['company'];
+
 ///////////////////SERVER
 $board_id = $_GET['id'];
 $q        = $_GET['q']; // 검색어
@@ -16,7 +18,7 @@ if ($order === 'hot') {
 } else {
     $order_query = "ORDER BY  `article`.`idx` DESC";
 }
-$article_query = mysql_query("SELECT * FROM  `design_thinking` ORDER BY `idx` DESC");
+$article_query = mysql_query("SELECT * FROM  `design_thinking` WHERE `company_id` = '$company_id' ORDER BY `idx` DESC");
 
 ?>
 <div class="clearfix">
@@ -40,8 +42,6 @@ $article_query = mysql_query("SELECT * FROM  `design_thinking` ORDER BY `idx` DE
 <?
     $count = 1;
     while($article_data = mysql_fetch_array($article_query)) {
-		$list_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$article_data['user_idx']);
-		$list_user_data = mysql_fetch_array($list_user_query);
 		$score_query    = mysql_query("SELECT *
 									   FROM  `bm_grade`
 									   WHERE  `article_idx` =".$article_data['idx']."
@@ -50,12 +50,12 @@ $article_query = mysql_query("SELECT * FROM  `design_thinking` ORDER BY `idx` DE
         <? if($count > 1) { ?><div class="ui divider"></div><? } ?>
         <div class="event">
             <div class="label">
-                <img src="<?=get_profile_url($list_user_data['idx']);  ?>">
+                <img src="<?=get_profile_url($article_data['user_idx']);  ?>">
             </div>
             <div class="content">
                 <div class="summary">
                     <a class="user">
-                        <?=$list_user_data['name']?>
+                        <?=$article_data['user_name']?>
                     </a><a href="/public/dt_grade?id=<?=$article_data['idx'] ?>">의 디자인씽킹</a>
                     <div class="date">
                         <?=dateToSNSString($article_data['datetime'])?>

@@ -1,7 +1,7 @@
 <?php
 require '_common.php';
 $idx = $_GET['idx'];
-
+$company_id = $_SESSION['company'];
 
 // 동영상 시청확인
 $article = mysql_query("SELECT *
@@ -28,12 +28,11 @@ if(($honework_time + 5) < $youtube_time) {
 	exit();
 }
 
-
 // 댓글작성 확인
 $comment = mysql_query("SELECT *
 FROM  `comment`
-WHERE  `company_id` =  'dankook'
-AND  `article_idx` =$idx
+WHERE  `company_id` =  '{$company_id}'
+AND  `article_idx` ='{$idx}'
 AND  `user_idx` =".$_SESSION['idx']);
 $comment_count = mysql_num_rows($comment);
 

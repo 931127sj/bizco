@@ -4,9 +4,12 @@ $_SESSION['current_menu'] = "dt";
 
 $article_id = $_GET['id'];
 $user_idx   = $_SESSION['idx'];
+$company_id = $_SESSION['company'];
+
 $article_query = mysql_query("SELECT *
                               FROM  `design_thinking`
-                              WHERE  `idx` ='$article_id' ");
+                              WHERE  `idx` ='$article_id'
+                              AND `company_id` = '$company_id'");
 $article_data = mysql_fetch_array($article_query);
 
 $extend_query = mysql_query("SELECT *
@@ -79,9 +82,9 @@ while($extend_data = mysql_fetch_array($extend_query)) {
         ?>
     </p>
     <h3>2단계 문제정의</h3>
-    
+
     <p><?=$article_data['problem_cause']?></p>
- 
+
 	<p><a target="_blank" href="<?=($article_data['image2']!='')?"/data/dt_thumb/real_".$article_data['image2']:""; ?>">
 	<img class= "ui big image" src="<?=($article_data['image2']!='')?"/data/dt_thumb/".$article_data['image2']:""; ?>"></a></p>
 
