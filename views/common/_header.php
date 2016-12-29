@@ -26,6 +26,11 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
     </div>
     <div class="right menu">
         <a class="ui item" href="/public/mypage"><strong><? echo $_SESSION['name']; ?></strong> 님</a>
+				<? if($alarm_count > 0){ ?>
+					<a class="ui item" style="background:rgba(255, 0, 0, 1);"><?= $alarm_count ?></a>
+				<? }else{ ?>
+					<a class="ui item" style="background:rgba(0, 0, 0, 0.03);><?= $alarm_count ?></a>
+				<? } ?>
         <a class="ui item logout" href="/public/do_logout.php">
             로그아웃
         </a>
