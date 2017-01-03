@@ -1,3 +1,9 @@
+<!-- Datas from PHP -->
+<?php
+  require_once '_common.php';
+
+  $company_id = $_SESSION['company'];
+?>
 <div class="clearfix">
     <h2 class="ui header floated right" style="margin-bottom: 0; margin-top: 5px;">스텝/과제 관리</h2>
     <button class="ui button primary float--right" onClick="step_add()">스텝 추가</button>
@@ -17,23 +23,17 @@
         </tr>
     </thead>
     <tbody>
-		<!-- Datas from PHP -->
-		<?php
+<?
+    $query = mysql_query("SELECT * from curriculum_step where `company_id` = '$company_id' order by step_seq asc ");
 
-			require_once '_common.php';
-      
-      $company_id = $_SESSION['company'];
-			$query = mysql_query("SELECT * from curriculum_step where `company_id` = '$company_id' order by step_seq asc ");
+    while($row = mysql_fetch_array($query)){
 
-			while($row = mysql_fetch_array($query)){
+      $start = str_replace("-","/", $row['start_date']);
+      $end = str_replace("-","/", $row['end_date']);
 
-				$start = str_replace("-","/", $row['start_date']);
-				$end = str_replace("-","/", $row['end_date']);
-
-                $cur_query = mysql_query("SELECT * from article where step_id = '".$row['idx']."' and board_id = 'dankook_cur' ORDER BY `priority` ASC");
-                $cur_num = mysql_num_rows($cur_query);
-
-			?>
+              $cur_query = mysql_query("SELECT * from article where step_id = '".$row['idx']."' and board_id = 'dankook_cur' ORDER BY `priority` ASC");
+              $cur_num = mysql_num_rows($cur_query);
+?>
 			<tr>
 				<td rowspan="<?=$cur_num+2?>"><?=$row['step_seq']?></td>
 				<td><b><?=xssHtmlProtect($row['step_name'])?></b> <? if ( ! $cur_num) { ?><a><i class="ui icon angle double left"></i>과제를 추가해주세요.</a><? } ?></td>
@@ -111,7 +111,7 @@ function step_edit(e){
 // 과제 추가 버튼
 function cur_add(e){
     var value = $(e).val();
-    document.location.href = './board_write?id=dankook_cur&redirect=manage_step&step_id='+value;
+    document.location.href = './board_write?board_id=<?= $company_id ?>_cur&redirect=manage_step&step_id='+value;
 }
 function del_article(idx) {
 	var con = confirm('정말로 게시물 삭제를 원하십니까?');

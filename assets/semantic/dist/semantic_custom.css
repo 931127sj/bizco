@@ -29306,7 +29306,7 @@ body.dimmable > .dimmer {
   border-radius: 0.28571429rem;
   -webkit-transition: opacity 0.1s ease;
   transition: opacity 0.1s ease;
-  z-index: 11;
+  z-index: 1000;
   will-change: transform, opacity;
 }
 

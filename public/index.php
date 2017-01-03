@@ -50,6 +50,10 @@ switch($menu) {
 	case '' : $_SESSION['current_menu'] = 'cur'; break;
 }
 
+if($_SESSION['level'] > 6) $first_page = "/manage_company";
+else $first_page = "/cur_step";
+
 $view->load->page('common/_header');
-$view->load->page('pages'.(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']?$_SERVER['PATH_INFO']:'/cur_step'));
+$view->load->page('pages'.(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']?$_SERVER['PATH_INFO']:$first_page));
 $view->load->page('common/_footer');
+?>

@@ -25,12 +25,31 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
         </div>
     </div>
     <div class="right menu">
-        <a class="ui item" href="/public/mypage"><strong><? echo $_SESSION['name']; ?></strong> 님</a>
 				<? if($alarm_count > 0){ ?>
-					<a class="ui item" style="background:rgba(255, 0, 0, 1);"><?= $alarm_count ?></a>
+					<div class="ui dropdown item">
+						<?= $alarm_count ?>
+						<div class="menu">
+						<? while($alarm_data = mysql_fetch_array($alarm_query)) {
+							$from_user_name = $alarm_data['from_user_name'];
+							$article_idx = $alarm_data['article_idx'];
+
+							$board_query = mysql_query("SELECT `board_id` FROM `article` WHERE `idx` = '$article_idx'");
+							$board_data = mysql_fetch_array($board_query);
+							$board_id = $board_data['board_id'];
+
+							if($alarm_data['type'] == 'comment'){
+								$alarm_msg = "<b>{$from_user_name}</b> 님이 댓글을 달았습니다.";
+								$alarm_url = "/public/view_article?board_id={$board_id}&article_id={$article_idx}";
+							}
+							?>
+							<a class="item" href="<?= $alarm_url ?>"><?= $alarm_msg ?></a>
+						<? } ?>
+						</div>
+					</div>
 				<? }else{ ?>
-					<a class="ui item" style="background:rgba(0, 0, 0, 0.03);><?= $alarm_count ?></a>
+					<a class="ui item" style="background:rgba(0, 0, 0, 0.03);"><?= $alarm_count ?></a>
 				<? } ?>
+        <a class="ui item" href="/public/mypage"><strong><? echo $_SESSION['name']; ?></strong> 님</a>
         <a class="ui item logout" href="/public/do_logout.php">
             로그아웃
         </a>

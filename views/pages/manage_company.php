@@ -3,6 +3,8 @@ $cquery = mysql_query("SELECT *
 						FROM `company`
 						ORDER BY `idx`");
 $current_step = 'manage_user_tools';
+
+if($_GET['company']) $_SESSION['company'] = $_GET['company'];
 ?>
 <div class="ui container">
 	<div class="clearfix">
@@ -42,12 +44,23 @@ $current_step = 'manage_user_tools';
             											WHERE `company_id` = '{$cdata['company_id']}'"));
             		$admin = mysql_fetch_array(mysql_query("SELECT `idx`, `name`, `email`
             												FROM `user`
-            												WHERE `company_id = '{$cdata['company_id']}' and `level` = '6'"));
+            												WHERE `company_id` = '{$cdata['company_id']}' AND `level` = '6'"));
+								$permission = mysql_num_rows(mysql_query("SELECT `idx`
+																	FROM `user`
+																	WHERE `company_id` = '{$cdata['company_id']}' AND `level` = '1'"));
             ?>
             <tr>
-                <td><?=$cdata['name']?></td>
+								<? if($_SESSION['company'] == $cdata['company_id']){ ?>
+									<td><b><font color="blue"><?=$cdata['name']?></font></b></td>
+								<? }else{?>
+									<td><a href="/public/manage_company?company=<?=$cdata['company_id']?>"><?=$cdata['name']?></a></td>
+								<? } ?>
 								<td><?=$cdata['company_id']?></td>
-                <td><?=$entry?> 명</td>
+                <td><a href="/public/manage_user_tools?company=<?=$cdata['company_id']?>"><?=$entry?></a> 명
+								<? if($permission > 0){ ?>
+										<font color="red">(<?=$permission?>명)</red>
+								<? } ?>
+								</td>
                 <td>
                 <?
                 	if(!$admin){

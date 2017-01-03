@@ -49,7 +49,7 @@ if($to_user_idx != $user_idx){
 		)
 		VALUES
 		(
-			'$to_user_idx', '$to_user_name', '$user_idx', '$user_name', 'comment', '$comment_idx', '$datetime', '1'
+			'$to_user_idx', '$to_user_name', '$user_idx', '$user_name', 'comment', '$article_id', '$datetime', '1'
 		);
 		");
 }
