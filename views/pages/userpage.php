@@ -103,22 +103,22 @@
         <h3 class="ui header">회원 레벨 조정</h3>
         <select name="level" class="ui fluid dropdown" required>
           <? if($_SESSION['level'] > 6){?>
-          <option value="7">사이트 관리자</option>
+          <option value="7" <?= ($result['level'] == 7)? 'selected' : '' ;?>>사이트 관리자</option>
           <? } ?>
           <? if($_SESSION['level'] > 6 && $company_admin == 0){?>
-          <option value="6"><?=$cdata['name']?> 최종 관리자</option>
+          <option value="6" <?= ($result['level'] == 6)? 'selected' : '' ;?>><?=$cdata['name']?> 최종 관리자</option>
           <? } ?>
-          <option value="5"><?=$cdata['name']?> 관리자</option>
-          <option value="4"><?=$cdata['name']?> 멘토</option>
+          <option value="5" <?= ($result['level'] == 5)? 'selected' : '' ;?>><?=$cdata['name']?> 관리자</option>
+          <option value="4" <?= ($result['level'] == 4)? 'selected' : '' ;?>><?=$cdata['name']?> 멘토</option>
           <? if($result['team_idx'] > 0){
                 $leader_chk = mysql_num_rows(mysql_query("SELECT `idx` FROM `team`
                                             WHERE `idx` = '{$result['team_idx']}' AND `leader_idx` = '{$_GET['id']}'"));
                 if($leader_chk){
                 ?>
-                <option value="3"><?=$cdata['name']?> 참여자</option>
+                <option value="3" <?= ($result['level'] == 3)? 'selected' : '' ;?>><?=$cdata['name']?> 참여자</option>
                 <? }?>
           <? }else{ ?>
-            <option value="2"><?=$cdata['name']?> 참여자</option>
+            <option value="2" <?= ($result['level'] == 2)? 'selected' : '' ;?>><?=$cdata['name']?> 참여자</option>
           <? } ?>
         </select>
         <? } ?>

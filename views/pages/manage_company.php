@@ -23,7 +23,6 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
     <table class="ui celled compact striped table">
     <colgroup>
     	<col width="*" />
-			<col width="15%" />
     	<col width="15%" />
     	<col width="25%" />
     	<col width="15%" />
@@ -31,7 +30,6 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
         <thead>
             <tr>
                 <th>프로그램</th>
-								<th>프로그램 ID</th>
                 <th>참가자 수</th>
                 <th>관리자</th>
                 <th></th>
@@ -55,7 +53,6 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
 								<? }else{?>
 									<td><a href="/public/manage_company?company=<?=$cdata['company_id']?>"><?=$cdata['name']?></a></td>
 								<? } ?>
-								<td><?=$cdata['company_id']?></td>
                 <td><a href="/public/manage_user_tools?company=<?=$cdata['company_id']?>"><?=$entry?></a> 명
 								<? if($permission > 0){ ?>
 										<font color="red">(<?=$permission?>명)</red>
