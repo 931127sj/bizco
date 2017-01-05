@@ -46,9 +46,9 @@ $current_step = 'manage_user_tools';
                     <? if($row['level'] != 8){?>
                     <? if($_SESSION['level'] >= 6) { ?>
                     <a class="mini ui button negative" href="/public/do_delete_user.php?user_idx=<?=$row['idx']?>">이 참가자 탈퇴</a>
-                    <? if($row['level'] == 1) { ?>
-                        <a class="mini ui button blue" href="/public/do_ack_to_user.php?user_idx=<?=$row['idx']?>">참가 승인</a>
-                    <? }?>
+                      <? if($row['level'] == 1) { ?>
+                          <a class="mini ui button blue" href="/public/do_level_to_admin.php?user_idx=<?=$row['idx']?>&level=2">참가 승인</a>
+                      <? }?>
                      <? } // session level 6 ?>
                     <? } // row level 8 ?>
                 </td>
