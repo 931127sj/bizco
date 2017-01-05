@@ -5,15 +5,18 @@ ini_set('display_errors', 'On');
 set_error_handler("var_dump");
 ini_set("mail.log", "/var/log/mail.log");
 
-$mailto="ksh@mondaychicken.com";
+$title = $_POST['title'];
+$content = $_POST['content'];
+
+$mailto="dragonsuperf@naver.com";
 $subject="mail test";
-$content="test";
+//$content="test";
 $headers = array("From: from@shalomtalk.kr",
     "Reply-To: no-reply@shalomtalk.kr",
     "X-Mailer: PHP/" . PHP_VERSION
 );
 $headers = implode("\r\n", $headers);
-$result = mail($mailto, $subject, $content, $headers);
+$result = mail($mailto, $title, $content, $headers);
 
 if ($result) {
     echo "mail success";
