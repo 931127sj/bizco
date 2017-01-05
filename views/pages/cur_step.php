@@ -93,8 +93,8 @@ $now_step_data = mysql_fetch_array($now_step_query);
 ///////// 과제 리스트 LIST
 $homework = mysql_query("SELECT *
 						FROM  `article`
-						WHERE  `board_id` LIKE  'dankook_cur'
-						AND  `step_id` =".$now_step_data['idx']
+						WHERE  `board_id` LIKE  '{$company_id}_cur'
+						AND  `step_id` =".$now_step_data['step_seq']
 						." ORDER BY `priority` ASC");
 
 $homework_count = mysql_num_rows($homework);

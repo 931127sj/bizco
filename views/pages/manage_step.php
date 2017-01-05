@@ -24,14 +24,14 @@
     </thead>
     <tbody>
 <?
-    $query = mysql_query("SELECT * from curriculum_step where `company_id` = '$company_id' order by step_seq asc ");
+    $query = mysql_query("SELECT * from `curriculum_step` where `company_id` = '$company_id' order by step_seq asc ");
 
     while($row = mysql_fetch_array($query)){
 
       $start = str_replace("-","/", $row['start_date']);
       $end = str_replace("-","/", $row['end_date']);
 
-              $cur_query = mysql_query("SELECT * from article where step_id = '".$row['idx']."' and board_id = 'dankook_cur' ORDER BY `priority` ASC");
+              $cur_query = mysql_query("SELECT * from article where step_id = '".$row['step_seq']."' and board_id = '{$company_id}_cur' ORDER BY `priority` ASC");
               $cur_num = mysql_num_rows($cur_query);
 ?>
 			<tr>
@@ -117,7 +117,7 @@ function del_article(idx) {
 	var con = confirm('정말로 게시물 삭제를 원하십니까?');
 	if(con == 1) {
 
-		location.href =  "/public/do_del_article.php?idx=" + idx;
+		location.href =  "/public/do_del_article.php?article_id=" + idx;
 	}
 }
 function edit_article(idx) {
@@ -158,13 +158,13 @@ function step_edit(e){
 // 과제 추가 버튼
 function cur_add(e){
     var value = $(e).val();
-    document.location.href = './board_write?id=dankook_cur&redirect=manage_step&step_id='+value;
+    document.location.href = './board_write?board_id=<?= $company_id ?>_cur&redirect=manage_step&step_id='+value;
 }
 function del_article(idx) {
 	var con = confirm('정말로 게시물 삭제를 원하십니까?');
 	if(con == 1) {
 
-		location.href =  "/public/do_del_article.php?idx=" + idx;
+		location.href =  "/public/do_del_article.php?article_id=" + idx;
 	}
 }
 function edit_article(idx) {

@@ -14,6 +14,13 @@ $user_name = $_SESSION['name'];
 
 $datetime = date("Y-m-d H:i:s",time());
 
+if($step_id > 0){
+	$step = mysql_fetch_array(mysql_query("SELECT `step_seq` FROM `curriculum_step` WHERE `idx` = '{$step_id}'"));
+	$step_seq = $step['step_seq'];
+
+	msg($step_seq);
+}
+
 if(! $title) {
 	msg('제목을 입력해주세요');
 	back();
@@ -86,7 +93,7 @@ if($board_data['type'] == "curriculum") {
 	$max_pri_query = mysql_query("SELECT *
 								FROM  `article`
 								WHERE  `board_id` =  '$board_id'
-								AND  `step_id` =$step_id
+								AND  `step_id` = '$step_seq'
 								ORDER BY  `article`.`priority` DESC
 								LIMIT 0 , 1");
 
@@ -114,7 +121,7 @@ if($_POST['type'] =="edit") {
 						`user_name`
 						)
 						VALUES (
-						NULL ,  '{$company_id}',  '$board_id', '$step_id',  '$user_idx',  '$title',  '$content',  '{$datetime}',  '$youtube',  '$duration', '$priority', '$user_name'
+						NULL ,  '{$company_id}',  '$board_id', '$step_seq',  '$user_idx',  '$title',  '$content',  '{$datetime}',  '$youtube',  '$duration', '$priority', '$user_name'
 						);
 						");
 
