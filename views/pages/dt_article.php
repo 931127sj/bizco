@@ -19,7 +19,7 @@ $_SESSION['current_menu'] = "dt";
             <label>이미지 업로드</label>
             <input type="file" name="img2">
         </div>
-        
+
         <div class="field">
             <label>팀내 토론을 거쳐 문제의 원인을 정리(정의)하세요</label>
             <textarea rows="2" name = "problem_cause"></textarea>

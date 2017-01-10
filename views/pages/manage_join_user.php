@@ -13,7 +13,7 @@ $qs = mysql_query("SELECT `cs`.`idx` as `step_idx`,
                           `article`.`idx` as `article_idx`
                    FROM `curriculum_step` as `cs`
                    LEFT JOIN `article`
-                   ON `article`.`step_id` = `cs`.`idx`
+                   ON `article`.`step_id` = `cs`.`step_seq`
                    ORDER BY `cs`.`step_seq`, `article`.`idx` ASC");
 $print_column = array();
 $step_count = 0;
@@ -28,12 +28,12 @@ $qs = mysql_query("SELECT `user`.`idx` as `user_idx`,
                           `article`.`title`, ifnull(`homework`.`state`, 0) as is_complete
                    FROM `user`
                    LEFT JOIN `article`
-                   ON `article`.`board_id` = 'dankook_cur'
+                   ON `article`.`board_id` = '{$company_id}_cur'
                    LEFT JOIN `homework`
                    ON `homework`.`article_idx` = `article`.`idx`
                    AND `homework`.`user_idx` = `user`.`idx`
                    LEFT JOIN `curriculum_step` as `cs`
-                   ON `cs`.`idx` = `article`.`step_id`
+                   ON `cs`.`step_seq` = `article`.`step_id`
                    WHERE `user`.`company_id` = '$company_id'
                    $search_query
                    GROUP BY `user`.`idx`, `article`.`idx`

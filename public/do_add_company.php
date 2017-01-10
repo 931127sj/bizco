@@ -4,6 +4,21 @@ require '_common.php';
 $company_name	=	$_POST['name'];
 $company_id		=	$_POST['company_id'];
 $curriculum 	= $_POST['curriculum'];
+$lang 	= $_POST['lang'];
+
+if($lang == 'en'){
+	$notice = "Notice";
+	$bml = "Business Model List";
+	$board = "Downloads";
+	$together = "Together";
+	$curriculum = "Curriculum";
+}else{
+	$notice = "공지사항";
+	$bml = "비지니스 모델 리스트";
+	$board = "자료실";
+	$together = "함께해요";
+	$curriculum = "커리큘럼";
+}
 
 
 if(!$company_name){
@@ -25,10 +40,11 @@ if($check == 0){
 
 	$result = mysql_query("INSERT INTO  `company`(
 							`company_id` ,
-							`name`
+							`name`,
+							`lang`
 							)
 							VALUES (
-							'$company_id',  '$company_name'
+							'$company_id',  '$company_name', '$lang'
 							);
 							");
 
@@ -42,7 +58,7 @@ if($check == 0){
 					`write_level`
 					)
 					VALUES(
-					'program_notice', '{$company_id}','{$company_name} 공지사항', 'default', '0', '3'
+					'program_notice', '{$company_id}','{$company_name} {$notice}', 'default', '0', '3'
 					);
 				");
 
@@ -55,7 +71,7 @@ if($check == 0){
 					`write_level`
 					)
 					VALUES(
-					'business_model', '{$company_id}','비즈니스 모델 리스트', 'business_model', '0', '0'
+					'business_model', '{$company_id}','{$bml}', 'business_model', '0', '0'
 					);
 			");
 
@@ -68,7 +84,7 @@ if($check == 0){
 					`write_level`
 					)
 					VALUES(
-					'filebox', '{$company_id}','자료실', 'default', '0', '0'
+					'filebox', '{$company_id}','{$board}', 'default', '0', '0'
 					);
 			");
 
@@ -81,7 +97,7 @@ if($check == 0){
 					`write_level`
 					)
 					VALUES(
-					'together', '{$company_id}','함께해요', 'default', '0', '0'
+					'together', '{$company_id}','{$together}', 'default', '0', '0'
 					);
 			");
 
@@ -94,7 +110,7 @@ if($check == 0){
 							`write_level`
 							)
 							VALUES(
-							'{$company_id}_cur', '{$company_id}','커리큘럼', 'curriculum', '0', '0'
+							'{$company_id}_cur', '{$company_id}','{$curriculum}', 'curriculum', '0', '0'
 							);
 					");
 

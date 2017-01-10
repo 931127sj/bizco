@@ -13,6 +13,7 @@ $history = $_POST['history'];
 $skills = $_POST['skills'];
 $progress = $_POST['progress'];
 $business_resource = $_POST['business_resource'];
+$phone = $_POST['phone'];
 //var_dump($_POST);
 //  유효성 check
 if($email == '') {
@@ -35,9 +36,14 @@ if($password_re == '') {
 		back();
 	exit();
 }
+if($phone == '') {
+	msg("연락처는 필수입력 사항입니다.");
+		back();
+	exit();
+}
 /*
 if($company == '') {
-	
+
 }
 */
 /*
@@ -98,7 +104,7 @@ $salt = substr(sha1(rand().$email.date("Y-m-d H:i:s")), 0, 20);
 $password = hash("sha256",$salt.$password);
 //SALT 알고리즘에을 통해, SALT값 + 비밀번호 순서로 해쉬한다(순서가 매우중요하다)
 
-	
+
 
 //DB중복 체크(이메일로)
 
@@ -126,10 +132,12 @@ $result = mysql_query("INSERT INTO  `user` (
 						`join_ip` ,
 						`state`,
 						`level`,
-						`team_id`
+						`team_id`,
+						`phone`
 						)
 						VALUES (
-						NULL ,  '$email',  '$name',  '$password',  '$company', '$team_id',  '$join_type', '$part', '$history', '$skills', '$progress', '$business_resource',  '$salt',  '',  '',  '',  '',  '',  '1', '1', '$team_id'
+						NULL ,  '$email',  '$name',  '$password',  '$company', '$team_id',  '$join_type', '$part', '$history', '$skills',
+						'$progress', '$business_resource',  '$salt',  '',  '',  '',  '',  '',  '1', '1', '$team_id', '$phone'
 						);
 						") or die(mysql_error());
 

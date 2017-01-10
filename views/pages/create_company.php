@@ -9,6 +9,13 @@
         <label>프로그램 아이디</label>
         <input type="text" name="company_id" placeholder="아이디">
     </div>
+    <div class="required field">
+        <label>언어 선택</label>
+        <select name="lang" class="ui fluid dropdown" required>
+          <option value="ko">한국어(Korean)</option>
+          <option value="en">영어(English)</option>
+        </select>
+    </div>
     <div class="field">
         <label>커리큘럼 복사</label>
           <select name="curriculum" class="ui fluid dropdown" required>

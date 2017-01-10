@@ -19,6 +19,10 @@ if($password == '') {
 $user_info= mysql_query("SELECT * FROM  `user` WHERE  `email` =  '$id'");
 $user_info_rows = mysql_num_rows($user_info);
 $user_info_data = mysql_fetch_array($user_info);
+
+$cdata = mysql_fetch_array(mysql_query("SELECT * FROM `company`
+																			WHERE `company_id` = '{$user_info_data['company_id']}'"));
+
 if($user_info_rows <= 0){
 	msg("존재하지 않는 아이디 혹은 비밀번호 입니다.");
 	back();
@@ -41,6 +45,7 @@ if($user_info_rows <= 0){
 		$_SESSION["name"] = $user_info_data['name'];
 		$_SESSION['level'] = $user_info_data['level'];
 		$_SESSION['company'] = $user_info_data['company_id'];
+		$_SESSION['lang'] = $cdata['lang'];
 
 
 		$token = substr(sha1(rand().$id.date("Y-m-d H:i:s")), 0, 20);

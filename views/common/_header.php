@@ -1,23 +1,68 @@
-<<<<<<< Updated upstream
 <!DOCTYPE html><html><head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <title><?=is($this->title, true)?:'App Name'?></title><?php echoAssets($this->headerFiles); ?></head><body>
-<?php
-if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
-	$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
-	$usr_data = mysql_fetch_array($usr);
 
-	$alarm_query = mysql_query("SELECT * FROM `user_alarm` WHERE `to_user_idx` = ".$_SESSION["idx"]);
-	$alarm_count = mysql_num_rows($alarm_query);
+	<?php
+	if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
+		$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
+		$usr_data = mysql_fetch_array($usr);
 
-    // 나중에 dankook이 아닌 동적으로 처리를 해야합니다.
-    $qs_count = mysql_query("SELECT
-        (SELECT count(idx) FROM `article` WHERE `company_id` = 'dankook' AND `board_id` = 'program_notice') as program_notice,
-        (SELECT count(idx) FROM `article` WHERE `company_id` = 'dankook' AND `board_id` = 'business_model') as business,
-        (SELECT count(idx) FROM `user` WHERE `company_id` ='dankook') as join_user,
-        (SELECT count(idx) FROM `design_thinking` WHERE `company_id` ='dankook') as design_thinking");
-    $rs_counts = mysql_fetch_array($qs_count);
-?>
+		$alarm_query = mysql_query("SELECT * FROM `user_alarm` WHERE `to_user_idx` = ".$_SESSION["idx"]);
+		$alarm_count = mysql_num_rows($alarm_query);
+
+	  // 나중에 dankook이 아닌 동적으로 처리를 해야합니다.
+	  $qs_count = mysql_query("SELECT
+	      (SELECT count(idx) FROM `article` WHERE `company_id` = '{$_SESSION['company_id']}' AND `board_id` = 'program_notice') as program_notice,
+	      (SELECT count(idx) FROM `article` WHERE `company_id` = '{$_SESSION['company_id']}' AND `board_id` = 'business_model') as business,
+	      (SELECT count(idx) FROM `user` WHERE `company_id` ='{$_SESSION['company_id']}') as join_user,
+	      (SELECT count(idx) FROM `design_thinking` WHERE `company_id` ='{$_SESSION['company_id']}') as design_thinking");
+	  $rs_counts = mysql_fetch_array($qs_count);
+
+		// menu
+		if($_SESSION['lang'] == "en"){
+			$logout = "Log out";
+			$curriculum = "Curriculum";
+			$businessmodel = "Business Model";
+			$join = "Join";
+			$teambuilding = "Team Building";
+			$designthinking = "Design Thinking";
+			$participants = "Participants";
+			$mentoring = "Mentoring";
+			$mentorlist = "Mentor List";
+			$mentoringboard = "Mentoring Board";
+			$boards = "Boards";
+			$notice = "Notice";
+			$downloads = "Downloads";
+			$administrator = "Administrator menu";
+			$mentorboard = "Mentor Board";
+			$assignmentcheck ="Assignment Check";
+			$manageparticipants = "Manage participants";
+			$managestepassignment = "Manage Step/Assignment";
+			$manageprograms = "Manage Programs";
+			$sendmessage = "Send Message";
+		}else{
+			$logout = "로그아웃";
+			$curriculum = "커리큘럼";
+			$businessmodel = "비즈니스 모델";
+			$join = "함께해요";
+			$teambuilding = "팀 빌딩";
+			$designthinking = "디자인 씽킹";
+			$participants = "참가자";
+			$mentoring = "멘토링";
+			$mentorlist = "멘토 리스트";
+			$mentoringboard = "멘토링 게시판";
+			$boards = "통합 게시판";
+			$notice = "공지사항";
+			$downloads = "자료실";
+			$administrator = "관리자 메뉴";
+			$mentorboard = "멘토링 답변";
+			$assignmentcheck ="참가자 과제 확인";
+			$manageparticipants = "참가자 관리";
+			$managestepassignment = "스텝/과제 관리";
+			$manageprograms = "프로그램 관리";
+			$sendmessage = "전체 메세지 보내기";
+		}
+	?>
 
 <nav class="ui top fixed secondary menu">
     <div class="header item" style="padding:6px 13px">
@@ -52,58 +97,58 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
 				<? } ?>
         <a class="ui item" href="/public/mypage"><strong><? echo $_SESSION['name']; ?></strong> 님</a>
         <a class="ui item logout" href="/public/do_logout.php">
-            로그아웃
+            <?= $logout ?>
         </a>
     </div>
 </nav>
 <div id="menuCover">
 <div class="ui secondary pointing menu basic-center">
     <a class="item <?=($_SESSION['current_menu']=="cur")?"active deep-blue":""; ?>" href="/public/cur_step">
-        커리큘럼
+        <?= $curriculum ?>
     </a>
         <div class="ui dropdown item">
-        비즈니스 모델
+        <?= $businessmodel ?>
             <div class="menu">
                 <a class="item <?=($_SESSION['current_menu']=='bm')?"active deep-blue":""; ?>" href="/public/bm_list?id=business_model">
-                    비즈니스 모델
+                    <?= $businessmodel ?>
                 </a>
                 <a class="item <?=($_SESSION['current_menu']=='together')?"active deep-blue":""; ?>" href="/public/board_list?board_id=together">
-                    함께해요
+                    <?= $join ?>
                 </a>
             </div>
         </div>
     <a class="item <?=($_SESSION['current_menu']=='team')?"active deep-blue":""; ?>" href="/public/team_list">
-        팀 빌딩
+    <?= $teambuilding ?>
     </a>
     <a class="item <?=($_SESSION['current_menu']=='dt')?"active deep-blue":""; ?>" href="/public/dt_list">
-        디자인 씽킹
+    <?= $designthinking ?>
     </a>
     <a class="item <?=($_SESSION['current_menu']=='user')?"active deep-blue":""; ?>" href="/public/group_user_list">
-        참가자
+    <?= $participants ?>
     </a>
     <div class="ui dropdown item">
-        멘토링
+    <?= $mentoring ?>
         <div class="menu">
             <a class="item <?=($_SESSION['current_menu']=='mento')?"active deep-blue":""; ?>" href="/public/group_mento_list">
-            멘토 리스트
+            <?= $mentorlist ?>
             </a>
             <a class="item <?=($_SESSION['current_menu']=='question')?"active deep-blue":""; ?>" href="/public/question_list">
-            멘토링 게시판
+            <?= $mentoringboard ?>
             </a>
         </div>
     </div>
     <div class="ui dropdown item">
-        통합 게시판
+    <?= $boards ?>
 
         <div class="menu">
-             <a class="item <?=($_SESSION['current_menu']=='public_notice')?"active deep-blue":""; ?>" href="/public/board_list?board_id=program_notice">
-                공지사항
+            <a class="item <?=($_SESSION['current_menu']=='public_notice')?"active deep-blue":""; ?>" href="/public/board_list?board_id=program_notice">
+            <?= $notice ?>
             </a>
             <a class="item <?=($_SESSION['current_menu']=='faq')?"active deep-blue":""; ?>" href="/public/faq_view">
-                FAQ
+            FAQ
             </a>
-             <a class="item <?=($_SESSION['current_menu']=='filebox')?"active deep-blue":""; ?>" href="/public/board_list?board_id=filebox">
-                자료실
+            <a class="item <?=($_SESSION['current_menu']=='filebox')?"active deep-blue":""; ?>" href="/public/board_list?board_id=filebox">
+            <?= $downloads ?>
             </a>
 
         </div>
@@ -111,25 +156,28 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
 
     <? if($_SESSION['level'] >= 5) { ?>
     <div class="ui dropdown item <?=(in_array($_SESSION['current_menu'], ['manage_join_user', 'manage_user_tools', 'manage_step']))?"selection":""; ?>">
-        관리자 메뉴
+    <?= $administrator ?>
         <div class="menu">
             <a class="item admin" href="/public/question_list_mento">
-                멘토링 답변
+            <?= $mentorboard ?>
             </a>
              <a class="item admin" href="/public/manage_join_user">
-                참가자 과제확인
+            <?= $assignmentcheck ?>
             </a>
              <a class="item admin" href="/public/manage_user_tools">
-                참가자 관리
+            <?= $manageparticipants ?>
             </a>
              <a class="item admin" href="/public/manage_step">
-                스탭/과제 관리
+            <?= $managestepassignment ?>
             </a>
 						<? if($_SESSION['level'] >= 7){ ?>
 						<a class="item admin" href="/public/manage_company">
-               프로그램 관리
+            <?= $manageprograms ?>
             </a>
 						<? } ?>
+						<a class="item admin" href="/public/manage_message">
+						<?= $sendmessage ?>
+						</a>
         </div>
     </div>
     <? } ?>
@@ -139,129 +187,3 @@ if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
 <?php
 }
 ?>
-=======
-<!DOCTYPE html><html><head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<title><?=is($this->title, true)?:'App Name'?></title><?php echoAssets($this->headerFiles); ?></head><body>
-<?php
-if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
-	$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
-	$usr_data = mysql_fetch_array($usr);
-
-	$alarm_query = mysql_query("SELECT * FROM `user_alarm` WHERE `to_user_idx` = ".$_SESSION["idx"]);
-	$alarm_count = mysql_num_rows($alarm_query);
-
-    // 나중에 dankook이 아닌 동적으로 처리를 해야합니다.
-    $qs_count = mysql_query("SELECT
-        (SELECT count(idx) FROM `article` WHERE `company_id` = 'dankook' AND `board_id` = 'program_notice') as program_notice,
-        (SELECT count(idx) FROM `article` WHERE `company_id` = 'dankook' AND `board_id` = 'business_model') as business,
-        (SELECT count(idx) FROM `user` WHERE `company_id` ='dankook') as join_user,
-        (SELECT count(idx) FROM `design_thinking` WHERE `company_id` ='dankook') as design_thinking");
-    $rs_counts = mysql_fetch_array($qs_count);
-?>
-
-<nav class="ui top fixed secondary menu">
-    <div class="header item" style="padding:6px 13px">
-        <div class="ui text container logo">
-            <a id="headerLogo" href="http://sbe.center/public"><img src="../../assets/css/logo_top.png" alt="Startup on the base of Entrepreneurship"></a>
-        </div>
-    </div>
-    <div class="right menu">
-        <a class="ui item" href="/public/mypage"><strong><? echo $_SESSION['name']; ?></strong> 님</a>
-				<? if($alarm_count > 0){ ?>
-					<a class="ui item" style="background:rgba(255, 0, 0, 1);"><?= $alarm_count ?></a>
-				<? }else{ ?>
-					<a class="ui item" style="background:rgba(0, 0, 0, 0.03);><?= $alarm_count ?></a>
-				<? } ?>
-        <a class="ui item logout" href="/public/do_logout.php">
-            로그아웃
-        </a>
-    </div>
-</nav>
-<div id="menuCover">
-<div class="ui secondary pointing menu basic-center">
-    <a class="item <?=($_SESSION['current_menu']=="cur")?"active deep-blue":""; ?>" href="/public/cur_step">
-        커리큘럼
-    </a>
-        <div class="ui dropdown item">
-        비즈니스 모델
-            <div class="menu">
-                <a class="item <?=($_SESSION['current_menu']=='bm')?"active deep-blue":""; ?>" href="/public/bm_list?id=business_model">
-                    비즈니스 모델
-                </a>
-                <a class="item <?=($_SESSION['current_menu']=='together')?"active deep-blue":""; ?>" href="/public/board_list?board_id=together">
-                    함께해요
-                </a>
-            </div>
-        </div>
-    <a class="item <?=($_SESSION['current_menu']=='team')?"active deep-blue":""; ?>" href="/public/team_list">
-        팀 빌딩
-    </a>
-    <a class="item <?=($_SESSION['current_menu']=='dt')?"active deep-blue":""; ?>" href="/public/dt_list">
-        디자인 씽킹
-    </a>
-    <a class="item <?=($_SESSION['current_menu']=='user')?"active deep-blue":""; ?>" href="/public/group_user_list">
-        참가자
-    </a>
-    <div class="ui dropdown item">
-        멘토링
-        <div class="menu">
-            <a class="item <?=($_SESSION['current_menu']=='mento')?"active deep-blue":""; ?>" href="/public/group_mento_list">
-            멘토 리스트
-            </a>
-            <a class="item <?=($_SESSION['current_menu']=='question')?"active deep-blue":""; ?>" href="/public/question_list">
-            멘토링 게시판
-            </a>
-        </div>
-    </div>
-    <div class="ui dropdown item">
-        통합 게시판
-
-        <div class="menu">
-             <a class="item <?=($_SESSION['current_menu']=='public_notice')?"active deep-blue":""; ?>" href="/public/board_list?board_id=program_notice">
-                공지사항
-            </a>
-            <a class="item <?=($_SESSION['current_menu']=='faq')?"active deep-blue":""; ?>" href="/public/faq_view">
-                FAQ
-            </a>
-             <a class="item <?=($_SESSION['current_menu']=='filebox')?"active deep-blue":""; ?>" href="/public/board_list?board_id=filebox">
-                자료실
-            </a>
-
-        </div>
-    </div>
-
-    <? if($_SESSION['level'] >= 5) { ?>
-    <div class="ui dropdown item <?=(in_array($_SESSION['current_menu'], ['manage_join_user', 'manage_user_tools', 'manage_step']))?"selection":""; ?>">
-        관리자 메뉴
-        <div class="menu">
-            <a class="item admin" href="/public/question_list_mento">
-                멘토링 답변
-            </a>
-             <a class="item admin" href="/public/manage_join_user">
-                참가자 과제확인
-            </a>
-             <a class="item admin" href="/public/manage_user_tools">
-                참가자 관리
-            </a>
-             <a class="item admin" href="/public/manage_step">
-                스탭/과제 관리
-            </a>
-						<? if($_SESSION['level'] >= 7){ ?>
-						<a class="item admin" href="/public/manage_company">
-               프로그램 관리
-            </a>
-						<? } ?>
-            <a class="item admin" href="/public/manage_message">
-                전체 메세지 보내기
-            </a>                                              
-        </div>
-    </div>
-    <? } ?>
-</div>
-</div>
-<section class="ui fluid container">
-<?php
-}
-?>
->>>>>>> Stashed changes

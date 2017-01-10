@@ -77,6 +77,12 @@ margin-bottom:100px;
                     </div>
                 </div>
                 <div class="required field">
+                    <label>연락처</label>
+                    <div class="ui left input">
+                        <input type="text" name="phone" placeholder="연락처" required>
+                    </div>
+                </div>
+                <div class="required field">
                     <label>참여</label>
                     <div class="ui left icon input">
                         <select name="company" class="ui fluid dropdown" required>

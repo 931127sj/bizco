@@ -26,7 +26,6 @@ while($extend_data = mysql_fetch_array($extend_query)) {
 }
 
 $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '".$_GET['article_id']."'");
-
 ?>
 
 <div class="ui top attached tabular menu">
