@@ -7,7 +7,8 @@ $rs = mysql_fetch_array($query);
 
 <div class="clearfix">
     <h2 class="ui header left floated" style="margin: 3px 0;">FAQ</h2>
-    <? if($_SESSION['level'] >= 5) { ?><a class="ui right floated blue button" href="/public/faq_write?company=<?=$company_id?>">수정</a><? } ?>
+    <? if($_SESSION['level'] >= 5) { ?>
+      <a class="ui right floated blue button" href="/public/faq_write?company=<?=$company_id?>"><?= $lang_update ?></a><? } ?>
 </div>
 <div class="ui divider forh2"></div>
 

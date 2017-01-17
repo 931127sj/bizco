@@ -14,5 +14,5 @@ $company_id = $_GET['company_id'];
         <label>문의 내용</label>
         <textarea rows="15" name="content" required></textarea>
     </div>
-    <button class="ui button primary">작성 완료</button>
+    <button class="ui button primary"><?= $lang_write ?></button>
 </form>

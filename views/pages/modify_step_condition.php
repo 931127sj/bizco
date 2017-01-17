@@ -27,5 +27,5 @@
         <label>해당 조건을 만족하지 못할때 보여줄 에러 메세지</label>
         <input type="text" name="step" placeholder="첫인상 평가를 마쳐야 다음 스텝으로 넘어가실 수 있습니다.">
     </div>
-    <button class="ui button primary" type="submit">저장</button>
+    <button class="ui button primary" type="submit"><?= $lang_submit ?></button>
 </form>

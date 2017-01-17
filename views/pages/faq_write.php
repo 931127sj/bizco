@@ -11,5 +11,5 @@ $rs = mysql_fetch_array($query);
         <label>FAQ 내용</label>
         <textarea rows="15" id="ir1" name="content" style="width: 100%;"><?=$rs['content']?></textarea>
     </div>
-    <button class="ui button primary" id="save">등록 및 수정</button>
+    <button class="ui button primary" id="save"><?= $lang_submit ?></button>
 </form>

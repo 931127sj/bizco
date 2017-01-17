@@ -43,23 +43,37 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
 							  {$search_query}
                               GROUP BY `article`.`idx`
                               {$order_query}");
+
+if($_SEESION['lang'] == 'en'){
+  $lang_bml = "Business Model List";
+  $lang_bmr = "Register B.M.";
+  $lang_join = "Join";
+  $lang_ratings = "ratings";
+
+}else{
+  $lang_bml = "비즈니스 모델 리스트";
+  $lang_bmr = "비즈니스 모델 등록";
+  $lang_join = "팀원 구하기";
+  $lang_ratings = "개의 평가";
+
+}
 ?>
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;">비즈니스 모델 리스트</h2>
-    <a href="/public/bm_new?id=business_model" class="ui right floated blue button">비즈니스 모델 등록</a>
-    <a href="/public/board_list?board_id=together" class="ui right floated blue button">팀원 구하기</a>
+    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_bml ?></h2>
+    <a href="/public/bm_new?id=business_model" class="ui right floated blue button"><?= $lang_bmr ?></a>
+    <a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
 </div>
 <form class="ui clearing segment selene-basic">
     <div class="ui icon input">
         <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="검색어" value="<?=$q?>">
+        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
         <i class="search link icon"></i>
     </div>
     <select name="order" class="ui dropdown">
-        <option value="recent" <?=$order === 'hot'?'':'selected'?>>최근 업데이트</option>
-        <option value="hot" <?=$order === 'hot'?'selected':''?>>인기</option>
+        <option value="recent" <?=$order === 'hot'?'':'selected'?>><?= $lang_latest ?></option>
+        <option value="hot" <?=$order === 'hot'?'selected':''?>><?= $lang_popular ?></option>
     </select>
-    <button class="ui right floated button">검색</button>
+    <button class="ui right floated button"><?= $lang_search ?></button>
 </form>
 <div class="ui selene-basic segment">
     <div class="ui large feed">
@@ -72,9 +86,9 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
             <div class="event bm">
     		<?
     			if($q){
-    				echo "<span style='margin:auto;'>검색 결과가 존재하지 않습니다.</span>";
+    				echo "<span style='margin:auto;'>{$no_result}</span>";
     			}else{
-    				echo "<span style='margin:auto;'>게시판에 글을 작성해 주세요.</span>";
+    				echo "<span style='margin:auto;'>{$please_write}</span>";
     			}
     		?>
             </div>
@@ -101,13 +115,13 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
                         <?=dateToSNSString($article_data['write_datetime'])?>
                     </div>
                     <? if(mysql_num_rows($score_query) >= 1): ?>
-                    <a class="ui horizontal mini green label">평가완료</a>
+                    <a class="ui horizontal mini green label"><?= $lang_complete ?></a>
  					<? else: ?>
-                    <a class="ui horizontal mini orange label">미평가</a>
+                    <a class="ui horizontal mini orange label"><?= $lang_incomplete ?></a>
                     <? endif; ?>
-                    <a class="ui horizontal mini teal label">기획 <div class="detail"><?=$article_data['planner_count']?:0?></div></a>
-                    <a class="ui horizontal mini blue label">디자이너 <div class="detail"><?=$article_data['designer_count']?:0?></div></a>
-                    <a class="ui horizontal mini green label">개발자 <div class="detail"><?=$article_data['developer_count']?:0?></div></a>
+                    <a class="ui horizontal mini teal label"><?= $lang_planner ?> <div class="detail"><?=$article_data['planner_count']?:0?></div></a>
+                    <a class="ui horizontal mini blue label"><?= $lang_designer ?> <div class="detail"><?=$article_data['designer_count']?:0?></div></a>
+                    <a class="ui horizontal mini green label"><?= $lang_developer ?> <div class="detail"><?=$article_data['developer_count']?:0?></div></a>
                 </div>
                 <div class="extra text"><?=xssHtmlProtect($article_data['message'])?></div>
                 <div class="meta">
@@ -117,7 +131,7 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
                     </a>
                     -->
                     <a class="users">
-                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?>개의 평가
+                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
                     </a>
                     <!--
                     <a class="comment">

@@ -30,7 +30,7 @@ while($extend_data = mysql_fetch_array($extend_query)) {
     <span class="item header"><?=xssHtmlProtect($article_data['title'])?></span>
     <a href="/public/bm_grade?board_id=business_model" class="item right active" data-tab="intro">개요</a>
     <? if($_SESSION['idx'] == $article_data['user_idx']) { ?>
-    <a href="/public/bm_new?type=edit&id=business_model&idx=<?=$article_id; ?>" class="item">수정하기</a>
+    <a href="/public/bm_new?type=edit&id=business_model&idx=<?=$article_id; ?>" class="item"><?= $lang_modify ?></a>
     <? } ?>
 </div>
 <!-- Step -->
@@ -52,9 +52,9 @@ while($extend_data = mysql_fetch_array($extend_query)) {
         <div class="description">
             <p><?=xssHtmlProtect($article_data['content'])?></p>
         </div>
-        <div class="ui label green float--right" style="margin:10px 1px 0 8px;">개발자 <div class="detail"><?=$ex['recruit_developer']?></div></div>
-         <div class="ui label blue float--right" style="margin:10px 1px 0 8px;">디자이너 <div class="detail"><?=$ex['recruit_designer']?></div></div>
-         <div class="ui label teal float--right" style="margin:10px 1px 0 8px;">기획 <div class="detail"><?=$ex['recruit_planner']?></div></div>
+        <div class="ui label green float--right" style="margin:10px 1px 0 8px;"><?= $lang_developers ?> <div class="detail"><?=$ex['recruit_developer']?></div></div>
+         <div class="ui label blue float--right" style="margin:10px 1px 0 8px;"><?= $lang_designers ?> <div class="detail"><?=$ex['recruit_designer']?></div></div>
+         <div class="ui label teal float--right" style="margin:10px 1px 0 8px;"><?= $lang_planners ?> <div class="detail"><?=$ex['recruit_planner']?></div></div>
     </div>
 
    <h4 class="ui divider header">
@@ -120,7 +120,7 @@ while($extend_data = mysql_fetch_array($extend_query)) {
         <input type="hidden" name="article_id" value="<?=$article_id?>">
     </div>
     <div style="text-align: center; margin: 10px 0 0 0">
-        <button class="ui basic button">평가완료</button>
+        <button class="ui basic button"><?= $lang_complete ?></button>
     </div>
     <? else: ?>
     <form action="/public/do_bm_grade.php" method="post">
@@ -155,7 +155,7 @@ while($extend_data = mysql_fetch_array($extend_query)) {
             <input type="hidden" name="article_id" value="<? echo $article_id?>">
         </div>
         <div style="text-align: center; margin: 10px 0 0 0">
-            <button class="ui primary button">평가하기</button>
+            <button class="ui primary button"><?= $lang_submit ?></button>
         </div>
     </form>
     <? endif; ?>

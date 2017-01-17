@@ -56,7 +56,7 @@
                 </div>
                 <div class="meta clearfix">
                     <div class="ui label teal"><?=$result['part']?></div>
-                    
+
                 </div>
                 <div class="clearfix">
 
@@ -71,7 +71,7 @@
 
                     <button class="ui button basic float--right" onclick="$('.modal.small.info').modal('show');"><i class="ui icon laptop"></i> 정보수정</button>
 
-                    
+
                     <!--<button class="ui button basic primary float--right"><i class="ui icon cloud upload"></i> 프로필사진 변경</button>-->
                 </div>
             </div>
@@ -99,13 +99,13 @@
         <p>
             <?=$result['skills']?>
         </p>
-        
+
         <div class="ui divider"></div>
         <h3 class="ui header">사업에 필요한 자원</h3>
         <p>
             <?=$result['business_resource']?>
         </p>
-        
+
 
     </div>
 </div>
@@ -128,8 +128,8 @@
         </form>
     </div>
     <div class="actions">
-        <div class="ui button" onClick="cancle()">취소</div>
-        <div class="ui primary button" onClick="change()">변경</div>
+        <div class="ui button" onClick="cancle()"><?= $lang_cancel ?></div>
+        <div class="ui primary button" onClick="change()"><?= $lang_modify ?></div>
     </div>
 </div>
 
@@ -161,9 +161,9 @@
                <div class="required field">
                     <label>참여 파트</label>
                     <select name="part" id="part" class="ui fluid dropdown" required>
-                        <option value="개발자" <?=($result['part']=="개발자")?"selected=\"selected\"":""; ?>>개발자</option>
-                        <option value="디자이너" <?=($result['part']=="디자이너")?"selected=\"selected\"":""; ?>>디자이너</option>
-                        <option value="기획자" <?=($result['part']=="기획자")?"selected=\"selected\"":""; ?>>기획자</option>
+                        <option value="개발자" <?=($result['part']=="개발자")?"selected=\"selected\"":""; ?>><?= $lang_developer ?></option>
+                        <option value="디자이너" <?=($result['part']=="디자이너")?"selected=\"selected\"":""; ?>><?= $lang_designer ?></option>
+                        <option value="기획자" <?=($result['part']=="기획자")?"selected=\"selected\"":""; ?>><?= $lang_planner ?></option>
                     </select>
                 </div>
                 <div class="required field">
@@ -200,8 +200,8 @@
         </form>
     </div>
     <div class="actions">
-        <div class="ui button" onClick="cancle()">취소</div>
-        <div class="ui primary button" onClick="info_change()">변경</div>
+        <div class="ui button" onClick="cancle()"><?= $lang_cancel ?></div>
+        <div class="ui primary button" onClick="info_change()"><?= $lang_modify ?></div>
     </div>
 </div>
 
@@ -244,7 +244,7 @@
                 "business_resource" : $("#business_resource").val(),
                 "history" : $("#history").val(),
                 "skills" : $("#skills").val()
-                
+
             },
             success : function (result) {
                 if(result == "success"){
@@ -278,5 +278,3 @@
         });
     });
 </script>
-
-

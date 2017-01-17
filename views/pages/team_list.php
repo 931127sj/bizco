@@ -28,10 +28,10 @@ if ($q) {
 <form class="ui clearing segment selene-basic">
     <div class="ui icon input">
         <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="검색어" value="<?=$q?>">
+        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
         <i class="search link icon"></i>
     </div>
-    <button class="ui right floated button">검색</button>
+    <button class="ui right floated button"><?= $lang_search ?></button>
 </form>
 
 <div class="ui selene-basic segment">
@@ -46,9 +46,9 @@ if ($q) {
         <div class="event bm">
 		<?
 			if($q){
-				echo "<span style='margin:auto;'>검색 결과가 존재하지 않습니다.</span>";
+				echo "<span style='margin:auto;'>{$no_result}</span>";
 			}else{
-				echo "<span style='margin:auto;'>게시판에 글을 작성해 주세요.</span>";
+				echo "<span style='margin:auto;'>{$please_write}</span>";
 			}
 		?>
         </div>

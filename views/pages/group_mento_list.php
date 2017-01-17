@@ -12,14 +12,30 @@ if ($q) {
 $user_query = mysql_query("SELECT *
 		FROM  `user`
 		WHERE level = 4 AND `company_id` ='$company_id' {$where}");
+
+if($_SESSION['lang'] == "en"){
+	$lang_mentor_list = "Mentor List";
+	$lang_search_mentor = "Searching mentors…";
+	$lang_check_profile = "Check profile";
+	$lang_noresult = "No result";
+	$lang_empty = "Empty";
+	$lang_details = "Details";
+}else{
+	$lang_mentor_list = "멘토 리스트";
+	$lang_search_mentor = "멘토 검색";
+	$lang_check_profile = "프로필을 확인하세요.";
+	$lang_noresult = "검색된 멘토가 존재하지 않습니다.";
+	$lang_empty = "멘토가 존재하지 않습니다.";
+	$lang_details = "자세히";
+}
 ?>
 
-<h2 class="ui header">멘토 리스트</h2>
+<h2 class="ui header"><?= $lang_mentor_list ?></h2>
 <div style="margin: 10px 0; text-align: center;">
 	<form action="/public/group_mento_list" method="get">
     <div class="ui icon input right">
 
-        <input name="q" type="text" placeholder="멘토 검색" value="<?=$_GET['q']?>">
+        <input name="q" type="text" placeholder="<?= $lang_search_mentor ?>" value="<?=$_GET['q']?>">
         <i class="search link icon"></i>
 
     </div>
@@ -43,9 +59,9 @@ $user_query = mysql_query("SELECT *
 	$user_total = mysql_num_rows($user_query);
 	if($user_total == 0){
 		if($q){
-			echo "<span style='margin: 20px auto;'>검색된 멘토가 존재하지 않습니다.</span>";
+			echo "<span style='margin: 20px auto;'>{$lang_noresult}</span>";
 		}else{
-			echo "<span style='margin: 20px auto;'>멘토가 존재하지 않습니다.</span>";
+			echo "<span style='margin: 20px auto;'>{$lang_empty}</span>";
 		}
 	}
 ?>
@@ -76,14 +92,14 @@ $user_query = mysql_query("SELECT *
 
                 <div class="description">
                     <p>
-                        프로필을 확인하세요.<br>
+                        <?= $lang_check_profile ?><br>
                     </p>
                 </div>
             </div>
             <div class="extra content">
                 <a class="right floated like" href = "./userpage?id=<?=$user_data['idx']?>">
                     <i class="info circle icon"></i>
-                    자세히
+                    <?= $lang_details ?>
                 </span>
                 <a class="right floated">
                     <!--<i class="mail icon"></i>

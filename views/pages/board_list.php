@@ -35,7 +35,8 @@ $article_query = mysql_query("SELECT *
 <div class="clearfix">
     <h2 class="ui header left floated" style="margin: 3px 0;"><? echo $board_data['name']; ?></h2>
     <? if($_SESSION['level'] >= $board_data['write_level']) { ?>
-    	<a href="/public/board_write?board_id=<? echo $board_id; ?><?= $type_team ?>"><button class="ui right floated blue button">새 글쓰기</button></a>
+    	<a href="/public/board_write?board_id=<? echo $board_id; ?><?= $type_team ?>">
+        <button class="ui right floated blue button"><?= $lang_write ?></button></a>
 
 	<? } ?>
 </div>

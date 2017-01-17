@@ -20,22 +20,33 @@ if ($order === 'hot') {
 }
 $article_query = mysql_query("SELECT * FROM  `design_thinking` WHERE `company_id` = '$company_id' ORDER BY `idx` DESC");
 
+if($_SESSION['lang'] == "en"){
+  $lang_dt_list = "Design Thinking List";
+  $lang_write_dt = "Write Design Thinking";
+  $lang_dt = "'s design thinking";
+  $lang_ratings = " ratings";
+}else{
+  $lang_dt_list = "디자인씽킹 리스트";
+  $lang_write_dt = "디자인씽킹 작성";
+  $lang_dt = "의 디자인씽킹";
+  $lang_ratings = "개의 평가";
+}
 ?>
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;">디자인씽킹 리스트</h2>
-    <a href="/public/dt_article?id=design_thinking" class="ui right floated blue button">디자인씽킹 작성</a>
+    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_dt_list ?></h2>
+    <a href="/public/dt_article?id=design_thinking" class="ui right floated blue button"><?= $lang_write_dt ?></a>
 </div>
 <form class="ui clearing segment selene-basic">
     <div class="ui icon input">
         <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="검색어" value="<?=$q?>">
+        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
         <i class="search link icon"></i>
     </div>
     <select name="order" class="ui dropdown">
-        <option value="recent" <?=$order === 'hot'?'':'selected'?>>최근 업데이트</option>
-        <option value="hot" <?=$order === 'hot'?'selected':''?>>인기</option>
+        <option value="recent" <?=$order === 'hot'?'':'selected'?>><?= $lang_latest ?></option>
+        <option value="hot" <?=$order === 'hot'?'selected':''?>><?= $lang_popular ?></option>
     </select>
-    <button class="ui right floated button">검색</button>
+    <button class="ui right floated button"><?= $lang_search ?></button>
 </form>
 <div class="ui selene-basic segment">
     <div class="ui large feed">
@@ -56,14 +67,14 @@ $article_query = mysql_query("SELECT * FROM  `design_thinking` WHERE `company_id
                 <div class="summary">
                     <a class="user">
                         <?=$article_data['user_name']?>
-                    </a><a href="/public/dt_grade?id=<?=$article_data['idx'] ?>">의 디자인씽킹</a>
+                    </a><a href="/public/dt_grade?id=<?=$article_data['idx'] ?>"><?= $lang_dt ?></a>
                     <div class="date">
                         <?=dateToSNSString($article_data['datetime'])?>
                     </div>
                     <? if(mysql_num_rows($score_query) >= 1): ?>
-                    <a class="ui horizontal mini green label">평가완료</a>
+                    <a class="ui horizontal mini green label"><?= $lang_complete ?></a>
  					<? else: ?>
-                    <a class="ui horizontal mini orange label">미평가</a>
+                    <a class="ui horizontal mini orange label"><?= $lang_incomplete ?></a>
                     <? endif; ?>
                 </div>
                 <div class="extra text blank"><?=xssHtmlProtect($article_data['message'])?></div>
@@ -74,7 +85,7 @@ $article_query = mysql_query("SELECT * FROM  `design_thinking` WHERE `company_id
                     </a>
                     -->
                     <a class="users">
-                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?>개의 평가
+                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
                     </a>
                     <!--
                     <a class="comment">

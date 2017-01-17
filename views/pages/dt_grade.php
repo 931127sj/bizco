@@ -25,6 +25,37 @@ while($extend_data = mysql_fetch_array($extend_query)) {
 	$i ++;
 }
 
+if($_SESSION['lang'] == "en"){
+  $lang_step1 = "Step 1. EMPATHIZE";
+  $lang_step2 = "Step 2. DEFINE";
+  $lang_step3 = "Step 3. IDEATE";
+  $lang_step4 = "Step 4. PROTOTYPE";
+  $lang_step5 = "Step 5. TEST";
+
+  $lang_impression = "First impression assessment";
+  $lang_eval = "Evaluation";
+	$lang_redefine = "Redefine the Business Model";
+	$lang_similar = "Similar services and opinions";
+
+  $lang_discuss1 = "What if I say this business model in one word?";
+  $lang_discuss2 = "Similar products / services and feedback";
+  $lang_feedback = "Feedback";
+}else{
+  $lang_step1 = "1단계 공감하기";
+  $lang_step2 = "2단계 문제정의";
+  $lang_step3 = "3단계 아이디어 도출";
+  $lang_step4 = "4단계 시제품 만들기";
+  $lang_step5 = "5단계 테스트";
+
+  $lang_impression = "첫인상평가";
+  $lang_eval = "평가";
+  $lang_redefine = "비즈모델 재정의";
+  $lang_similar = "유사서비스 및 의견";
+
+  $lang_discuss1 = "이 비즈니스 모델을 한마디로 말 한다면?";
+  $lang_discuss2 = "유사 제품/서비스 및 의견";
+  $lang_feedback = "피드백";
+}
 ?>
 
         <?
@@ -71,7 +102,7 @@ while($extend_data = mysql_fetch_array($extend_query)) {
     </div>
     <div class="ui divider"></div>
     <h2 class="ui center aligned header">Design Think 6-STEP</h2>
-    <h3>1단계 공감하기</h3>
+    <h3><?= $lang_step1 ?></h3>
     <p>
         <?
             for($i =0; $i < count($datas); $i++){
@@ -81,14 +112,14 @@ while($extend_data = mysql_fetch_array($extend_query)) {
             }
         ?>
     </p>
-    <h3>2단계 문제정의</h3>
+    <h3><?= $lang_step2 ?></h3>
 
     <p><?=$article_data['problem_cause']?></p>
 
 	<p><a target="_blank" href="<?=($article_data['image2']!='')?"/data/dt_thumb/real_".$article_data['image2']:""; ?>">
 	<img class= "ui big image" src="<?=($article_data['image2']!='')?"/data/dt_thumb/".$article_data['image2']:""; ?>"></a></p>
 
-    <h3>3단계 아이디어 도출</h3>
+    <h3><?= $lang_step3 ?></h3>
     <p>
         <?
             for($i =0; $i < count($datas); $i++){
@@ -98,9 +129,9 @@ while($extend_data = mysql_fetch_array($extend_query)) {
             }
         ?>
     </p>
-    <h3>4단계 시제품 만들기</h3>
+    <h3><?= $lang_step4 ?></h3>
     <p><a target="_blank" href="<?=($article_data['image']!='')?"/data/dt_thumb/real_".$article_data['image']:""; ?>"><img class = "ui big image" src="<?=($article_data['image']!='')?"/data/dt_thumb/".$article_data['image']:""; ?>"><?="<br>".$article_data['youtube_link']?></a></p>
-    <h3>5단계 테스트</h3>
+    <h3><?= $lang_step5 ?></h3>
     <p>
         <?
             for($i =0; $i < count($datas); $i++){
@@ -166,7 +197,7 @@ $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '"
             </div>
             <div class="content">
                 <div class="summary">
-                    <div class="ui label green">첫인상평가</div>
+                    <div class="ui label green"><?= $lang_impression ?></div>
                     <div class="date">
                         5달 전
                     </div>
@@ -174,7 +205,7 @@ $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '"
                 <p>
                     <div class="ui list">
                         <div class="item clearfix">
-                            <div class="left-header">평가</div>
+                            <div class="left-header"><?= $lang_eval ?></div>
                             <div class="left-header-content">
                             <?
                             if($row['score'] == 1){
@@ -190,11 +221,11 @@ $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '"
                             </div>
                         </div>
                         <div class="item clearfix">
-                            <div class="left-header">비즈모델 재정의</div>
+                            <div class="left-header"><?= $lang_redefine ?></div>
                             <div class="left-header-content"><?=$row['summary']?></div>
                         </div>
                         <div class="item clearfix">
-                            <div class="left-header">유사서비스 및 의견</div>
+                            <div class="left-header"><?= $lang_similar ?></div>
                             <div class="left-header-content"><?=$row['opinion']?></div>
                         </div>
                     </div>
@@ -223,10 +254,10 @@ $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '"
                         ?>
                         <form class="ui reply form">
                             <div class="field">
-                                <textarea placeholder="댓글을 입력하세요" class="comment_input"></textarea>
+                                <textarea placeholder="<?= $lang_writecomments ?>" class="comment_input"></textarea>
                             </div>
                             <div class="ui primary submit labeled icon button" onClick="reply(this)" value="<?=$row['idx']?>">
-                                <i class="icon edit"></i> 등록
+                                <i class="icon edit"></i> <?= $lang_submit ?>
                             </div>
                         </form>
                     </div>
@@ -242,10 +273,10 @@ $bm_grade_query = mysql_query("SELECT * FROM `bm_grade` WHERE `article_idx` = '"
     <table class="ui very basic table">
         <thead>
             <tr>
-                <th>평가</th>
-                <th>이 비즈니스 모델을 한마디로 말 한다면?</th>
-                <th>유사 제품/서비스 및 의견</th>
-                <th>피드백</th>
+                <th><?= $lang_eval ?></th>
+                <th><?= $lang_discuss1 ?></th>
+                <th><?= $lang_discuss2 ?></th>
+                <th><?= $lang_feedback ?></th>
             </tr>
         </thead>
         <?

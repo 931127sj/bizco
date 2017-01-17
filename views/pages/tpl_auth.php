@@ -1,3 +1,16 @@
+<?
+
+if($_SESSION['lang'] == "en"){
+  $lang_keep_login = "Keep me logged in";
+  $lang_sign_up = "Sign up";
+  $lang_login = "Log in";
+
+}else{
+  $lang_keep_login = "로그인 유지하기";
+  $lang_sign_up = "새 계정가입";
+  $lang_login = "로그인";
+}
+?>
 <style type="text/css">
 body {
 background:url(../../assets/css/bg_login.jpg) center center no-repeat;
@@ -50,6 +63,8 @@ border-radius: 30rem;
 }
 </style>
 
+<div style="width:100%; margin-top:50px; margin-left:50px;">한국어 English</div>
+
 <nav class="ui top fixed secondary menu">
     <div class="header item">
         <div class="ui text container logo">
@@ -84,15 +99,15 @@ border-radius: 30rem;
                     <div class="field">
                         <div class="ui checkbox">
                             <input type="checkbox" tabindex="0" class="hidden">
-                            <label class="white">로그인 유지하기</label>
+                            <label class="white"><?= $lang_keep_login ?></label>
                         </div>
                     </div>
                     <div class="field">
-                        <a class="awhite" href="/public/join.php"><i class="ui icon child"></i> 새 계정가입</a>
+                        <a class="awhite" href="/public/join.php"><i class="ui icon child"></i> <?= $lang_sing_up ?></a>
                     </div>
                 </div>
 
-                <input type="submit" class="ui fluid large deep-blue submit button" value="로그인">
+                <input type="submit" class="ui fluid large deep-blue submit button" value="<?= $lang_login ?>">
 
             </div>
 

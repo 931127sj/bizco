@@ -18,12 +18,13 @@ $article_query = mysql_query("SELECT *
 
 <div class="clearfix">
     <h2 class="ui header left floated" style="margin: 3px 0;">멘토링 게시판</h2>
-    <a href="/public/question_write?company_id=<?=$company?>"><button class="ui right floated blue button">문의 남기기</button></a>
+    <a href="/public/question_write?company_id=<?=$company?>">
+      <button class="ui right floated blue button"><?= $lang_write ?></button></a>
 </div>
 <div class="ui divider forh2"></div>
 <table class="ui single line striped compact table">
     <tbody>
-        <? while($article_data = mysql_fetch_array($article_query)) { 
+        <? while($article_data = mysql_fetch_array($article_query)) {
                 $user_query = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$article_data['user_idx']);
                 $user_data = mysql_fetch_array($user_query);
             ?>

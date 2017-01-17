@@ -126,6 +126,6 @@
     </div>
 </div>
 <? if($_SESSION['level'] > 4){ ?>
-<button class="ui button primary" type="submit" id = "save">저장</button>
+<button class="ui button primary" type="submit" id = "save"><?= $lang_update ?></button>
 <? } ?>
 </form>

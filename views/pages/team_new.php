@@ -1,8 +1,8 @@
 
 <?
 // 작성한 비즈모델이 있나 확인, 없으면 종료
-$query = mysql_query("SELECT * 
-						FROM  `article` 
+$query = mysql_query("SELECT *
+						FROM  `article`
 						WHERE  `board_id` =  'business_model'
 						AND  `user_idx` =".$_SESSION['idx']);
 if(mysql_num_rows($query) < 1) {
@@ -41,13 +41,13 @@ if($type == "edit") {
 			while($bm_list = mysql_fetch_array($query)) {
 				?>
 				<option <?=($bm_list['idx']==$tdata['bm_idx'])?"selected":""; ?> value="<?=$bm_list['idx']; ?>"><?=$bm_list['title']; ?></option>
-				
+
 				<?
 			}
-			
+
 			?>
 
-		
+
 		</select>
 
     </div>
@@ -70,8 +70,8 @@ if($type == "edit") {
     <input type="hidden" name="type" value="<?=($type=="edit")?"edit":"new";  ?>">
     <input type="hidden" name="idx" value="<?=$_GET['idx']; ?>">
     <div class="ui divider"></div>
-    <a href="#" onclick="$(this).closest('form').submit()"><button class="ui button positive" type="button">저장하기</button></a>
+    <a href="#" onclick="$(this).closest('form').submit()"><button class="ui button positive" type="button"><?= $lang_submit ?></button></a>
     <a href="/public/team_list">
-    	<button class="ui button red" type="button">취소하기</button>
+    	<button class="ui button red" type="button"><?= $lang_cancel ?></button>
     </a>
 </form>

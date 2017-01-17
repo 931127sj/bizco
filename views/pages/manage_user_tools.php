@@ -24,7 +24,7 @@ $current_step = 'manage_user_tools';
             <input type="text" name="q" placeholder="이름 / 이메일로 찾기" value="<?=$q?>">
             <i class="search link icon"></i>
         </div>
-        <button class="ui button">검색</button>
+        <button class="ui button"><?= $lang_search ?></button>
     </form>
 
     <table class="ui celled compact striped table">

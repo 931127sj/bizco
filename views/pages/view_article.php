@@ -63,13 +63,13 @@ if($my_array_of_vars['v'] == ''){
                     <? if($_SESSION['idx'] == $article_data['user_idx']) { ?>
                     <div class="two ui buttons mini">
                         <div class="ui fade animated green button fluid edit" tabindex="0" onClick="edit_article('<?=$article_id; ?>', '<?= $board_id ?>', '<?= $board_type ?>');">
-                            <div class="visible content">수정</div>
+                            <div class="visible content"><?= $lang_modify ?></div>
                             <div class="hidden content">
                                 <i class="wizard icon"></i>
                             </div>
                         </div>
                         <div class="ui fade animated red button fluid del" tabindex="0" onClick="del_article('<?=$article_id; ?>', '<?= $board_id ?>', '<?= $board_type ?>');">
-                            <div class="visible content">삭제</div>
+                            <div class="visible content"><?= $lang_delete ?></div>
                             <div class="hidden content">
                                 <i class="trash outline icon"></i>
                             </div>
@@ -396,6 +396,6 @@ function comment_action(){
       </div>
     </div>
     <div class="actions">
-      <div class="ui green button" onClick="comment_action()">수정하기</div>
+      <div class="ui green button" onClick="comment_action()"><?= $lang_modify ?></div>
     </div>
   </div>
