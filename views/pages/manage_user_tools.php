@@ -19,6 +19,7 @@ $current_step = 'manage_user_tools';
 <h2 class="ui header">참가자 관리</h2>
 
 <div class="ui container">
+    <button class="ui fluid button" onclick = "location.href = '/public/do_export_xls.php'">엑셀 다운로드</button>
     <form class="ui clearing segment selene-basic">
         <div class="ui icon input">
             <input type="text" name="q" placeholder="이름 / 이메일로 찾기" value="<?=$q?>">
