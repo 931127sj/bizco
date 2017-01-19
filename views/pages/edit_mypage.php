@@ -1,6 +1,6 @@
 <?php
-
 require_once '_common.php';
+require_once(VIEW.'common/_language.php');
 
 $query = mysql_query("SELECT * from user where idx = '".$_SESSION['idx']."'");
 $result = mysql_fetch_array($query);

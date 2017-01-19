@@ -1,10 +1,10 @@
 <?php
 require '_common.php';
 
-$company_name	=	$_POST['name'];
-$company_id		=	$_POST['company_id'];
-$curriculum 	= $_POST['curriculum'];
-$lang 	= $_POST['lang'];
+$company_name		=	$_POST['name'];
+$company_id			=	$_POST['company_id'];
+$curriculum_id 	= $_POST['curriculum'];
+$lang 					= $_POST['lang'];
 
 if($lang == 'en'){
 	$notice = "Notice";
@@ -37,6 +37,7 @@ $check = mysql_num_rows(mysql_query("SELECT `idx`
 
 if($check == 0){
 	$_SESSION['company'] = $company_id;
+	$_SESSION['lang'] = $lang;
 
 	$result = mysql_query("INSERT INTO  `company`(
 							`company_id` ,
@@ -117,16 +118,16 @@ if($check == 0){
 		mysql_query("INSERT INTO `startup`.`curriculum_step`(
 								`company_id`, `step_seq`, `step_name`, `start_date`, `end_date`, `step_explain`, `bm_link`
 							) SELECT '{$company_id}', `step_seq`, `step_name`, `start_date`, `end_date`, `step_explain`, `bm_link`
-									FROM `startup`.`curriculum_step` WHERE `company_id` = '{$curriculum}'");
+									FROM `startup`.`curriculum_step` WHERE `company_id` = '{$curriculum_id}'");
 
-		$step_board_id = $curriculum . "_cur";
+		$step_board_id = $curriculum_id . "_cur";
 
 		mysql_query("INSERT INTO `startup`.`article`(
 		`company_id`, `board_id`, `step_id`, `user_idx`, `title`, `content`, `write_datetime`,
 		`youtube_link`, `youtube_duration_sec`, `priority`, `user_name`
 		)SELECT '{$company_id}', '{$company_id}_cur', `step_id`, `user_idx`, `title`, `content`,
 				`write_datetime`, `youtube_link`, `youtube_duration_sec`, `priority`, `user_name`
-		FROM `startup`.`article` WHERE `company_id` = '{$curriculum}' AND `board_id` = '{$step_board_id}'");
+		FROM `startup`.`article` WHERE `company_id` = '{$curriculum_id}' AND `board_id` = '{$step_board_id}'");
 
 	msg("{$company_name} 프로그램이 개설되었습니다.");
 	req_move("manage_company");

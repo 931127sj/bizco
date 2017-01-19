@@ -1,4 +1,5 @@
 <?php
+require_once(VIEW.'common/_language.php');
 $company_id = $_GET['company_id'];
 ?>
 <form class="ui form" action="/public/do_write_board.php" method="post">

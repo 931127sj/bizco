@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 $where = '';
 $company_id = $_SESSION['company'];
 

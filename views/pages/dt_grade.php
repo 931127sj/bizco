@@ -1,4 +1,6 @@
 ﻿<?
+require_once(VIEW.'common/_language.php');
+
 ////////// SERVER
 $_SESSION['current_menu'] = "dt";
 

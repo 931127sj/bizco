@@ -1,4 +1,6 @@
 <?php
+require_once(VIEW.'common/_language.php');
+
 $cquery = mysql_query("SELECT *
 						FROM `company`
 						ORDER BY `idx`");
@@ -51,7 +53,7 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
 								<? if($_SESSION['company'] == $cdata['company_id']){ ?>
 									<td><b><font color="blue"><?=$cdata['name']?></font></b></td>
 								<? }else{?>
-									<td><a href="/public/manage_company?company=<?=$cdata['company_id']?>"><?=$cdata['name']?></a></td>
+									<td><a href="/public/manage_company?company=<?=$cdata['company_id']?>&lang=<?= $cdata['lang'] ?>"><?=$cdata['name']?></a></td>
 								<? } ?>
                 <td><a href="/public/manage_user_tools?company=<?=$cdata['company_id']?>"><?=$entry?></a> 명
 								<? if($permission > 0){ ?>

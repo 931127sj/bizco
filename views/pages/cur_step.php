@@ -1,4 +1,6 @@
 ﻿<?
+require_once(VIEW.'common/_language.php');
+
 // 메뉴지정
 $complete_homework = true;
 $company_id = $_SESSION['company'];
@@ -165,7 +167,7 @@ if($homework_count > 0) {
 		if(mysql_num_rows($my_hr_query) > 0) {
 		?>
         <div class="ui segment">
-            <a href="/public/view_article?board_id=dankook_cur&article_id=<? echo $homework_data['idx']; ?>">
+            <a href="/public/view_article?board_id=<?= $company_id ?>_cur&article_id=<? echo $homework_data['idx']; ?>">
               <div class="ui horizontal label"><?= $lang_complete1 ?></div> <? echo $homework_data['title']; ?></a>
         </div>
         <?
@@ -174,7 +176,7 @@ if($homework_count > 0) {
             $complete_homework = false;
 		?>
         <div class="ui segment">
-            <a href="/public/view_article?board_id=dankook_cur&article_id=<? echo $homework_data['idx']; ?>">
+            <a href="/public/view_article?board_id=<?= $company_id ?>_cur&article_id=<? echo $homework_data['idx']; ?>">
               <div class="ui deep-blue horizontal label"><?= $lang_incomplete1 ?></div> <? echo $homework_data['title']; ?></a>
         </div>
         <?

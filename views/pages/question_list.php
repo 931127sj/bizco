@@ -1,5 +1,7 @@
 
 <?
+require_once(VIEW.'common/_language.php');
+
 $board_id = $_GET['id'];
 $company  = $_SESSION['company'];
 $user_idx = $_SESSION['idx'];

@@ -1,4 +1,5 @@
 <?
+if($_GET['lang']) $_SESSION['lang'] = $_GET['lang'];
 
 if($_SESSION['lang'] == "en"){
   $lang_keep_login = "Keep me logged in";
@@ -63,7 +64,8 @@ border-radius: 30rem;
 }
 </style>
 
-<div style="width:100%; margin-top:50px; margin-left:50px;">한국어 English</div>
+<div style="width:100%; margin: 0px 40px;"><a href="/public/auth.php?lang=ko" style="color:white;">한국어</a>&nbsp;&nbsp;
+<a href="/public/auth.php?lang=en" style="color:white;">English</a></div>
 
 <nav class="ui top fixed secondary menu">
     <div class="header item">
@@ -103,7 +105,7 @@ border-radius: 30rem;
                         </div>
                     </div>
                     <div class="field">
-                        <a class="awhite" href="/public/join.php"><i class="ui icon child"></i> <?= $lang_sing_up ?></a>
+                        <a class="awhite" href="/public/join.php"><i class="ui icon child"></i> <?= $lang_sign_up ?></a>
                     </div>
                 </div>
 

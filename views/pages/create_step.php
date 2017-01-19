@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 if($_SESSION['lang'] == "en"){
   $lang_step_creation = "Step Creation";
   $lang_subject = "Subject";

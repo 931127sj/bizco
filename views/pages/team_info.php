@@ -1,6 +1,7 @@
 <?php
 
 require_once '_common.php';
+require_once(VIEW.'common/_language.php');
 
 $idx = $_GET['idx'];
 

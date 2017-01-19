@@ -1,4 +1,6 @@
 <?php
+require_once(VIEW.'common/_language.php');
+
 $company_id = $_SESSION['company'];
 
 $query = mysql_query("SELECT * from article where company_id = '$company_id' and board_id = 'faq'");

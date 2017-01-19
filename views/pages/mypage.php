@@ -1,5 +1,6 @@
-
-
+<?
+  require_once(VIEW.'common/_language.php');
+?>
 <style>
 .file-upload {
     position: relative;

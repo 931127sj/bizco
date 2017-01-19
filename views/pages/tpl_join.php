@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 if($_SESSION['lang'] == "en"){
   $lang_email = "E-mail address";
   $lang_name = "Name";
