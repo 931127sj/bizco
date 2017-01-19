@@ -68,6 +68,12 @@
         <p>
             <?=$result['join_type']?>
         </p>
+        
+        <div class="ui divider"></div>
+        <h3 class="ui header">연락처</h3>
+        <p>
+            <?=$result['phone']?>
+        </p>
 
         <div class="ui divider"></div>
         <h3 class="ui header">진행사항</h3>
@@ -126,6 +132,6 @@
     </div>
 </div>
 <? if($_SESSION['level'] > 4){ ?>
-<button class="ui button primary" type="submit" id = "save"><?= $lang_update ?></button>
+<button class="ui button primary" type="submit" id = "save">저장</button>
 <? } ?>
 </form>
