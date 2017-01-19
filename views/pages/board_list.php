@@ -40,6 +40,7 @@ $article_query = mysql_query("SELECT *
 
 	<? } ?>
 </div>
+
 <div class="ui divider forh2"></div>
 <table class="ui single line striped compact table">
     <tbody>

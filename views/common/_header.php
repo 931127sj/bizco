@@ -158,6 +158,9 @@
     <div class="ui dropdown item <?=(in_array($_SESSION['current_menu'], ['manage_join_user', 'manage_user_tools', 'manage_step']))?"selection":""; ?>">
     <?= $administrator ?>
         <div class="menu">
+            <a class="item admin" href="/public/manage_question">
+            문의 게시판
+            </a>
             <a class="item admin" href="/public/question_list_mento">
             <?= $mentorboard ?>
             </a>

@@ -2,11 +2,12 @@
 <<<<<<< HEAD
     $title = $_POST['title'];
     $content = $_POST['content'];
+    $target = $_POST['target'];
     require '_common.php';
 
     $qs = mysql_query("SELECT `user`.`email`
                    FROM `user`
-                   WHERE `user`.`level` < 7
+                   WHERE `user`.`level` = $target
                    ORDER BY `user`.`idx`");
 
 
@@ -83,31 +84,3 @@
         back();
         exit();
     }
-=======
-require '_common.php';
-error_reporting(-1);
-ini_set('display_errors', 'On');
-set_error_handler("var_dump");
-ini_set("mail.log", "/var/log/mail.log");
-
-$title = $_POST['title'];
-$content = $_POST['content'];
-
-$mailto="dragonsuperf@naver.com";
-$subject="mail test";
-//$content="test";
-$headers = array("From: from@shalomtalk.kr",
-    "Reply-To: no-reply@shalomtalk.kr",
-    "X-Mailer: PHP/" . PHP_VERSION
-);
-$headers = implode("\r\n", $headers);
-$result = mail($mailto, $title, $content, $headers);
-
-if ($result) {
-    echo "mail success";
-} else {
-    echo "mail fail";
-}
-
-// return sendMail('test', ['sh.kang@ecubelabs.com'], 'sadasd', 'dasdasdasdasdas');
->>>>>>> origin/master

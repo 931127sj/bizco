@@ -8,6 +8,14 @@
         <input type="text" name="title" required>
     </div>
     <div class="field">
+        <select class="ui fluid dropdown" name = "target">
+            <option value="">보낼 대상</option>
+            <option value="2">참가자에게</option>
+            <option value="4">멘토에게</option>
+            <option value="7">관리자에게</option>
+        </select>
+    </div>
+    <div class="field">
         <label>메세지 내용</label>
         <textarea rows="15" name="content" required></textarea>
     </div>

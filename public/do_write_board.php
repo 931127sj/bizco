@@ -10,7 +10,7 @@ $article_id = $_POST['article_id'];
 $company_id = $_POST['company_id'];
 
 $user_idx = $_SESSION['idx'];
-$user_name = $_SESSION['name'];
+$user_name = $_POST['name'] ? $_POST['name'] :$_SESSION['name'];
 
 $datetime = date("Y-m-d H:i:s",time());
 
