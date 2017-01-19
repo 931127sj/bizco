@@ -3,7 +3,7 @@ require '_common.php';
 
 if($_SESSION['login'] != true && $_SESSION['u_id'] == NULL) {
 	// 로그인이 되어있지 않은 상태일때는 로그인 페이지로 리다이렉트 시킨다.
-	req_redirect("auth.php");
+	req_redirect("welcome.php");
 }
 check_login();
 

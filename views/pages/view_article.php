@@ -6,6 +6,14 @@ $board_id = $_GET['board_id'];
 $article_id = $_GET['article_id'];
 $company_id = $_SESSION['company'];
 
+$cur_board_id = $_SESSION['company'] + "cur";
+
+if($_GET['board_id'] == "landing_question")
+    $company_search = "";
+else
+    $company_search = "AND  `company_id` =  '{$company_id}'";
+
+
 if($_GET['board_type']){
 	$board_type = "team";
 	$type_team = "&board_type=team";
@@ -14,7 +22,6 @@ if($_GET['board_type']){
 $article_query = mysql_query("SELECT *
 FROM  `article`
 WHERE  `idx` =$article_id
-AND  `company_id` =  '{$company_id}'
 AND  `board_id` =  '$board_id'");
 $article_data = mysql_fetch_array($article_query);
 if($article_data['youtube_link'] != '') {
@@ -78,10 +85,10 @@ if($my_array_of_vars['v'] == ''){
                     </div>
                     <div class="ui divider basic"></div>
                     <? } ?>
-                    <? if($board_id=="dankook_cur") { ?><p>동영상/글읽기 완료후에<br />버튼을 누르세요</p><? } ?>
+                    <? if($board_id==$cur_board_id) { ?><p>동영상/글읽기 완료후에<br />버튼을 누르세요</p><? } ?>
                     <? if($board_id!=="etc_question") { ?>
                     <div class="two ui buttons">
-                    	<? if($board_id=="dankook_cur") {
+                    	<? if($board_id==$cur_board_id) {
 							$homework_query= mysql_query("SELECT * FROM  `homework` WHERE  `user_idx` =".$_SESSION['idx']." AND  `article_idx` =".$article_data['idx']." AND state = 1");
 							if(mysql_num_rows($homework_query) > 0) {
 						?>
@@ -278,7 +285,7 @@ function edit_article(idx, board_id, board_type='') {
 </script>
 
 
-<? if($board_id=="dankook_cur") { ?>
+<? if($board_id==$cur_board_id) { ?>
 <script>
 
 $(document).ready(function(){
