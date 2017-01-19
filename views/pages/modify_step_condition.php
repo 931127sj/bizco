@@ -1,3 +1,6 @@
+<?
+  require_once(VIEW.'common/_language.php');
+?>
 <h2 class="ui header">스텝 진입조건 수정</h2>
 <div class="ui divider"></div>
 <form class="ui form">

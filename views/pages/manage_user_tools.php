@@ -1,4 +1,6 @@
 <?php
+require_once(VIEW.'common/_language.php');
+
 $q = $_GET['q'];
 
 if($_GET['company']) $_SESSION['company'] = $_GET['company'];

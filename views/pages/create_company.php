@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 if($_SEESION['lang'] == 'en'){
   $lang_add_program = "Add New Program";
   $lang_program_name = "Program name";

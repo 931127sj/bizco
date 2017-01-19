@@ -7,7 +7,11 @@ $idx = $_POST['company_idx'];
 $cdata = mysql_fetch_array(mysql_query("SELECT `company_id` FROM `company`
 										WHERE `idx` = '{$idx}'"));
 $company_id = $cdata['company_id'];
-if($_SESSION['company'] == $company_id) $_SESSION['company'] = 'dankook';
+if($_SESSION['company'] == $company_id){
+		$_SESSION['company'] = 'dankook';
+		$_SESSIOn['lang'] = 'ko';
+}
+
 
 if($company_id == 'dankook'){
 	msg("해당 프로그램은 삭제할 수 없습니다.");

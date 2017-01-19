@@ -1,5 +1,6 @@
-
 <?
+require_once(VIEW.'common/_language.php');
+
 $board_id = $_GET['id'];
 $company  = $_SESSION['company'];
 
@@ -22,7 +23,7 @@ $article_query = mysql_query("SELECT *
 <div class="ui divider forh2"></div>
 <table class="ui single line striped compact table">
     <tbody>
-        <? while($article_data = mysql_fetch_array($article_query)) { 
+        <? while($article_data = mysql_fetch_array($article_query)) {
                 $user_query = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$article_data['user_idx']);
                 $user_data = mysql_fetch_array($user_query);
             ?>

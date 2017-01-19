@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 	$company_idx = $_POST['company_idx'];
 
 	$cquery = mysql_query("SELECT `name` FROM `company`

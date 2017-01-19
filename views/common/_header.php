@@ -3,7 +3,9 @@
 <title><?=is($this->title, true)?:'App Name'?></title><?php echoAssets($this->headerFiles); ?></head><body>
 
 	<?php
-	if (! preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
+	if($_GET['lang']) $_SESSION['lang'] = $_GET['lang'];
+
+	if (! preg_match('/\.php/', $_SERVER['REQUEST_URI'])) {
 		$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
 		$usr_data = mysql_fetch_array($usr);
 
@@ -70,6 +72,10 @@
             <a id="headerLogo" href="http://sbe.center/public"><img src="../../assets/css/logo_top.png" alt="Startup on the base of Entrepreneurship"></a>
         </div>
     </div>
+		<div class="left menu" style="margin-left:20px;">
+			<a class="item" href="javascript:setLeft('ko');" style="color:white;">한국어</a>&nbsp;&nbsp;
+			<a class="item" href="javascript:setLeft('en');" style="color:white;">English</a>
+		</div>
     <div class="right menu">
 				<? if($alarm_count > 0){ ?>
 					<div class="ui dropdown item">
@@ -190,3 +196,36 @@
 <?php
 }
 ?>
+
+<script type="text/javascript">
+	function setLeft(str)
+	{
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				if(str=="hide")
+				{
+					document.getElementById("left_side").style.display='none';
+					document.getElementById("left_side_show").style.display='';
+				}
+				if(str=="show")
+				{
+					document.getElementById("left_side").style.display='';
+					document.getElementById("left_side_show").style.display='none';
+				}
+			}
+		}
+		xmlhttp.open("GET","setSession.php?lang="+str,true);
+		xmlhttp.send();
+		location.reload();
+	}
+</script>

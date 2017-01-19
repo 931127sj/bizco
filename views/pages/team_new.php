@@ -1,5 +1,7 @@
 
 <?
+require_once(VIEW.'common/_language.php');
+
 // 작성한 비즈모델이 있나 확인, 없으면 종료
 $query = mysql_query("SELECT *
 						FROM  `article`

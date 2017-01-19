@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 $_SESSION['current_menu'] = "user";
 $company_id = $_SESSION['company'];
 

@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 ////////// SERVER
 $board_id   = $_GET['board_id'];
 $article_id = $_GET['article_id'];

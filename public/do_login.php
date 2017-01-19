@@ -45,7 +45,8 @@ if($user_info_rows <= 0){
 		$_SESSION["name"] = $user_info_data['name'];
 		$_SESSION['level'] = $user_info_data['level'];
 		$_SESSION['company'] = $user_info_data['company_id'];
-		$_SESSION['lang'] = $cdata['lang'];
+
+		if(!$_SESSION['lang']) $_SESSION['lang'] = $cdata['lang'];
 
 
 		$token = substr(sha1(rand().$id.date("Y-m-d H:i:s")), 0, 20);

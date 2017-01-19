@@ -1,4 +1,6 @@
 <?
+require_once(VIEW.'common/_language.php');
+
 $_SESSION['current_menu'] = "dt";
 $article_id = $_GET['id'];
 $user_idx   = $_SESSION['idx'];

@@ -1,7 +1,64 @@
 <?
+require_once(VIEW.'common/_language.php');
 
 $type	= $_GET['type'];
 $idx	= $_GET['idx'];
+
+if($_SESSION['lang'] == "en"){
+	$lang_mod_mybm = "Modify My Business Model";
+	$lang_newbmr = "Register New B.M.";
+
+	$lang_info = "Infomation";
+	$lang_subject = "Subject";
+	$lang_bm_keywords = "Keywords";
+	$lang_bm_type = "B.M. Type";
+	$lang_summary = "Summary";
+	$lang_bm_item = "Business Item";
+	$lang_bm_item1 = "Please describe your items with following questions.";
+
+	$lang_select = "Select..";
+	$lang_it = "IT Service";
+	$lang_manufact = "Manufacturing";
+
+	$lang_bm1 = "Who is your customer?";
+	$lang_bm2 = "What is the problems customer has?";
+	$lang_bm3 = "How can you solve these problems?";
+	$lang_bm4 = "Revenue Model";
+	$lang_bm5 = "Your website or landing page";
+	$lang_bm6 = "Team Information (Team Ability)";
+	$lang_recruitment = "Recruitment";
+
+	$lang_item = "Business item writing method";
+	$lang_references = "References: Dankook University Enternship";
+
+}else{
+	$lang_mod_mybm = "내 비즈니스 모델 수정";
+	$lang_newbmr = "신규 비즈니스 모델 등록";
+
+	$lang_info = "기본정보";
+	$lang_subject = "제목";
+	$lang_bm_keywords = "요약설명";
+	$lang_bm_type = "비즈니스 모델 유형";
+	$lang_summary = "요약";
+	$lang_bm_item = "자신의 사업아이템";
+	$lang_bm_item1 = "사업아이템을 아래의 문항을 통해 정리해주세요.";
+
+	$lang_select = "선택";
+	$lang_it = "지식서비스";
+	$lang_manufact = "제조업";
+
+	$lang_bm1 = "(Who) 나의 고객은?";
+	$lang_bm2 = "(What) 고객의 문제는?";
+	$lang_bm3 = "(HOW) 고객의 문제를 어떻게 해결할것인가?";
+	$lang_bm4 = "수익 모델은?";
+	$lang_bm5 = "자신의 웹사이트 또는 랜딩페이지";
+	$lang_bm6 = "팀소개(팀의 역량)";
+	$lang_recruitment = "구인중인";
+
+	$lang_item = "사업아이템 작성법";
+	$lang_references = "참고자료: 단국대학교 엔턴십";
+}
+
 if($type == "edit") {
 	$article = mysql_query("SELECT *
 								FROM  `article`
@@ -19,61 +76,6 @@ if($type == "edit") {
 	}
 	//var_dump($article_data);
 	//var_dump($extend_data);
-
-	if($_SESSION['lang'] == 'en'){
-		$lang_mod_mybm = "Modify My Business Model";
-		$lang_newbmr = "Register New B.M.";
-
-		$lang_info = "Infomation";
-		$lang_subject = "Subject";
-		$lang_bm_keywords = "Keywords";
-		$lang_bm_type = "B.M. Type";
-		$lang_summary = "Summary";
-		$lang_bm_item = "Business Item";
-		$lang_bm_item1 = "Please describe your items with following questions.";
-
-		$lang_select = "Select..";
-		$lang_it = "IT Service";
-		$lang_manufact = "Manufacturing";
-
-		$lang_bm1 = "Who is your customer?";
-		$lang_bm2 = "What is the problems customer has?";
-		$lang_bm3 = "How can you solve these problems?";
-		$lang_bm4 = "Revenue Model";
-		$lang_bm5 = "Your website or landing page";
-		$lang_bm6 = "Team Information (Team Ability)";
-		$lang_recruitment = "Recruitment";
-
-		$lang_item = "Business item writing method";
-		$lang_references = "References: Dankook University Enternship";
-
-	}else{
-		$lang_mod_mybm = "내 비즈니스 모델 수정";
-		$lang_newbmr = "신규 비즈니스 모델 등록";
-
-		$lang_info = "기본정보";
-		$lang_subject = "제목";
-		$lang_bm_keywords = "요약설명";
-		$lang_bm_type = "비즈니스 모델 유형";
-		$lang_summary = "요약";
-		$lang_bm_item = "자신의 사업아이템";
-		$lang_bm_item1 = "사업아이템을 아래의 문항을 통해 정리해주세요.";
-
-		$lang_select = "선택";
-		$lang_it = "지식서비스";
-		$lang_manufact = "제조업";
-
-		$lang_bm1 = "(Who) 나의 고객은?";
-		$lang_bm2 = "(What) 고객의 문제는?";
-		$lang_bm3 = "(HOW) 고객의 문제를 어떻게 해결할것인가?";
-		$lang_bm4 = "수익 모델은?";
-		$lang_bm5 = "자신의 웹사이트 또는 랜딩페이지";
-		$lang_bm6 = "팀소개(팀의 역량)";
-		$lang_recruitment = "구인중인";
-
-		$lang_item = "사업아이템 작성법";
-		$lang_references = "참고자료: 단국대학교 엔턴십";
-	}
 ?>
 <h2 class="ui header"><?= $lang_mod_mybm ?></h2>
 <?
