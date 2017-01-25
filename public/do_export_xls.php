@@ -11,6 +11,7 @@ $company_id = $_SESSION['company'];
 
 $qs = mysql_query("SELECT `user`.*
                    FROM `user`
+                   WHERE `company_id` = '$company_id'
                    ORDER BY `user`.`idx`");
 $result = mysql_query($qs);  
   

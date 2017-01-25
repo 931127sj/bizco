@@ -1,15 +1,26 @@
 <?php
-<<<<<<< HEAD
     $title = $_POST['title'];
     $content = $_POST['content'];
     $target = $_POST['target'];
+
+    $user_id = $_GET['user_idx'];
+    
     require '_common.php';
-
-    $qs = mysql_query("SELECT `user`.`email`
+    
+    if($user_id == null)
+    {
+        $qs = mysql_query("SELECT `user`.`email`
+                       FROM `user`
+                       WHERE `user`.`level` = $target
+                       ORDER BY `user`.`idx`");
+    }
+    else
+    {
+        $qs = mysql_query("SELECT `user`.`email`
                    FROM `user`
-                   WHERE `user`.`level` = $target
+                   WHERE `user`.`idx` = $user_id
                    ORDER BY `user`.`idx`");
-
+    }
 
     date_default_timezone_set('Etc/UTC');
     require '../librarys/PHPMailerAutoload.php';
@@ -24,7 +35,7 @@
     // 0 = off (for production use)
     // 1 = client messages
     // 2 = client and server messages
-    //$mail->SMTPDebug = 2;
+    $mail->SMTPDebug = 2;
 
     //Ask for HTML-friendly debug output
     $mail->Debugoutput = 'html';
@@ -59,6 +70,7 @@
     {
         $mail->addAddress($row['email']);
     }
+
 
     //Set the subject line
     $mail->Subject = $title;

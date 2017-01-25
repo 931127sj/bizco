@@ -14,6 +14,9 @@ $skills = $_POST['skills'];
 $progress = $_POST['progress'];
 $business_resource = $_POST['business_resource'];
 $phone = $_POST['phone'];
+$sex = $_POST['sex'];
+$birth = (string)$_POST['year'] .(string)$_POST['month'] .(string)$_POST['day'];
+$job = $_POST['job'];
 //var_dump($_POST);
 //  유효성 check
 if($email == '') {
@@ -38,6 +41,11 @@ if($password_re == '') {
 }
 if($phone == '') {
 	msg("연락처는 필수입력 사항입니다.");
+		back();
+	exit();
+}
+if($job == '') {
+	msg("직업은 필수입력 사항입니다.");
 		back();
 	exit();
 }
@@ -133,11 +141,14 @@ $result = mysql_query("INSERT INTO  `user` (
 						`state`,
 						`level`,
 						`team_id`,
-						`phone`
+						`phone`,
+                        `sex`,
+                        `birthday`,
+                        `job`
 						)
 						VALUES (
 						NULL ,  '$email',  '$name',  '$password',  '$company', '$team_id',  '$join_type', '$part', '$history', '$skills',
-						'$progress', '$business_resource',  '$salt',  '',  '',  '',  '',  '',  '1', '1', '$team_id', '$phone'
+						'$progress', '$business_resource',  '$salt',  '',  '',  '',  '',  '',  '1', '1', '$team_id', '$phone' , '$sex' , '$birth' , '$job'
 						);
 						") or die(mysql_error());
 

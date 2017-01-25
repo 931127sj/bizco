@@ -75,7 +75,16 @@
         <p>
             <?=$result['phone']?>
         </p>
-
+        <div class="ui divider"></div>
+        <h3 class="ui header">성별</h3>
+        <p>
+            <?=$result['sex']?>
+        </p>
+        <div class="ui divider"></div>
+        <h3 class="ui header">직업</h3>
+        <p>
+            <?=$result['job']?>
+        </p>
         <div class="ui divider"></div>
         <h3 class="ui header">진행사항</h3>
         <p>

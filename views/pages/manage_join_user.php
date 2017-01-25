@@ -1,6 +1,7 @@
 <?php
 $q = $_GET['q'];
 $company_id = $_SESSION['company'];
+$board_id = $company_id ."_cur";
 
 if ($q)
     $search_query = "AND (`user`.`name` like '%".mysql_escape_string($q)."%' OR `user`.`email` like '%".mysql_escape_string($q)."%')";
@@ -16,7 +17,7 @@ $qs = mysql_query("SELECT `user`.`idx` as `user_idx`,
                    LEFT JOIN `user_step_relation`
                    ON `user_step_relation`.`user_idx` = `user`.`idx`
                    LEFT JOIN `article`
-                   ON `article`.`board_id` = 'dankook_cur'
+                   ON `article`.`board_id` = '$board_id'
                    AND `article`.`step_id` = `user_step_relation`.`current_step_idx`
                    LEFT JOIN `homework`
                    ON `homework`.`article_idx` = `article`.`idx`

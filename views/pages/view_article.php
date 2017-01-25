@@ -37,6 +37,20 @@ if($my_array_of_vars['v'] == ''){
 }else{
 	$article_data['youtube_link'] = $my_array_of_vars['v'];
 }
+
+if($_SESSION['lang'] == 'en'){
+	$lang_subject = "Subject";
+	$lang_contents = "Contents";
+	$lang_youtube = "Youtube";
+	$lang_files = "Add files";
+	$lang_total = "Total Max.";
+}else{
+	$lang_subject = "제목";
+	$lang_contents = "내용";
+	$lang_youtube = "유투브";
+	$lang_files = "첨부파일";
+	$lang_total = "합산 최대";
+}
 ?>
 
 

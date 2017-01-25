@@ -88,7 +88,7 @@ margin-bottom:100px;
     </div>
 </nav>
 
-<div class="ui middle aligned center aligned grid" style="min-height: 1150px;">
+<div class="ui middle aligned center aligned grid" style="min-height: 1300px;">
     <div class="column">
         <form class="ui large form"  action="/public/do_join.php" method="post">
             <div class="ui basic segment" id="formDiv">
@@ -119,6 +119,65 @@ margin-bottom:100px;
                         <i class="lock icon"></i>
                         <input type="password" name="password_retype" placeholder="<?= $lang_repw ?>" required>
                     </div>
+                </div>
+                
+                <div class="field">
+                    <label>생년월일</label>
+                </div>
+                <div class="three fields">
+                    <div class="field" style = "min-width : 100px">
+                        <select class = "ui compact dropdown" name = "year">
+                            <?php
+                                for($i = 1960; $i < 2016; $i++)
+                                {
+                            ?>
+                            <option value = <?php echo $i;?>>
+                                <?php echo $i;?>
+                            </option>
+                            <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="field" style = "min-width : 100px">
+                        <select class = "ui compact dropdown" name = "month">
+                            <?php
+                                for($i = 1; $i < 13; $i++)
+                                {
+                            ?>
+                            <option value = <?php echo $i;?>>
+                                <?php echo $i;?>
+                            </option>
+                            <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="field" style = "min-width : 100px">
+                        <select class = "ui compact dropdown" name = "day">
+                            <?php
+                                for($i = 1; $i < 31; $i++)
+                                {
+                            ?>
+                            <option value = <?php echo $i;?>>
+                                <?php echo $i;?>
+                            </option>
+                            <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label>성별</label>
+                    <select class = "ui dropdown" name = "sex">
+                        <option value = "male">남자</option>
+                        <option value = "female">여자</option>
+                    </select>
+                </div>
+                <div class="required field">
+                    <label>직업</label>
+                    <input type="text" name="job" placeholder="직업" required>
                 </div>
                 <div class="required field">
                     <label><?= $lang_phone ?></label>
