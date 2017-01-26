@@ -20,8 +20,10 @@ $user_info= mysql_query("SELECT * FROM  `user` WHERE  `email` =  '$id'");
 $user_info_rows = mysql_num_rows($user_info);
 $user_info_data = mysql_fetch_array($user_info);
 
-$cdata = mysql_fetch_array(mysql_query("SELECT * FROM `company`
-																			WHERE `company_id` = '{$user_info_data['company_id']}'"));
+$company_info = mysql_query("SELECT * FROM `company` WHERE `company_id` = '{$user_info_data['company_id']}'");
+$company_info_rows = mysql_num_rows($company_info);
+$company_info_data = mysql_fetch_array($company_info);
+
 
 if($user_info_rows <= 0){
 	msg("존재하지 않는 아이디 혹은 비밀번호 입니다.");
@@ -35,6 +37,10 @@ if($user_info_rows <= 0){
     msg("아직 참가승인이 되지 않았습니다.");
     back();
     exit();
+} else if($company_info_rows <= 0){
+	msg("프로그램이 삭제되었습니다.");
+	back();
+	exit();
 } else {
 
 
@@ -46,7 +52,7 @@ if($user_info_rows <= 0){
 		$_SESSION['level'] = $user_info_data['level'];
 		$_SESSION['company'] = $user_info_data['company_id'];
 
-		if(!$_SESSION['lang']) $_SESSION['lang'] = $cdata['lang'];
+		if(!$_SESSION['lang']) $_SESSION['lang'] = $company_info_data['lang'];
 
 
 		$token = substr(sha1(rand().$id.date("Y-m-d H:i:s")), 0, 20);

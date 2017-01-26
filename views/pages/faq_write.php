@@ -10,7 +10,7 @@ $rs = mysql_fetch_array($query);
 <form class="ui form" action="/public/do_write_faq.php" method="post">
     <input type="hidden" name="company_id" value="<?=$company_id?>">
     <div class="field">
-        <label>FAQ 내용</label>
+        <label>FAQ</label>
         <textarea rows="15" id="ir1" name="content" style="width: 100%;"><?=$rs['content']?></textarea>
     </div>
     <button class="ui button primary" id="save"><?= $lang_submit ?></button>

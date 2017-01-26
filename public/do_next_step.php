@@ -14,7 +14,8 @@ if($step_count >= 1) {
 
 	$step_info = mysql_query("SELECT *
 							FROM  `curriculum_step`
-							WHERE  `step_seq` =$current_step");
+							WHERE  `step_seq` =$current_step
+                            AND `company_id`".=$_SESSION['company']);
 
 	$step_info_data = mysql_fetch_array($step_info);
 	//var_dump($step_info_data);
