@@ -5,6 +5,7 @@ require_once(VIEW.'common/_language.php');
 $board_id = $_GET['board_id'];
 $board_type = $_GET['board_type'];
 $company_id = $_SESSION['company'];
+$user_idx = $_SESSION['idx'];
 
 //일반게시판
 if($board_type != "team") {
@@ -36,10 +37,21 @@ $article_query = mysql_query("SELECT *
 
 <div class="clearfix">
     <h2 class="ui header left floated" style="margin: 3px 0;"><? echo $board_data['name']; ?></h2>
-    <? if($_SESSION['level'] >= $board_data['write_level']) { ?>
-    	<a href="/public/board_write?board_id=<? echo $board_id; ?><?= $type_team ?>">
+    <? if($_SESSION['level'] >= $board_data['write_level']) {
+          if($board_type == 'team'){
+            $team_chk = mysql_num_rows(mysql_query("SELECT `idx` FROM `user` WHERE `idx` = '{$user_idx}' AND `team_idx`='{$board_id}'"));
+            // team member check
+            if(($team_chk) OR ($_SESSION['level'] > 3)){
+    ?>
+            <a href="/public/board_write?board_id=<? echo $board_id; ?><?= $type_team ?>">
+            <button class="ui right floated blue button"><?= $lang_write ?></button></a>
+    <?
+            }
+          }else{
+      ?>
+    	  <a href="/public/board_write?board_id=<? echo $board_id; ?>">
         <button class="ui right floated blue button"><?= $lang_write ?></button></a>
-
+        <? } ?>
 	<? } ?>
 </div>
 

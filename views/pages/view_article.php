@@ -23,12 +23,25 @@ if($article_data['youtube_link'] != '') {
 	$isYoutube = false;
 }
 
-
 parse_str( parse_url( $article_data['youtube_link'], PHP_URL_QUERY ), $my_array_of_vars );
 if($my_array_of_vars['v'] == ''){
 	$article_data['youtube_link'] = array_pop(explode('/', $article_data['youtube_link']));
 }else{
 	$article_data['youtube_link'] = $my_array_of_vars['v'];
+}
+
+if($_SESSION['lang'] == 'en'){
+	$lang_subject = "Subject";
+	$lang_contents = "Contents";
+	$lang_youtube = "Youtube";
+	$lang_files = "Add files";
+	$lang_total = "Total Max.";
+}else{
+	$lang_subject = "제목";
+	$lang_contents = "내용";
+	$lang_youtube = "유투브";
+	$lang_files = "첨부파일";
+	$lang_total = "합산 최대";
 }
 ?>
 
@@ -53,7 +66,7 @@ if($my_array_of_vars['v'] == ''){
                         $i =0;
                         while($file_data = mysql_fetch_array($file)) {
                             $i++;
-                            ?> 첨부파일<?= $i; ?> : <a href="http://sbe.center/public/down.php?file=<?= urlencode($file_data['name']); ?>&file_name=<?= urlencode($file_data['url']); ?>" target="_blank"><?= $file_data['name']; ?></a><br>
+                            ?> <?= $lang_files ?><?= $i; ?> : <a href="http://sbe.center/public/down.php?file=<?= urlencode($file_data['name']); ?>&file_name=<?= urlencode($file_data['url']); ?>" target="_blank"><?= $file_data['name']; ?></a><br>
                         <?
                         }
                      ?>
@@ -78,10 +91,10 @@ if($my_array_of_vars['v'] == ''){
                     </div>
                     <div class="ui divider basic"></div>
                     <? } ?>
-                    <? if($board_id=="dankook_cur") { ?><p>동영상/글읽기 완료후에<br />버튼을 누르세요</p><? } ?>
-                    <? if($board_id!=="etc_question") { ?>
+                    <? if($board_id == "{$company_id}_cur") { ?><p>동영상/글읽기 완료후에<br />버튼을 누르세요</p><? } ?>
+                    <? if($board_id !== "etc_question") { ?>
                     <div class="two ui buttons">
-                    	<? if($board_id=="dankook_cur") {
+                    	<? if($board_id == "{$company_id}_cur") {
 							$homework_query= mysql_query("SELECT * FROM  `homework` WHERE  `user_idx` =".$_SESSION['idx']." AND  `article_idx` =".$article_data['idx']." AND state = 1");
 							if(mysql_num_rows($homework_query) > 0) {
 						?>
