@@ -98,6 +98,21 @@ semantic.visibility.ready = function()
         }
       })
     ;
+    
+    $('.sixth.images')
+      .visibility({
+        onTopVisible: function() {
+            $('.sixth.images img')
+                .transition({
+                    animation : 'fade',
+                    duration  : 1200,
+                    interval  : 400,
+                })
+            ;
+        }
+      })
+    ;
+    
 
     $('.ui.segment').tab('setting', 'onLoad', function() {
         $('.ui.sticky')

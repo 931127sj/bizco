@@ -2,6 +2,7 @@
 require_once(VIEW.'common/_language.php');
 $company_id = $_GET['company_id'];
 ?>
+
 <form class="ui form" action="/public/do_write_board.php" method="post">
     <input type="hidden" name="company_id" value="<?=$company_id?>">
     <input type="hidden" name="board_id" value="etc_question">

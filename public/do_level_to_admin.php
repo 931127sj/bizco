@@ -5,6 +5,8 @@ if($_GET['user_idx']){
   $level = $_GET['level'];
 
   $msg = "가입 승인이 완료되었습니다.";
+  $subject = "SBE CENTER 가입이 승인되었습니다.";
+  $body = "환영합니다!";
 
   $user_id = $_GET['user_idx'];
     $qs = mysql_query("SELECT `user`.`email`
@@ -18,9 +20,12 @@ if($_GET['user_idx']){
 
     $mail = new PHPMailer;
 
+    $mail->CharSet = "EUC-KR";
+    $mail->Encoding = "base64";
+    
     $mail->isSMTP();
 
-    $mail->SMTPDebug = 2;
+    $mail->SMTPDebug = 0;
 
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
@@ -43,11 +48,11 @@ if($_GET['user_idx']){
         $mail->addAddress($row['email']);
     }
     
-    $mail->Subject = "SBE CENTER 가입이 승인되었습니다.";
+    $mail->Subject = iconv("UTF-8" , "EUC-KR" , $subject);
 
-    $mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
+    //$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 
-    $mail->Body = "환영합니다!";
+    $mail->Body = iconv("UTF-8" , "EUC-KR" , $body);
 
     $mail->send();
     
