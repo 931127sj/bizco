@@ -12,12 +12,18 @@ $article_query = mysql_query("SELECT *
                               WHERE `company_id` = '$company'
                               AND `board_id` = 'etc_question'
                               ORDER BY `article`.`idx` DESC ");
+
+if($_SESSION['lang'] == "en"){
+  $lang_title = "Mentoring Board";
+}else{
+  $lang_title = "멘토링 게시판";
+}
 ?>
 
 
 
 <div class="clearfix">
-    <h2 class="ui header left floated" style="margin: 3px 0;">멘토링 게시판(관리자)</h2>
+    <h2 class="ui header left floated" style="margin: 3px 0;"><?= $lang_title ?></h2>
     <!--<a href="/public/question_write?company_id=<?=$company?>"><button class="ui right floated blue button">문의 남기기</button></a>-->
 </div>
 <div class="ui divider forh2"></div>

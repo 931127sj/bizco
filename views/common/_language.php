@@ -29,6 +29,8 @@ if($_SESSION['lang'] == 'en'){
   $lang_latest = "Latest";
   $lang_popular = "Popular";
 
+  $lang_people = "people";
+
   $no_result = "No result.";
   $please_write = "Please write the board.";
 
@@ -60,6 +62,8 @@ if($_SESSION['lang'] == 'en'){
   $lang_keywords = "검색어";
   $lang_latest = "최근 업데이트";
   $lang_popular = "인기";
+
+  $lang_people = "명";
 
   $no_result = "검색 결과가 존재하지 않습니다.";
   $please_write = "게시판에 글을 작성해 주세요.";

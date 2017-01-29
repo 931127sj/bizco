@@ -26,11 +26,51 @@ while($extend_data = mysql_fetch_array($extend_query)) {
 	$i ++;
 }
 
+if($_SESSION['lang'] == "en"){
+  $lang_bmc = "Business Model Canvas";
+
+  $lang_summary = "Summary";
+
+  $lang_td1 = "Who is your customer?";
+  $lang_td2 = "What will solve the customer's problem?";
+  $lang_td3 = "What are the core competencies that are most needed for problem solving?";
+  $lang_td4 = "What is your revenue model?";
+  $lang_td5 = "Enter demo site / screenshot image link";
+  $lang_td6 = "Team Introduction";
+
+  $lang_bm_grade1 = "Interested in the idea above? (necessary)";
+  $lang_bm_grade2 = "I'm interested.";
+  $lang_bm_grade3 = "I don't know";
+  $lang_bm_grade4 = "What is your opinion on the idea above?";
+  $lang_bm_grade5 = "One line summary";
+  $lang_bm_grade6 = "Do you know similar domestic and international services? If so, please tell us that service name or site.";
+  $lang_rate_it = "Rate it";
+}else{
+  $lang_bmc = "비즈니스 모델 캔버스";
+
+  $lang_summary = "개요";
+
+  $lang_td1 = "나의 고객님은 어떤 문제점을 가진 누구인가?";
+  $lang_td2 = "그 고객의 문제를 무엇으로 해결할 것인가?";
+  $lang_td3 = "문제 해결을 위해 가장 필요한 핵심 역량은 무엇인가?";
+  $lang_td4 = "수익 모델은?";
+  $lang_td5 = "데모 사이트/스크린샷 이미지 링크를 입력하세요.";
+  $lang_td6 = "팀소개";
+
+  $lang_bm_grade1 = "위 아이디어에 관심이 있나요? (필수)";
+  $lang_bm_grade2 = "관심이 있어요";
+  $lang_bm_grade3 = "잘 모르겠어요";
+  $lang_bm_grade4 = "위 아이디어에 대한 귀하의 의견은?";
+  $lang_bm_grade5 = "한줄 정리";
+  $lang_bm_grade6 = "유사한 국내외 서비스가 있나요? 있다면 서비스명이나 사이트를 말해주세요.";
+  $lang_rate_it = "평가하기";
+}
+
 ?>
 
 <div class="ui top attached tabular menu" id="bmGrade1">
     <span class="item header"><?=xssHtmlProtect($article_data['title'])?></span>
-    <a href="/public/bm_grade?board_id=business_model" class="item right active" data-tab="intro">개요</a>
+    <a href="/public/bm_grade?board_id=business_model" class="item right active" data-tab="intro"><?= $lang_summary ?></a>
     <? if($_SESSION['idx'] == $article_data['user_idx']) { ?>
     <a href="/public/bm_new?type=edit&id=business_model&idx=<?=$article_id; ?>" class="item"><?= $lang_modify ?></a>
     <? } ?>
@@ -61,26 +101,26 @@ while($extend_data = mysql_fetch_array($extend_query)) {
 
    <h4 class="ui divider header">
       <i class="bar newspaper icon"></i>
-      비즈니스모델 캔버스
+      <?= $lang_bmc ?>
     </h4>
 
 
-    <h3>#1 나의 고객님은 어떤 문제점을 가진 누구인가?</h3>
+    <h3>#1 <?= $lang_td1 ?></h3>
     <p><?=$ex['slide_1']?></p>
-    <h3>#2 그 고객의 문제를 무엇으로 해결할 것인가?</h3>
+    <h3>#2 <?= $lang_td2 ?></h3>
     <p><?=$ex['slide_2']?></p>
-    <h3>#3 문제 해결을 위해 가장 필요한 핵심 역량은 무엇인가?</h3>
+    <h3>#3 <?= $lang_td3 ?></h3>
     <p><?=$ex['slide_3']?></p>
-    <h3>#4 수익 모델은?</h3>
+    <h3>#4 <?= $lang_td4 ?></h3>
     <p><?=$ex['slide_4']?></p>
-    <h3>#5 데모 사이트/스크린샷 이미지 링크를 입력하세요.</h3>
+    <h3>#5 <?= $lang_td5 ?></h3>
     <p><?=$ex['slide_5']?></p>
-    <h3>#6 팀소개</h3>
+    <h3>#6 <?= $lang_td6 ?></h3>
     <p><?=$ex['slide_6']?></p>
 
     <h4 class="ui divider header">
       <i class="bar chart icon"></i>
-      평가하기
+      <?= $lang_rate_it ?>
     </h4>
     <?
     $check_grade = mysql_query("SELECT *
@@ -93,30 +133,30 @@ while($extend_data = mysql_fetch_array($extend_query)) {
     ?>
     <div class="ui form">
         <div class="grouped fields">
-            <label>위 아이디어에 관심이 있나요? (필수)</label>
+            <label><?= $lang_bm_grade1 ?></label>
             <div class="field">
                 <div class="ui radio checkbox">
                     <input type="radio" name="score" value="1" readonly <?=($check_grade_data['score']==1)?'checked="checked"':''?>>
-                    <label>관심이 있어요</label>
+                    <label><?= $lang_bm_grade2 ?></label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui radio checkbox">
                     <input type="radio" name="score" value="0" readonly <?=($check_grade_data['score']==0)?'checked="checked"':''?>>
-                    <label>잘 모르겠어요</label>
+                    <label><?= $lang_bm_grade3 ?></label>
                 </div>
             </div>
         </div>
         <div class="grouped fields">
-            <label>위 아이디어에 대한 귀하의 의견은?</label>
+            <label><?= $lang_bm_grade4 ?></label>
             <div class="field">
                 <div class="ui fluid input">
-                    <input type="text" name="summary" readonly value="<?=$check_grade_data['summary']?>" placeholder="한줄 정리">
+                    <input type="text" name="summary" readonly value="<?=$check_grade_data['summary']?>" placeholder="<?= $lang_bm_grade5 ?>">
                 </div>
             </div>
         </div>
         <div class="grouped field">
-            <label>유사한 국내외 서비스가 있나요? 있다면 서비스명이나 사이트를 말해주세요.</label>
+            <label><?= $lang_bm_grade6 ?></label>
             <textarea name="opinion" rows="2" readonly><?=$check_grade_data['opinion']?></textarea>
         </div>
         <input type="hidden" name="article_id" value="<?=$article_id?>">
@@ -128,30 +168,30 @@ while($extend_data = mysql_fetch_array($extend_query)) {
     <form action="/public/do_bm_grade.php" method="post">
         <div class="ui form">
             <div class="grouped fields">
-                <label>위 아이디어에 관심이 있나요? (필수)</label>
+                <label><?= $lang_bm_grade1 ?></label>
                 <div class="field">
                     <div class="ui radio checkbox">
                         <input type="radio" name="score" value="1" checked="checked">
-                        <label>관심이 있어요</label>
+                        <label><?= $lang_bm_grade2 ?></label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui radio checkbox">
                         <input type="radio" name="score" value="0">
-                        <label>잘 모르겠어요</label>
+                        <label><?= $lang_bm_grade3 ?></label>
                     </div>
                 </div>
             </div>
             <div class="grouped fields">
-                <label>위 아이디어에 대한 귀하의 의견은?</label>
+                <label><?= $lang_bm_grade4 ?></label>
                 <div class="field">
                     <div class="ui fluid input">
-                        <input type="text" name="summary" placeholder="한줄 정리">
+                        <input type="text" name="summary" placeholder="<?= $lang_bm_grade5 ?>">
                     </div>
                 </div>
             </div>
             <div class="grouped field">
-                <label>유사한 국내외 서비스가 있나요? 있다면 서비스명이나 사이트를 말해주세요.</label>
+                <label><?= $lang_bm_grade6 ?></label>
                 <textarea name="opinion" rows="2"></textarea>
             </div>
             <input type="hidden" name="article_id" value="<? echo $article_id?>">

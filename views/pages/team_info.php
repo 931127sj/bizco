@@ -15,6 +15,43 @@ $bm =  mysql_fetch_array(mysql_query("SELECT * FROM  `article` WHERE  `idx` =".$
 
 $user_data = mysql_fetch_array(mysql_query("SELECT `team_idx` FROM `user` WHERE `idx` = ".$_SESSION['idx']));
 
+if($_SESSION['lang'] == "en"){
+	$lang_register = "Register new team";
+	$lang_mod_team = "Edit team infomation";
+
+	$lang_info = "Information";
+	$lang_name = "Team name";
+  $lang_leader = "Team leader";
+	$lang_member = "Members’ name";
+	$lang_bm = "Business Model";
+	$lang_award = "Award history";
+	$lang_career = "Career";
+	$lang_ability = "Team’s Ability";
+	$lang_process = "Your workflow process";
+  $lang_team_board = "Team board";
+  $lang_join = "Join";
+
+  $lang_mod_comment = "Modify comments";
+  $lang_success_cmt = "Your comment has been successfully changed.";
+}else{
+	$lang_register = "신규 팀 등록";
+	$lang_mod_team = "팀 수정";
+
+	$lang_info = "기본정보";
+	$lang_name = "팀 이름";
+  $lang_leader = "팀 리더";
+	$lang_member = "팀원";
+	$lang_bm = "비즈니스 모델";
+	$lang_award = "수상이력";
+	$lang_career = "경력";
+	$lang_ability = "보유역량";
+	$lang_process = "진행사항";
+  $lang_team_board = "팀 게시판 가기";
+  $lang_join = "함께하기";
+
+  $lang_mod_comment = "댓글 수정";
+  $lang_success_cmt = "댓글을 성공적으로 변경하였습니다.";
+}
 ?>
 
 <style>
@@ -83,14 +120,14 @@ $user_data = mysql_fetch_array(mysql_query("SELECT `team_idx` FROM `user` WHERE 
             <div class="content" style="float: left; width: 80%;">
                 <h1 class="ui header"><?=$result['name']?></h1>
                 <div class="meta">
-                    <span><i class="bookmark icon" style="margin-right:0.4em;"></i>팀 리더</span> <a href="/public/userpage?id=<?=$usr['idx']; ?>">@<?=$usr['name']?></a>
+                    <span><i class="bookmark icon" style="margin-right:0.4em;"></i><?= $lang_leader ?></span> <a href="/public/userpage?id=<?=$usr['idx']; ?>">@<?=$usr['name']?></a>
                 </div>
                 <div class="meta">
                     <?
                     $tm_query = mysql_query("SELECT `idx`, `name` FROM `user` WHERE `team_idx`='$idx' AND `idx` != '{$result['leader_idx']}'");
                     $tm_num = mysql_num_rows($tm_query);
                     ?>
-                    <span><i class="bookmark icon" style="margin-right:0.4em;"></i>팀원(<?= $tm_num ?>명)</span>
+                    <span><i class="bookmark icon" style="margin-right:0.4em;"></i><?= $lang_member ?>(<?= $tm_num ?><?= $lang_people ?>)</span>
                     <? while($tm_data = mysql_fetch_array($tm_query)){ ?>
                      <a href="/public/userpage?id=<?= $tm_data['idx'] ?>"><?=$tm_data['name']?></a>
                     <? } ?>
@@ -101,13 +138,13 @@ $user_data = mysql_fetch_array(mysql_query("SELECT `team_idx` FROM `user` WHERE 
             </div>
             <div style="width: 20%; float:right; margin:auto;">
             <a href="/public/board_list?board_type=team&board_id=<?=$result['idx'] ?>" target="_blank">
-            	<button class="ui blue basic button">팀 게시판 가기</button></a>
+            	<button class="ui blue basic button"><?= $lang_team_board ?></button></a>
             </div>
         </div>
         <div class="clearfix">
         <? if($_SESSION['idx'] == $result['leader_idx']) { ?>
-            <a href="/public/do_del_team.php?idx=<?=$result['idx']; ?>"><button class="ui button basic float--right"><i class="ui icon privacy"></i> 팀 삭제</button></a>
-            <a href="/public/team_new?type=edit&idx=<?=$result['idx']; ?>"><button class="ui button basic float--right"><i class="ui icon laptop"></i> 정보수정</button></a>
+            <a href="/public/do_del_team.php?idx=<?=$result['idx']; ?>"><button class="ui button basic float--right"><i class="ui icon privacy"></i> <?= $lang_delete ?></button></a>
+            <a href="/public/team_new?type=edit&idx=<?=$result['idx']; ?>"><button class="ui button basic float--right"><i class="ui icon laptop"></i> <?= $lang_modify ?></button></a>
             <!--<button class="ui button basic primary float--right"><i class="ui icon cloud upload"></i> 프로필사진 변경</button>-->
         <? }else if($idx == $user_data['team_idx']){ ?>
             <a href="/public/do_join_team.php?team_idx=<?= $result['idx'] ?>&join=0"><button class="ui button basic float--right">탈퇴하기</button></a>
@@ -117,30 +154,30 @@ $user_data = mysql_fetch_array(mysql_query("SELECT `team_idx` FROM `user` WHERE 
                if($acc){ ?>
             <button class="ui button basic float--right">승인중</button>
             <? }else{ ?>
-            <a href="/public/do_join_team.php?team_idx=<?= $result['idx'] ?>&join=1"><button class="ui button basic float--right">함께하기</button></a>
+            <a href="/public/do_join_team.php?team_idx=<?= $result['idx'] ?>&join=1"><button class="ui button basic float--right"><?= $lang_join ?></button></a>
             <? } ?>
         <? } ?>
        </div>
        <div class="ui divider"></div>
-        <h3 class="ui header">수상이력</h3>
+        <h3 class="ui header"><?= $lang_award ?></h3>
         <p>
             <?=$result['award']?>
         </p>
 
         <div class="ui divider"></div>
-        <h3 class="ui header">경력</h3>
+        <h3 class="ui header"><?= $lang_career ?></h3>
         <p>
             <?=$result['history']?>
         </p>
 
         <div class="ui divider"></div>
-        <h3 class="ui header">보유역량</h3>
+        <h3 class="ui header"><?= $lang_ability ?></h3>
         <p>
             <?=$result['ability']?>
         </p>
 
         <div class="ui divider"></div>
-        <h3 class="ui header">진행사항</h3>
+        <h3 class="ui header"><?= $lang_process ?></h3>
         <p>
             <?=$result['progress']?>
         </p>
@@ -172,7 +209,7 @@ function comment_action(){
         },
         success : function (result) {
             if(result == "success"){
-                alert("댓글을 성공적으로 변경하였습니다.");
+                alert("<?= $lang_success_cmt ?>");
                 $(".comment.modal").modal('hide');
                 window.location.reload(true);
             }else{
@@ -186,7 +223,7 @@ function comment_action(){
 <div class="ui comment modal">
   <i class="close icon"></i>
   <div class="header">
-    댓글 수정
+    <?= $lang_mod_comment ?>
   </div>
   <div class="content">
     <div class="ui form" style="margin:0; ">
