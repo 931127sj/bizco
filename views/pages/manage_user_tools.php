@@ -17,14 +17,38 @@ $qs = mysql_query("SELECT `user`.*
                    $search_query
                    ORDER BY `user`.`idx`");
 $current_step = 'manage_user_tools';
+
+if($_SESSION['lang'] == "en"){
+  $lang_title = "Manage participants";
+  $lang_searching = "Searching with name/e-mail address";
+  $lang_name = "Name";
+  $lang_email = "E-mail address";
+  $lang_team = "Team";
+  $lang_tools = "Tools";
+
+  $lang_withdraw = "Withdraw this participant";
+  $lang_grant = "Grant administrator privileges";
+  $lang_remove = "Remove administrator privileges";
+}else{
+  $lang_title = "참가자 관리";
+  $lang_searching = "이름 / 이메일로 찾기";
+  $lang_name = "참가자 이름";
+  $lang_email = "이메일";
+  $lang_team = "팀";
+  $lang_tools = "도구";
+
+  $lang_withdraw = "이 참가자 탈퇴";
+  $lang_grant = "관리자 권한 부여";
+  $lang_remove = "관리자 권한 제거";
+}
 ?>
-<h2 class="ui header">참가자 관리</h2>
+<h2 class="ui header"><?= $lang_title ?></h2>
 
 <div class="ui container">
     <button class="ui fluid button" onclick = "location.href = '/public/do_export_xls.php'">엑셀 다운로드</button>
     <form class="ui clearing segment selene-basic">
         <div class="ui icon input">
-            <input type="text" name="q" placeholder="이름 / 이메일로 찾기" value="<?=$q?>">
+            <input type="text" name="q" placeholder="<?= $lang_searching ?>" value="<?=$q?>">
             <i class="search link icon"></i>
         </div>
         <button class="ui button"><?= $lang_search ?></button>
@@ -33,10 +57,10 @@ $current_step = 'manage_user_tools';
     <table class="ui celled compact striped table">
         <thead>
             <tr>
-                <th>참가자 이름</th>
-                <th>이메일</th>
-                <th>팀</th>
-                <th>도구</th>
+                <th><?= $lang_name ?></th>
+                <th><?= $lang_email ?></th>
+                <th><?= $lang_team ?></th>
+                <th><?= $lang_tools ?></th>
             </tr>
         </thead>
         <tbody>
@@ -48,14 +72,14 @@ $current_step = 'manage_user_tools';
                 <td>
                     <? if($row['level'] != 8){?>
                     <? if($_SESSION['level'] >= 6) { ?>
-                    <a class="mini ui button negative" href="/public/do_delete_user.php?user_idx=<?=$row['idx']?>">이 참가자 탈퇴</a>
+                    <a class="mini ui button negative" href="/public/do_delete_user.php?user_idx=<?=$row['idx']?>"><?= $lang_withdraw ?></a>
                       <? if($row['level'] == 1) { ?>
                           <a class="mini ui button blue" href="/public/do_level_to_admin.php?user_idx=<?=$row['idx']?>&level=2">참가 승인</a>
                       <? }?>
                         <? if($row['level'] < 5) { ?>
-                            <a class="mini ui button blue" href="/public/do_level_to_admin.php?user_idx=<?=$row['idx']?>">관리자 권한 부여</a>
+                            <a class="mini ui button blue" href="/public/do_level_to_admin.php?user_idx=<?=$row['idx']?>"><?= $lang_grant ?></a>
                         <? } else { ?>
-                            <a class="mini ui button secondary" href="/public/do_level_to_general.php?user_idx=<?=$row['idx']?>">관리자 권한 제거</a>
+                            <a class="mini ui button secondary" href="/public/do_level_to_general.php?user_idx=<?=$row['idx']?>"><?= $lang_remove ?></a>
                         <? } ?>
                         <? if($row['level'] == 0) { ?>
                             <a class="mini ui button blue" href="/public/do_ack_to_user.php?user_idx=<?=$row['idx']?>">참가 승인</a>

@@ -30,7 +30,6 @@ if($article_data['youtube_link'] != '') {
 	$isYoutube = false;
 }
 
-
 parse_str( parse_url( $article_data['youtube_link'], PHP_URL_QUERY ), $my_array_of_vars );
 if($my_array_of_vars['v'] == ''){
 	$article_data['youtube_link'] = array_pop(explode('/', $article_data['youtube_link']));
@@ -44,12 +43,34 @@ if($_SESSION['lang'] == 'en'){
 	$lang_youtube = "Youtube";
 	$lang_files = "Add files";
 	$lang_total = "Total Max.";
+  $lang_like = "Like";
+  $lang_comments = "Comments";
+
+  $lang_notice1 = "Please click the complete button ";
+  $lang_notice2 = "after watching videos or contents";
+
+  $lang_mod_comment = "Modify comments";
+  $lang_success_cmt = "Your comment has been successfully changed.";
+
+  $lang_del_cmt = "Do you really want to delete the comment?";
+  $lang_del_article = "Do you really want to delete posts?";
 }else{
 	$lang_subject = "제목";
 	$lang_contents = "내용";
 	$lang_youtube = "유투브";
 	$lang_files = "첨부파일";
 	$lang_total = "합산 최대";
+  $lang_like = "좋아요";
+  $lang_comments = "의견 남기기";
+
+  $lang_notice1 = "동영상/글읽기 완료후에";
+  $lang_notice2 = "버튼을 누르세요";
+
+  $lang_mod_comment = "댓글 수정";
+  $lang_success_cmt = "댓글을 성공적으로 변경하였습니다.";
+
+  $lang_del_cmt = "정말로 댓글 삭제를 원하십니까?";
+  $lang_del_article = "정말로 게시물 삭제를 원하십니까?";
 }
 ?>
 
@@ -74,7 +95,7 @@ if($_SESSION['lang'] == 'en'){
                         $i =0;
                         while($file_data = mysql_fetch_array($file)) {
                             $i++;
-                            ?> 첨부파일<?= $i; ?> : <a href="http://sbe.center/public/down.php?file=<?= urlencode($file_data['name']); ?>&file_name=<?= urlencode($file_data['url']); ?>" target="_blank"><?= $file_data['name']; ?></a><br>
+                            ?> <?= $lang_files ?><?= $i; ?> : <a href="http://sbe.center/public/down.php?file=<?= urlencode($file_data['name']); ?>&file_name=<?= urlencode($file_data['url']); ?>" target="_blank"><?= $file_data['name']; ?></a><br>
                         <?
                         }
                      ?>
@@ -99,22 +120,24 @@ if($_SESSION['lang'] == 'en'){
                     </div>
                     <div class="ui divider basic"></div>
                     <? } ?>
-                    <? if($board_id==$cur_board_id) { ?><p>동영상/글읽기 완료후에<br />버튼을 누르세요</p><? } ?>
-                    <? if($board_id!=="etc_question") { ?>
+
+                    <? if($board_id == "{$company_id}_cur") { ?><p><?= $lang_notice1 ?><br /><?= $lang_notice2 ?></p><? } ?>
+                    <? if($board_id !== "etc_question") { ?>
                     <div class="two ui buttons">
-                    	<? if($board_id==$cur_board_id) {
+                    	<? if($board_id == "{$company_id}_cur") {
+
 							$homework_query= mysql_query("SELECT * FROM  `homework` WHERE  `user_idx` =".$_SESSION['idx']." AND  `article_idx` =".$article_data['idx']." AND state = 1");
 							if(mysql_num_rows($homework_query) > 0) {
 						?>
                         <div class="ui green button fluid" tabindex="0">
-                            <div class="visible content">숙제완료</div>
+                            <div class="visible content"><?= $lang_complete1 ?></div>
 
                         </div>
                         <?
 							} else {
 						?>
                         <div onClick="location.href='/public/do_homework.php?idx=<?=$article_data['idx']; ?>'" class="ui fade animated primary button basic fluid" tabindex="0">
-                            <div class="visible content">숙제하기</div>
+                            <div class="visible content"><?= $lang_incomplete1 ?></div>
                             <div class="hidden content">
                                 <i class="write icon"></i>
                             </div>
@@ -147,7 +170,7 @@ if($_SESSION['lang'] == 'en'){
 
                         <div onClick="location.href='/public/do_like.php?idx=<?=$article_id?>'" class="ui fade animated red button fluid <?=$is_liked?'':'basic'?>" tabindex="0">
 
-                            <div class="visible content">좋아요 <?=$is_liked?"취소":""?> <strong><? echo $like_count; ?></strong></div>
+                            <div class="visible content"><?= $lang_like ?> <?=$is_liked?"{$lang_cancel}":""?> <strong><? echo $like_count; ?></strong></div>
                             <div class="hidden content">
                                 <i class="heart icon"></i>
                             </div>
@@ -176,7 +199,7 @@ if($_SESSION['lang'] == 'en'){
 												<input type="hidden" name="to_user_idx" value="<? echo $article_data['user_idx']; ?>">
                         <a href="#" onclick="$(this).closest('form').submit()">
                             <div class="ui blue submit icon button fluid">
-                                	의견 남기기
+                                	<?= $lang_comments ?>
                             </div>
                         </a>
                     </form>
@@ -207,7 +230,7 @@ if($_SESSION['lang'] == 'en'){
                             <div class="content">
                                 <a class="author"><? echo $comment_user_data['name']; ?></a>
                                 <div class="metadata">
-                                    <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open">의견달기</a> <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?> <a href="#" onClick="del_comment('<? echo $comment_data['idx']; ?>');">삭제</a> <a href="#" onClick="modify_comment('<?=$comment_data['idx']; ?>','', '<?=$comment_data['content']; ?>');">수정</a><? } ?>
+                                    <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open"><?= $lang_comments ?></a> <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?> <a href="#" onClick="del_comment('<? echo $comment_data['idx']; ?>');">삭제</a> <a href="#" onClick="modify_comment('<?=$comment_data['idx']; ?>','', '<?=$comment_data['content']; ?>');">수정</a><? } ?>
                                 </div>
                                 <div class="text">
                                     <? echo $comment_data['content'];  ?>
@@ -250,7 +273,7 @@ if($_SESSION['lang'] == 'en'){
 																		<input type="hidden" name="to_user_idx" value="<? echo $comment_user_data['idx']; ?>">
                                     <a href="#" onclick="$(this).closest('form').submit()">
                                         <div class="ui blue mini submit button fluid">
-                                           	 의견 남기기
+                                           	 <?= $lang_comments ?>
                                         </div>
                                     </a>
                              </form>
@@ -273,7 +296,7 @@ if($_SESSION['lang'] == 'en'){
 <script>
 //댓글 삭제 스크립트
 function del_comment(idx) {
-	var con = confirm('정말로 댓글 삭제를 원하십니까?');
+	var con = confirm('<?= $lang_del_cmt ?>');
 	if(con == 1) {
 
 		location.replace ( "/public/do_del_comment.php?idx=" + idx);
@@ -281,7 +304,7 @@ function del_comment(idx) {
 }
 
 function del_article(idx, board_id, board_type='') {
-	var con = confirm('정말로 게시물 삭제를 원하십니까?');
+	var con = confirm('<?= $lang_del_article ?>');
 	if(con == 1) {
 		var location_url = "/public/do_del_article.php?article_id=" + idx + "&board_id=" + board_id;
 		if(board_type != '') location_url += "&board_type=" + board_type;
@@ -396,7 +419,7 @@ function comment_action(){
         },
         success : function (result) {
             if(result == "success"){
-                alert("댓글을 성공적으로 변경하였습니다.");
+                alert("<?= $lang_success_cmt ?>");
                 $(".comment.modal").modal('hide');
                 window.location.reload(true);
             }else{
@@ -410,7 +433,7 @@ function comment_action(){
   <div class="ui comment modal">
     <i class="close icon"></i>
     <div class="header">
-      댓글 수정
+      <?= $lang_mod_comment ?>
     </div>
     <div class="content">
       <div class="ui form" style="margin:0; ">

@@ -193,7 +193,7 @@ if($_SESSION['lang'] == 'en'){
         <button class="ui basic button"><?= $lang_complete ?></button>
     </div>
     <? else: ?>
-    <form action="/public/do_bm_grade.php" method="post">
+    <form action="/public/do_bm_grade.php?board_id=business_model" method="post">
         <div class="ui form">
             <div class="grouped fields">
                 <label><?= $lang_bm_grade1 ?></label>

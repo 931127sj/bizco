@@ -6,10 +6,16 @@
 	if($_GET['lang']) $_SESSION['lang'] = $_GET['lang'];
 
 	if (! preg_match('/\.php/', $_SERVER['REQUEST_URI'])) {
+
 		$usr = mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$_SESSION["idx"]);
 		$usr_data = mysql_fetch_array($usr);
 
-		$alarm_query = mysql_query("SELECT * FROM `user_alarm` WHERE `to_user_idx` = ".$_SESSION["idx"]);
+		if($_GET['alarm']){
+			mysql_query("UPDATE `user_alarm` SET `read_chk` = 0 WHERE `idx` = ".$_GET['alarm']);
+		}
+
+		$alarm_query = mysql_query("SELECT * FROM `user_alarm`
+		WHERE `to_user_idx` = '{$_SESSION['idx']}' AND `type` != 'team_acc' AND `read_chk` = 1");
 		$alarm_count = mysql_num_rows($alarm_query);
 
 	  // 나중에 dankook이 아닌 동적으로 처리를 해야합니다.
@@ -91,7 +97,19 @@
 
 							if($alarm_data['type'] == 'comment'){
 								$alarm_msg = "<b>{$from_user_name}</b> 님이 댓글을 달았습니다.";
-								$alarm_url = "/public/view_article?board_id={$board_id}&article_id={$article_idx}";
+								$alarm_url = "/public/view_article?board_id={$board_id}&article_id={$article_idx}&alarm={$alarm_data['idx']}";
+							}else if($alarm_data['type'] == 'bm_grade'){
+								$alarm_msg = "<b>{$from_user_name}</b> 님이 비즈니스 모델을 평가하였습니다.";
+								$alarm_url = "/public/bm_grade?board_id={$board_id}&article_id={$article_idx}&alarm={$alarm_data['idx']}";
+							}else if($alarm_data['type'] == 'team_join'){
+								$alarm_msg = "<b>{$from_user_name}</b> 님이 함께 하기를 원합니다.";
+								$alarm_url = "/public/team_info?idx={$article_idx}&alarm={$alarm_data['idx']}";
+							}else if($alarm_data['type'] == 'team_out'){
+								$alarm_msg = "<b>{$from_user_name}</b> 님이 팀에서 탈퇴하였습니다.";
+								$alarm_url = "/public/team_info?idx={$article_idx}&alarm={$alarm_data['idx']}";
+							}else if($alarm_data['type'] == 'team_ok'){
+								$alarm_msg = "팀 승인이 완료되었습니다.";
+								$alarm_url = "/public/team_info?idx={$article_idx}&alarm={$alarm_data['idx']}";
 							}
 							?>
 							<a class="item" href="<?= $alarm_url ?>"><?= $alarm_msg ?></a>

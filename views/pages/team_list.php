@@ -20,11 +20,20 @@ if ($q) {
 	$search_query = "";
 }
 
+if($_SESSION['lang'] == "en"){
+	$lang_title = "Team List";
+	$lang_join = "Join";
+	$lang_register = "Register Team";
+}else{
+	$lang_title = "팀 리스트";
+	$lang_join = "팀원 구하기";
+	$lang_register = "팀 등록";
+}
 ?>
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;">팀 리스트</h2>
-    <a href="/public/team_new" class="ui right floated blue button">팀 등록</a>
-    <a href="/public/board_list?board_id=together" class="ui right floated blue button">팀원 구하기</a>
+    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_title ?></h2>
+    <a href="/public/team_new" class="ui right floated blue button"><?= $lang_register ?></a>
+    <a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
 </div>
 
 <form class="ui clearing segment selene-basic">

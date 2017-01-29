@@ -7,6 +7,7 @@ $cquery = mysql_query("SELECT *
 $current_step = 'manage_user_tools';
 
 if($_GET['company']) $_SESSION['company'] = $_GET['company'];
+
 ?>
 <div class="ui container">
 	<div class="clearfix">
