@@ -29,6 +29,8 @@
     $mail = new PHPMailer;
     //Tell PHPMailer to use SMTP
 
+    $mail->CharSet = "euc-kr";
+    $mail->Encoding = "base64";
     $mail->isSMTP();
 
     //Enable SMTP debugging
@@ -73,14 +75,14 @@
 
 
     //Set the subject line
-    $mail->Subject = $title;
+    $mail->Subject = iconv("UTF-8" , "EUC-KR" , $title);
     //Read an HTML message body from an external file, convert referenced images to embedded,
     //convert HTML into a basic plain-text alternative body
 
     $mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 
     //Replace the plain text body with one created manually
-    $mail->Body = $content;
+    $mail->Body = iconv("UTF-8" , "EUC-KR" , $content);
 
     //Attach an image file
     //$mail->addAttachment('images/phpmailer_mini.png');

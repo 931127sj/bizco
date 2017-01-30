@@ -7,17 +7,17 @@
         padding : 0px;
     }
 
-    .sixth .ui.huge.primary.button{
+    .footer .ui.huge.primary.button{
         width : 400px;
         height : 100px;
         font-size : 2.42857143rem;
-        margin-top: 1850px;
+        margin-top: 100px;
     }
     
     .fourth.ui.basic.segment{
         padding : 0px;
         margin-top : -50px;
-        height : 685px;
+        height : 405px;
     }
     
     .fixed.menu
@@ -157,7 +157,7 @@
 </script>
 
 <div class = "ui vertical masthead basic center aligned segment" style = "min-width : 1280px; margin-top : -100px; padding-bottom : 0px !important;">
-    <div class = "ui main container" style = "min-width : 1280px !important; min-height : 7450px">
+    <div class = "ui main container" style = "min-width : 1280px !important;">
         <div class = "first ui basic segment" style = "width : 100%; height : 750px" id = "first">
             <div class = "ui first images" style = "margin-top : 435px">
                 <?php
@@ -165,9 +165,9 @@
                     {
                 ?>
                         <div class = "image">
-                            <img src="../../assets/css/icon<?php echo $i?>.png" data-src="../../assets/css/icon<?php echo $i?>.png" class = "transition hidden" style = "margin-right : 15px">
+                            <img src="../../assets/css/icon<?php echo $i?>.png" data-src="../../assets/css/icon<?php echo $i?>.png" class = "transition hidden" style = "margin-right : 30px">
                         </div>
-                        <i class = "angle right icon" style = "margin-right : 15px"></i>
+                        <!--<img src="../../assets/css/right_arrow.png" class = "transition hidden" style = "margin-right : 15px; margin-top : -157px">-->
                 <?php
                     }
                 ?>
@@ -182,16 +182,16 @@
             </div>
         </div>
         
-        <div class = "third ui header" style = "height : 400px" id = "third"></div>
+        <div class = "third ui header" style = "height : 300px" id = "third"></div>
         <div class = "third ui basic segment">
             <div class = "ui step images">
                 <img src="../../assets/css/step1.png" data-src="../../assets/css/step1.png" class = "transition hidden">
-                <img src="../../assets/css/step2.png" data-src="../../assets/css/step2.png" class = "transition hidden">
-                <img src="../../assets/css/step3.png" data-src="../../assets/css/step3.png" class = "transition hidden">
+                <img src="../../assets/css/step2.png" data-src="../../assets/css/step2.png" class = "transition hidden" style = "margin-top : -13px">
+                <img src="../../assets/css/step3.png" data-src="../../assets/css/step3.png" class = "transition hidden" style = "margin-top : -23px">
             </div>
         </div>
         
-        <div class = "fourth ui header" style = "height : 275px" id = "fourth"></div>
+        <div class = "fourth ui header" style = "height : 210px; margin-top : -30px" id = "fourth"></div>
         <div class = "fourth ui basic segment">
             <div class="ui secondary menu" style = "padding-top : 55px; padding-left : 182px">
                 <a class="active item" data-tab="1">1</a>
@@ -237,7 +237,7 @@
             <div class="ui tab basic segment" data-tab="11"></div>
         </div>
         
-        <div class = "fifth ui header" style = "height : 300px" id = "fifth"></div>
+        <div class = "fifth ui header" style = "height : 320px" id = "fifth"></div>
         
         <div class = "fifth ui basic segment">
             <div class = "auto ui shape">
@@ -269,6 +269,16 @@
         </div>
         
         <div class = "sixth ui basic segment">
+            <img src="../../assets/css/sixth_header.png" style = "margin-top : 790px">
+            <div class = "ui sixth images" style = "margin-top : 30px">
+                <img src="../../assets/css/sixth_chart1.png" class = "transition hidden" style = "margin-right : 30px">
+                <img src="../../assets/css/sixth_chart2.png" class = "transition hidden" style = "margin-right : 30px">
+                <img src="../../assets/css/sixth_chart3.png" class = "transition hidden" style = "margin-right : 30px">
+            </div>
+            <img src="../../assets/css/sixth_footer.png">
+        </div>
+        
+        <div class = "footer ui basic segment">  
             <div class="ui huge primary animated fade button " onclick = "location.href = '/public/auth.php'" id = "footer">
                 <div class="visible content">함께하기</div>
                 <div class="hidden content">지금 바로!</div>
