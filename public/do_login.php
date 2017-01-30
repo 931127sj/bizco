@@ -3,16 +3,25 @@ require '_common.php';
 $id = $_POST['email'];
 $password = $_POST['password'];
 
+if($_SESSION['lang'] == 'en'){
+	$err_required_email = "E-mail is a required field.";
+	$err_required_pw = "Password is a required field.";
+	$err_exist = "It does not exist.";
+}else{
+	$err_required_email = "이메일은 필수입력 사항입니다.";
+	$err_required_pw = "비밀번호는 필수입력 사항입니다.";
+	$err_exist = "존재하지 않는 아이디 혹은 비밀번호 입니다.";
+}
 
 //  유효성 check
 if($id == '') {
-	msg("아이디는 필수입력 사항입니다.");
-		back();
+	msg($err_required_email);
+	back();
 	exit();
 }
 if($password == '') {
-	msg("비밀번호는 필수입력 사항입니다.");
-		back();
+	msg($err_required_pw);
+	back();
 	exit();
 }
 
@@ -26,11 +35,11 @@ $company_info_data = mysql_fetch_array($company_info);
 
 
 if($user_info_rows <= 0){
-	msg("존재하지 않는 아이디 혹은 비밀번호 입니다.");
+	msg($err_exist);
 	back();
 	exit();
 } else if(hash("sha256",$user_info_data["salt"].$password) != $user_info_data["password"]) {
-	msg("존재하지 않는 아이디 혹은 비밀번호 입니다.");
+	msg($err_exist);
 	back();
 	exit();
 } else if($user_info_data["level"] == 1) {

@@ -57,20 +57,38 @@ function echoAssets($arr) {
  * SNS처럼 보기 쉬운 날짜 형식으로 변환해주는 함수
  */
 function dateToSNSString($datetime) {
+    if($_SESSION['lang'] == 'en'){
+      $lang_now = "Now";
+      $lang_minute = "minute ago";
+      $lang_hour = "hour ago";
+      $lang_day = "day ago";
+      $lang_week = "week ago";
+      $lang_month = "month ago";
+      $lang_year = "year ago";
+    }else{
+      $lang_now = "방금";
+      $lang_minute = "분 전";
+      $lang_hour = "시간 전";
+      $lang_day = "일 전";
+      $lang_week = "주 전";
+      $lang_month = "개월 전";
+      $lang_year = "년 전";
+    }
+
     $sec = time() - strtotime($datetime);
-    if($sec < 60) return '방금';
+    if($sec < 60) return $lang_now;
         $min = $sec / 60;
-    if($min < 60) return intval($min) . '분 전';
+    if($min < 60) return intval($min) . $lang_minute;
         $hour = $min / 60;
-    if($hour < 24) return intval($hour) . '시간 전';
+    if($hour < 24) return intval($hour) . $lang_hour;
         $day = $hour / 24;
-    if($day < 7) return intval($day) . '일 전';
+    if($day < 7) return intval($day) . $lang_day;
         $week = $day / 7;
-    if($time < 5) return intval($week) . '주 전';
+    if($time < 5) return intval($week) . $lang_week;
         $month = $day / 30;
-    if($month < 24) return intval($month) . '개월 전';
+    if($month < 24) return intval($month) . $lang_month;
         $year = $day / 365;
-    return intval($year) . '년 전';
+    return intval($year) . $lang_year;
 }
 
 
@@ -85,4 +103,3 @@ function sendMail($to, $emails, $subject, $content) {
 function xssHtmlProtect($string) {
     return nl2br(htmlspecialchars(trim($string)));
 }
-

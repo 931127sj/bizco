@@ -1,6 +1,31 @@
 <?php
 require '_common.php';
 require '../librarys/image_resize/class.image.php';
+
+if($_SESSION['lang'] == 'en'){
+  $err_image = "Only JPEG or PNG images can be uploaded.";
+  $err_msg1 = "The maximum upload capacity has been exceeded.";
+  $err_msg2 = "The maximum upload capacity has been exceeded.";
+  $err_msg3 = "Only part of the file has been uploaded.";
+  $err_msg4 = "No uploaded file.";
+  $err_msg5 = "";
+  $err_msg6 = "No temporary folders available.";
+  $err_msg7 = "Can not save to disk.";
+  $err_msg8 = "File upload stopped.";
+  $err_msg9 = "A system error has occurred.";
+}else{
+  $err_image = "JPEG 또는 PNG 이미지만 업로드 가능합니다.";
+  $err_msg1 = "업로드 최대용량을 초과하였습니다.";
+  $err_msg2 = "업로드 최대용량을 초과하였습니다.";
+  $err_msg3 = "파일 일부만 업로드 되었습니다.";
+  $err_msg4 = "업로드된 파일이 없습니다.";
+  $err_msg5 = "";
+  $err_msg6 = "사용가능한 임시폴더가 없습니다.";
+  $err_msg7 = "디스크에 저장할수 없습니다.";
+  $err_msg8 = "파일 업로드가 중지되었습니다.";
+  $err_msg9 = "시스템 오류가 발생하였습니다.";
+}
+
 function extraction($extensions) {
     $return = false;
     if(strlen($extensions) === strcspn($extensions, "\\/:*?\"'<>|\n\t\r\x0\x0B"))  {
@@ -40,7 +65,7 @@ function uploadImage($param, $dir) {
 				copy("../data/$dir/$uid.$ex", "../data/$dir/real_$uid.$ex");
 			} //if , move_uploaded_file
 		} else {
-			msg('JPEG 또는 PNG 이미지만 업로드 가능합니다.');
+			msg($err_image);
 			back();
 			exit();
 		}//if , inarray
@@ -49,28 +74,28 @@ function uploadImage($param, $dir) {
 		// 실패 내용 출력
 		switch ($_FILES[$param]['error']) {
 			case 1:
-				$msg = '업로드 최대용량을 초과하였습니다.';
+				$msg = $err_msg1;
 				break;
 			case 2:
-				$msg ='업로드 최대용량을 초과하였습니다.';
+				$msg = $err_msg2;
 				break;
 			case 3:
-				$msg ='파일 일부만 업로드 되었습니다.';
+				$msg = $err_msg3;
 				break;
 			case 4:
-				$msg ='업로드된 파일이 없습니다.';
+				$msg = $err_msg4;
 				break;
 			case 6:
-				$msg ='사용가능한 임시폴더가 없습니다.';
+				$msg = $err_msg6;
 				break;
 			case 7:
-				$msg ='디스크에 저장할수 없습니다.';
+				$msg = $err_msg7;
 				break;
 			case 8:
-				$msg ='파일 업로드가 중지되었습니다.';
+				$msg = $err_msg8;
 				break;
 			default:
-				$msg ='시스템 오류가 발생하였습니다.';
+				$msg = $err_msg9;
 				break;
 		} // switch
 

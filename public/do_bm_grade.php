@@ -8,8 +8,16 @@ $user_idx = $_SESSION['idx'];
 $user_name = $_SESSION['name'];
 $datetime = date("Y-m-d H:i:s",time());
 
+if($_SESSION['lang'] == 'en'){
+	$err_required = "Enter all requirements.";
+	$lang_msg = "Registration of first impression assessment is completed.";
+}else{
+	$err_required = "모든 항목을 입력하세요.";
+	$lang_msg = "첫인상평가 등록이 완료되었습니다.";
+}
+
 if($score == '' || $summary == '' || $opinion == '') {
-	msg("모든 항목을 입력하세요");
+	msg($err_required);
 	back();
 	exit();
 }
@@ -45,10 +53,10 @@ if($bm_data['user_idx'] != $_SESSION['idx']){
 
 
 if($_GET['board_id']){
-	msg("첫인상평가 등록이 완료되었습니다.");
+	msg($lang_msg);
 	req_move('bm_grade?board_id=business_model&article_id='.$article_id);
 }else{
-	msg("첫인상평가 등록이 완료되었습니다.");
+	msg($lang_msg);
 	req_move("cur_step?step=2#bm_grade");
 }
 ?>

@@ -13,8 +13,14 @@ $to_user_query = mysql_query("SELECT `name` FROM `user` WHERE idx = {$to_user_id
 $to_user_data = mysql_fetch_array($to_user_query);
 $to_user_name = $to_user_data['name'];
 
+if($_SESSION['lang'] == 'en'){
+	$lang_msg = "Enter your comment";
+}else{
+	$lang_msg = "댓글을 입력하세요";
+}
+
 if($content == '') {
-	msg("댓글을 입력하세요");
+	msg("{$lang_msg}");
 	back();
 	exit();
 }

@@ -8,8 +8,14 @@ $parent_idx = $_POST['parent_idx'];
 $datetime = date("Y-m-d H:i:s",time());
 $company_id = $_SESSION['company'];
 
+if($_SESSION['lang'] == 'en'){
+	$lang_msg = "Enter your comment";
+}else{
+	$lang_msg = "댓글을 입력하세요";
+}
+
 if($content == '') {
-	msg("댓글을 입력하세요");
+	msg("{$lang_msg}");
 	back();
 	exit();
 }

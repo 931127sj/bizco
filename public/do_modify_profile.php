@@ -1,6 +1,33 @@
 <?php
 require '_common.php';
 require '../librarys/image_resize/class.image.php';
+
+if($_SESSION['lang'] == 'en'){
+  $err_image = "Only JPEG or PNG images can be uploaded.";
+  $err_msg1 = "The maximum upload capacity has been exceeded.";
+  $err_msg2 = "The maximum upload capacity has been exceeded.";
+  $err_msg3 = "Only part of the file has been uploaded.";
+  $err_msg4 = "No uploaded file.";
+  $err_msg5 = "";
+  $err_msg6 = "No temporary folders available.";
+  $err_msg7 = "Can not save to disk.";
+  $err_msg8 = "File upload stopped.";
+  $err_msg9 = "A system error has occurred.";
+  $lang_msg = "Your profile photo has been changed successfully.";
+}else{
+  $err_image = "JPEG 또는 PNG 이미지만 업로드 가능합니다.";
+  $err_msg1 = "업로드 최대용량을 초과하였습니다.";
+  $err_msg2 = "업로드 최대용량을 초과하였습니다.";
+  $err_msg3 = "파일 일부만 업로드 되었습니다.";
+  $err_msg4 = "업로드된 파일이 없습니다.";
+  $err_msg5 = "";
+  $err_msg6 = "사용가능한 임시폴더가 없습니다.";
+  $err_msg7 = "디스크에 저장할수 없습니다.";
+  $err_msg8 = "파일 업로드가 중지되었습니다.";
+  $err_msg9 = "시스템 오류가 발생하였습니다.";
+  $lang_msg = "프로필 사진이 정상적으로 변경되었습니다.";
+}
+
 function extraction($extensions) {
     $return = false;
     if(strlen($extensions) === strcspn($extensions, "\\/:*?\"'<>|\n\t\r\x0\x0B"))  {
@@ -24,41 +51,40 @@ if (isset($_FILES['profile']) && !$_FILES['profile']['error']) {
 		if (move_uploaded_file ($_FILES['profile']['tmp_name'], "../data/profile_thumb/$uid.$ex")) {
 		} //if , move_uploaded_file
 	} else {
-		echo 'JPEG 또는 PNG 이미지만 업로드 가능합니다.';
+		msg($err_image);
 		exit();
 	}//if , inarray
 } //if , isset
 if ($_FILES['profile']['error'] > 0) {
-	echo '<p>파일 업로드 실패 이유: <strong>';
-	// 실패 내용 출력
-	switch ($_FILES['profile']['error']) {
-		case 1:
-			echo '업로드 최대용량 초과';
-			break;
-		case 2:
-			echo '업로드 최대용량 초과';
-			break;
-		case 3:
-			echo '파일 일부만 업로드 됨';
-			break;
-		case 4:
-			echo '업로드된 파일이 없음';
-			break;
-		case 6:
-			echo '사용가능한 임시폴더가 없음';
-			break;
-		case 7:
-			echo '디스크에 저장할수 없음';
-			break;
-		case 8:
-			echo '파일 업로드가 중지됨';
-			break;
-		default:
-			echo '시스템 오류가 발생';
-			break;
-	} // switch
-
-	exit();
+  switch ($_FILES[$param]['error']) {
+    case 1:
+      $msg = $err_msg1;
+      break;
+    case 2:
+      $msg = $err_msg2;
+      break;
+    case 3:
+      $msg = $err_msg3;
+      break;
+    case 4:
+      $msg = $err_msg4;
+      break;
+    case 6:
+      $msg = $err_msg6;
+      break;
+    case 7:
+      $msg = $err_msg7;
+      break;
+    case 8:
+      $msg = $err_msg8;
+      break;
+    default:
+      $msg = $err_msg9;
+      break;
+  } // switch
+  msg($msg);
+  back();
+  exit();
 } // if
 
 if (file_exists ($_FILES['profile']['tmp_name']) && is_file($_FILES['profile']['tmp_name']) ) {
@@ -100,4 +126,4 @@ $thumb->save();
 //db url 삽입
 $rq = mysql_query("UPDATE  `user` SET  `profile` = '$uid.$ex' WHERE  `idx` =$uid;");
 
-echo "프로필 사진이 정상적으로 변경되었습니다.";
+msg($lang_msg);

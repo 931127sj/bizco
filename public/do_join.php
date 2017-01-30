@@ -18,34 +18,60 @@ $sex = $_POST['sex'];
 $birth = (string)$_POST['year'] .(string)$_POST['month'] .(string)$_POST['day'];
 $job = $_POST['job'];
 //var_dump($_POST);
+
+if($_SESSION['lang'] == 'en'){
+	$err_required_email = "E-mail is a required field.";
+	$err_required_name = "Name is a required field.";
+	$err_required_pw = "Password is a required field.";
+	$err_required_repw = "Re-verification of your password is required.";
+	$err_required_phone = "Phone is a required field.";
+	$err_required_job = "Job is a required field.";
+	$err_required_type = "Motivation is a required field.";
+	$err_required_pro = "Progress is a required field.";
+	$err_not_match = "Password and password verification are different.";
+	$lang_msg = "User registration completed.";
+
+}else{
+	$err_required_email = "이메일은 필수입력 사항입니다.";
+	$err_required_name = "이름은 필수입력 사항입니다.";
+	$err_required_pw = "비밀번호는 필수입력 사항입니다.";
+	$err_required_repw = "비밀번호 재확인은 필수입력 사항입니다.";
+	$err_required_phone = "연락처는 필수입력 사항입니다.";
+	$err_required_job = "직업은 필수입력 사항입니다.";
+	$err_required_type = "참여 동기는 필수입력 사항입니다.";
+	$err_required_pro = "진행사항은 필수입력 사항입니다.";
+	$err_not_match = "비밀번호와 비밀번호 확인이 다릅니다.";
+	$lang_msg = "사용자 등록을 완료했습니다.";
+}
+
 //  유효성 check
 if($email == '') {
-	msg("이메일은 필수입력 사항입니다.");
+	msg($err_required_email);
 	back();
 	exit();
 }
 if($name == '') {
-	msg("이름은 필수입력 사항입니다.");
+	msg($err_required_name);
 		back();
 	exit();
 }
 if($password == '') {
-	msg("비밀번호는 필수입력 사항입니다.");
+	msg($err_required_pw);
 		back();
 	exit();
 }
 if($password_re == '') {
-	msg("비밀번호재확인은 필수입력 사항입니다.");
+	msg($err_required_repw);
 		back();
 	exit();
 }
 if($phone == '') {
-	msg("연락처는 필수입력 사항입니다.");
+	msg($err_required_phone);
 		back();
 	exit();
 }
 if($job == '') {
-	msg("직업은 필수입력 사항입니다.");
+	msg($err_required_job);
 		back();
 	exit();
 }
@@ -62,18 +88,18 @@ if($position == '') {
 }
 */
 if($join_type == '') {
-	msg("창여 동기는 필수입력 사항입니다.");
+	msg($err_required_type);
 		back();
 	exit();
 }
 
 if($progress == '') {
-	msg("진행사항은 필수입력 사항입니다.");
+	msg($err_required_pro);
 		back();
 	exit();
 }
 if($password != $password_re) {
-	msg("비밀번호와 비밀번호 확인이 다릅니다.");
+	msg($err_not_match);
 		back();
 	exit();
 }
@@ -142,9 +168,9 @@ $result = mysql_query("INSERT INTO  `user` (
 						`level`,
 						`team_id`,
 						`phone`,
-                        `sex`,
-                        `birthday`,
-                        `job`
+            `sex`,
+            `birthday`,
+            `job`
 						)
 						VALUES (
 						NULL ,  '$email',  '$name',  '$password',  '$company', '$team_id',  '$join_type', '$part', '$history', '$skills',
@@ -152,5 +178,5 @@ $result = mysql_query("INSERT INTO  `user` (
 						);
 						") or die(mysql_error());
 
-msg("사용자 등록을 완료했습니다.");
+msg($lang_msg);
 req_redirect_js("");

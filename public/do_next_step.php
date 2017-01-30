@@ -8,6 +8,16 @@ $step_count = mysql_num_rows($step);
 $step_data = mysql_fetch_array($step);
 $is_avaliable_step = true;
 
+if($_SESSION['lang'] == 'en'){
+	$lang_msg = "Successfully proceeded to the next stage.";
+	$lang_fail1 = "The next step failed. Make sure you've completed all the assignments.";
+	$lang_fail2 = "The next step failed! Please contact the management team.";
+}else{
+	$lang_msg = "다음단계로 진입에 성공하였습니다.";
+	$lang_fail1 = "다음단계 진입에 실패했습니다. 모든 과제를 완료하였나 확인하세요.";
+	$lang_fail2 = "다음단계 진입에 실패했습니다! 운영진에게 문의하세요.";
+}
+
 
 if($step_count >= 1) {
 	$current_step = $step_data['current_step_idx'];
@@ -40,16 +50,14 @@ if($step_count >= 1) {
 	}
 
 	if($is_avaliable_step) {
-		msg("다음단계로 진입에 성공하였습니다.");
+		msg($lang_msg);
 		$rq = mysql_query("UPDATE  `user_step_relation` SET  `current_step_idx` =  '".($current_step+1)."' WHERE  `user_step_relation`.`user_idx` =".$_SESSION['idx'].";");
 		req_redirect_js("cur_step");
 	} else {
-		msg( "다음단계 진입에 실패했습니다. 모든 과제를 완료하였나 확인하세요.");
+		msg($lang_fail1);
 		back();
 	}
 } else {
-	msg("다음단계 진입에 실패했습니다! 운영진에게 문의하세요.");
+	msg($lang_fail2);
 	back();
 }
-
-

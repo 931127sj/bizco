@@ -13,8 +13,20 @@ $company_id = $_SESSION['company'];
 $user_idx		= $_SESSION['idx'];
 $user_name	= $_SESSION['name'];
 
+if($_SESSION['lang'] == 'en'){
+	$err_required = "Please enter all required information.";
+	$err_mutiple = "Team registration failed; create multiple teams per account.";
+	$err_duplicate = "Team registration failed; duplicate team name.";
+	$lang_msg = "Team registration succeeded.";
+}else{
+	$err_required = "필수정보를 모두 입력하세요.";
+	$err_mutiple = "팀 이름이 중복됩니다.";
+	$err_duplicate = "이전에 생성한 팀이 있습니다.";
+	$lang_msg = "팀 등록에 성공하였습니다.";
+}
+
 if($team_name == NULL || $team_member == NULL || $bm == NULL) {
-	msg("필수정보를 모두 입력하세요.");
+	msg($err_required);
 	back();
 	exit();
 }
@@ -48,7 +60,7 @@ else
 {
 	$chk = mysql_num_rows(mysql_query("SELECT `idx` FROM `team` WHERE `name` = {$team_name} AND `company_id` = {$company_id}"));
 	if($chk){
-		msg("팀 이름이 중복됩니다.");
+		msg($err_duplicate);
 		back();
 	}else{
 		$result = mysql_query("INSERT INTO  `team` (
@@ -74,10 +86,10 @@ else
 		mysql_query("UPDATE `user` SET `team_idx` = '{$team_idx}', `level`=3 WHERE idx = ".$_SESSION['idx']);
 
 		if($result){
-			msg("팀 등록에 성공하였습니다.");
+			msg($lang_msg);
 			req_move("team_list");
 		}else{
-			msg("이전에 생성한 팀이 있습니다.");
+			msg($err_mutiple);
 			req_move("team_list");
 		}
 	}

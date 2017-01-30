@@ -14,6 +14,16 @@ $user_name = $_POST['name'] ? $_POST['name'] :$_SESSION['name'];
 
 $datetime = date("Y-m-d H:i:s",time());
 
+if($_SESSION['lang'] == 'en'){
+	$err_required_subject = "Please enter the subject.";
+	$err_required_contents = "Please enter contents.";
+	$lang_msg = "Completed.";
+}else{
+	$err_required_subject = "제목을 입력해주세요.";
+	$err_required_contents = "내용을 입력해주세요.";
+	$lang_msg = "게시물을 저장했습니다.";
+}
+
 if($step_id > 0){
 	$step = mysql_fetch_array(mysql_query("SELECT `step_seq` FROM `curriculum_step` WHERE `idx` = '{$step_id}'"));
 	$step_seq = $step['step_seq'];
@@ -22,12 +32,12 @@ if($step_id > 0){
 }
 
 if(! $title) {
-	msg('제목을 입력해주세요');
+	msg($err_required_subject);
 	back();
 	exit();
 }
 if(! trim(strip_tags(str_replace("&nbsp;"," ",$content)))) {
-	msg('내용을 입력해주세요.');
+	msg($err_required_contents);
 	back();
 	exit();
 }
@@ -199,7 +209,7 @@ for($i = 0; $i <= 2; $i++) {
 }
 
 
-msg("게시물을 저장했습니다.");
+msg($lang_msg);
 
 if ($_POST['redirect'] != '') {
 	req_move($_POST['redirect']);

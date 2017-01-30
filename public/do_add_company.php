@@ -12,21 +12,31 @@ if($lang == 'en'){
 	$board = "Downloads";
 	$together = "Together";
 	$curriculum = "Curriculum";
+
+	$enter_name_msg = "Please enter a program name.";
+	$enter_id_msg = "Please enter a program ID.";
+	$open_msg = " program has been opened.";
+	$use_msg = "This is the program ID already in use.";
 }else{
 	$notice = "공지사항";
 	$bml = "비지니스 모델 리스트";
 	$board = "자료실";
 	$together = "함께해요";
 	$curriculum = "커리큘럼";
+
+	$enter_name_msg = "프로그램 이름을 입력해 주세요.";
+	$enter_id_msg = "프로그램 아이디를 입력해 주세요.";
+	$open_msg = " 프로그램이 개설되었습니다.";
+	$use_msg = "이미 사용되고 있는 프로그램 아이디 입니다.";
 }
 
 
 if(!$company_name){
-	msg("프로그램 이름을 입력해 주세요.");
+	msg("{$enter_name_msg}");
 	back();
 	exit();
 }else if(!$company_id){
-	msg("프로그램 아이디를 입력해 주세요.");
+	msg("{$enter_id_msg}");
 	back();
 	exit();
 }
@@ -129,10 +139,10 @@ if($check == 0){
 				`write_datetime`, `youtube_link`, `youtube_duration_sec`, `priority`, `user_name`
 		FROM `startup`.`article` WHERE `company_id` = '{$curriculum_id}' AND `board_id` = '{$step_board_id}'");
 
-	msg("{$company_name} 프로그램이 개설되었습니다.");
+	msg("{$company_name}{$open_msg}");
 	req_move("manage_company");
 }else{
-	msg("이미 사용되고 있는 프로그램 아이디 입니다.");
+	msg("{$use_msg}");
 	back();
 	exit();
 }

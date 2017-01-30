@@ -4,8 +4,16 @@ require '_common.php';
 $pw_old	=	$_POST['password_old'];
 $pw		=	$_POST['password'];
 
+if($_SESSION['lang'] == 'en'){
+	$err_required = "Please enter all required.";
+	$err_not_match = "Your current passwords do not match.";
+}else{
+	$err_required = "비밀번호를 입력 해 주세요.";
+	$err_not_match = "해당 프로그램은 삭제할 수 없습니다.";
+}
+
 if(strlen($pw) == 0 || strlen($pw_check)){
-	echo("비밀번호를 입력 해 주세요.");
+	echo($err_required);
 	exit();
 }
 
@@ -14,9 +22,9 @@ $user_info= mysql_query("SELECT * FROM  `user` WHERE  `idx` =  '".$_SESSION['idx
 $user_info_rows = mysql_num_rows($user_info);
 $user_info_data = mysql_fetch_array($user_info);
 if($user_info_rows <= 0){
-	echo("현재 비밀번호가 일치하지 않습니다.");
+	echo($err_not_match);
 } else if(hash("sha256",$user_info_data["salt"].$pw_old) != $user_info_data["password"]) {
-	echo("현재 비밀번호가 일치하지 않습니다.");
+	echo($err_not_match);
 } else {
 
 // salt생성

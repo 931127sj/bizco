@@ -5,9 +5,15 @@ $article_id = $_GET['article_id'];
 $board_id = $_GET['board_id'];
 $board_type = $_GET['board_type'];
 
+if($_SESSION['lang'] == 'en'){
+	$lang_msg = "Your post has been deleted.";
+}else{
+	$lang_msg = "게시물이 삭제되었습니다.";
+}
+
 mysql_query("DELETE FROM `article` WHERE `idx` = $article_id");
 
-msg("게시물이 삭제되었습니다.");
+msg($lang_msg);
 
 if($board_id == 'business_model'){
 	req_move("bm_list?id={$board_id}");

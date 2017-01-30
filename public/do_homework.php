@@ -3,6 +3,16 @@ require '_common.php';
 $idx = $_GET['idx'];
 $company_id = $_SESSION['company'];
 
+if($_SESSION['lang'] == 'en'){
+	$err_videos = "Please watch all videos.";
+	$err_discuss = "You must complete at least one comment to complete the assignment.";
+	$lang_msg = "Completed the assignment!";
+}else{
+	$err_videos = "동영상을 모두 시청해주세요.";
+	$err_discuss = "의견을 1개 이상 작성해야 과제를 완료할 수 있습니다.";
+	$lang_msg = "과제를 완료했습니다!";
+}
+
 // 동영상 시청확인
 $article = mysql_query("SELECT *
 FROM  `article`
@@ -23,7 +33,7 @@ $honework_time = $homework_data['complete_sec'];
 
 //과제완료시
 if(($honework_time + 5) < $youtube_time) {
-	msg("동영상을 모두 시청해주세요.");
+	msg($err_videos);
 	back();
 	exit();
 }
@@ -48,9 +58,9 @@ if($comment_count > 0) {
 	VALUES (
 	NULL ,  '".$_SESSION['idx']."',  '$idx',  '1',  ''
 	);");
-	msg("과제를 완료했습니다!");
+	msg($lang_msg);
 	req_redirect_js("cur_step");
 } else {
-	msg("의견을 1개 이상 작성해야 과제를 완료할 수 있습니다.");
+	msg($err_discuss);
 	back();
 }

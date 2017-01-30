@@ -7,6 +7,16 @@ $article_id	= $_GET['id'];
 $article = mysql_query("SELECT * FROM  `article` WHERE  `idx` =$article_id");
 $article_data = mysql_fetch_array($article);
 
+if($_SESSION['lang'] == 'en'){
+	$err_top = "The current assignment is at the top.";
+	$err_bottom = "The current assignment is at the bottom.";
+	$lang_msg = "We've processed your request.";
+}else{
+	$err_top = "현재 과제가 제일 위에 있습니다.";
+	$err_bottom = "현재 과제가 제일 아래에 있습니다.";
+	$lang_msg = "요청하신 내용을 처리하였습니다.";
+}
+
 
 if($type == 0) {
 	$pri = mysql_query("SELECT *
@@ -21,7 +31,7 @@ if($type == 0) {
 
 
 	if(!(mysql_num_rows($pri) > 0)) {
-		msg("현재 과제가 제일 위에 있습니다.");
+		msg($err_top);
 		req_redirect_js("manage_step");
 		exit();
 	}
@@ -49,7 +59,7 @@ if($type == 0) {
 
 
 	if(!(mysql_num_rows($pri) > 0)) {
-		msg("현재 과제가 제일 아래에 있습니다.");
+		msg($err_bottom);
 		req_redirect_js("manage_step");
 		exit();
 	}
@@ -63,5 +73,5 @@ if($type == 0) {
 
 }
 
-msg("요청하신 내용을 처리하였습니다.");
+msg($lang_msg);
 req_redirect_js("manage_step");
