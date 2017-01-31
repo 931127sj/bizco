@@ -32,10 +32,12 @@ if ($order === 'hot') {
     $order_query = " ORDER BY  `article`.`idx` DESC ";
 }
 
-if ($board_id == "lading_question")
-    $where_query = ""
-else
-    $where_query = "WHERE  `article`.`company_id` =  '$company_id'"
+if ($board_id == "lading_question"){
+    $where_query = "";
+}else{
+    $where_query = "WHERE  `article`.`company_id` =  '$company_id'";
+}
+
 $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as grade_count, `be_data`.`content` as message, `bm_count`.`developer_count`, `bm_count`.`designer_count`, `bm_count`.`planner_count`
                               FROM  `article`
                               LEFT JOIN `bm_grade` as `bg`
@@ -47,7 +49,7 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
                               on `bm_count`.`article_idx` = `article`.`idx`
                               {$where_query}
                               AND  `article`.`board_id` =  'business_model'
-							  {$search_query}
+							                {$search_query}
                               GROUP BY `article`.`idx`
                               {$order_query}");
 

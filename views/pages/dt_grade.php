@@ -42,6 +42,8 @@ if($_SESSION['lang'] == "en"){
   $lang_discuss1 = "What if I say this business model in one word?";
   $lang_discuss2 = "Similar products / services and feedback";
   $lang_feedback = "Feedback";
+
+  $lang_title = "'s design thinking";
 }else{
   $lang_step1 = "1단계 공감하기";
   $lang_step2 = "2단계 문제정의";
@@ -57,6 +59,8 @@ if($_SESSION['lang'] == "en"){
   $lang_discuss1 = "이 비즈니스 모델을 한마디로 말 한다면?";
   $lang_discuss2 = "유사 제품/서비스 및 의견";
   $lang_feedback = "피드백";
+
+  $lang_title = "의 디자인씽킹";
 }
 ?>
 
@@ -67,7 +71,7 @@ if($_SESSION['lang'] == "en"){
 
 <div class="ui top attached tabular menu">
     <span class="item header"><?=xssHtmlProtect($article_data['title'])?></span>
-    <h2 class="ui header floated left" style="margin-bottom: 15px; margin-top: 5px;"><?=$list_user_data['name']?>의 디자인씽킹</h2>
+    <h2 class="ui header floated left" style="margin-bottom: 15px; margin-top: 5px;"><?=$list_user_data['name']?><?= $lang_title ?></h2>
 </div>
 
 <!-- Step -->
@@ -91,8 +95,8 @@ if($_SESSION['lang'] == "en"){
                     <?
                     if($article_data['user_idx'] == $_SESSION['idx']){
                     ?>
-                    <a class="mini ui button negative" href="/public/do_delete_dt.php?article_idx=<?=$article_data['idx']?>">삭제</a>
-                     <a class="mini ui button negative" href="/public/dt_modify?id=<?=$article_data['idx']?>" style="background-color: #00B5AD !important">수정</a>
+                    <a class="mini ui button negative" href="/public/do_delete_dt.php?article_idx=<?=$article_data['idx']?>"><?= $lang_delete ?></a>
+                     <a class="mini ui button negative" href="/public/dt_modify?id=<?=$article_data['idx']?>" style="background-color: #00B5AD !important"><?= $lang_modify ?></a>
                     <?
                     }
                     ?>

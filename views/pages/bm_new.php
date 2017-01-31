@@ -31,6 +31,8 @@ if($_SESSION['lang'] == "en"){
 	$lang_item = "Business item writing method";
 	$lang_references = "References: Dankook University Enternship";
 
+	$lang_character = " characters";
+
 }else{
 	$lang_mod_mybm = "내 비즈니스 모델 수정";
 	$lang_newbmr = "신규 비즈니스 모델 등록";
@@ -57,6 +59,8 @@ if($_SESSION['lang'] == "en"){
 
 	$lang_item = "사업아이템 작성법";
 	$lang_references = "참고자료: 단국대학교 엔턴십";
+
+	$lang_character = "자";
 }
 
 if($type == "edit") {
@@ -92,11 +96,11 @@ if($type == "edit") {
         <h3><i class="ui icon send outline"></i> <?= $lang_info ?></h3>
     </div>
     <div class="required field">
-        <label><?= $lang_subject ?> (15자)</label>
+        <label><?= $lang_subject ?> (15<?= $lang_character ?>)</label>
         <input type="text" name="title" placeholder="<?= $lang_subject ?>" value="<?=$article_data['title']; ?>">
     </div>
     <div class="required field">
-        <label><?= $lang_bm_keywords ?> (30자)</label>
+        <label><?= $lang_bm_keywords ?> (30<?= $lang_character ?>)</label>
         <input type="text" name="ex_message" placeholder="<?= $lang_bm_keywords ?>" value="<?=$extend_data['message']; ?>">
     </div>
     <!--<div class="field">

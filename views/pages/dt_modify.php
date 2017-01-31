@@ -161,7 +161,7 @@ if($_SESSION['lang'] == "en"){
             for($i = $i + 1; $i < count($datas); $i++){
                 if($datas[$i][0] == 'test'){
                     //echo $datas[$i][1]."<br>";
-                    echo '<div class="field"><textarea rows="2" name="test[]">'.$datas[$i][1].'</textarea><a onclick="removeThisField(this)">위의 칸 제거</a></div>';
+                    echo '<div class="field"><textarea rows="2" name="test[]">'.$datas[$i][1].'</textarea><a onclick="removeThisField(this)">'.$lang_remove.'</a></div>';
                 }
             }
         ?>
