@@ -57,10 +57,6 @@ if($_SESSION['lang'] == "en"){
         <input type="text" name="team_name" placeholder="<?= $lang_name ?>" value="<?=$tdata['name']; ?>">
     </div>
     <div class="required field">
-        <label><?= $lang_member ?></label>
-        <input type="text" name="team_member" placeholder="<?= $lang_member ?>" value="<?=$tdata['members']; ?>">
-    </div>
-    <div class="required field">
 
         <label><?= $lang_bm ?></label>
         <select name="bm" class="ui fluid dropdown" required>

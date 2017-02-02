@@ -1,6 +1,11 @@
 <?
 require_once(VIEW.'common/_language.php');
 
+if($_GET['article_id'] == ''){
+  msg("잘못된 접근입니다.");
+  back();
+}
+
 ////////// SERVER
 $board_id   = $_GET['board_id'];
 $article_id = $_GET['article_id'];

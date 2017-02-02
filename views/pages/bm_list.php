@@ -53,11 +53,11 @@ $article_query = mysql_query("SELECT `article`.*, floor(count(`bg`.`idx`)/2) as 
                               GROUP BY `article`.`idx`
                               {$order_query}");
 
-if($_SEESION['lang'] == 'en'){
+if($_SESSION['lang'] == 'en'){
   $lang_bml = "Business Model List";
   $lang_bmr = "Register B.M.";
   $lang_join = "Join";
-  $lang_ratings = "ratings";
+  $lang_ratings = " ratings";
 
 }else{
   $lang_bml = "비즈니스 모델 리스트";

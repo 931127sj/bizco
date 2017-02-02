@@ -1,9 +1,16 @@
 <?php
-
 require '_common.php';
 $article_id = $_GET['article_id'];
 $board_id = $_GET['board_id'];
 $board_type = $_GET['board_type'];
+
+if($board_id == 'business_model'){
+	$team_num = mysql_num_rows(mysql_query("SELECT `idx` FROM `team` WHERE `leader_idx` = ".$_SESSION['idx']));
+	if($team_num > 0){
+		msg("해당 비즈니스 모델을 사용하는 팀이 개설되어 있습니다.");
+		back();
+	}
+}
 
 if($_SESSION['lang'] == 'en'){
 	$lang_msg = "Your post has been deleted.";

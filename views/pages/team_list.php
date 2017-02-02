@@ -91,8 +91,21 @@ if($_SESSION['lang'] == "en"){
                 </div>
                 <div style="font-size:12px; color:#3f63bf">
                 	<a style=" color:#3f63bf"; href="/public/bm_grade?board_id=business_model&article_id=<?=$bm_data['idx']; ?>">@<?=$bm_data['title']; ?></a>
-				</div>
-                <div class="extra text" style="margin-top:10px;"><?=xssHtmlProtect($team_data['members'])?></div>
+								</div>
+                <div class="extra text" style="margin-top:10px;">
+								<?
+									$tm_query = mysql_query("SELECT `name`, `level` FROM `user` WHERE `team_idx` = {$team_data['idx']} ORDER BY `level` DESC");
+									$tm_num = mysql_num_rows($tm_query);
+									if($tm_num == 0) echo "{$team_data['members']}";
+									while($tm_data = mysql_fetch_array($tm_query)){
+											if($tm_data['level'] == 2){
+												echo ", {$tm_data['name']}";
+											}else{
+												echo "{$tm_data['name']} (Leader)";
+											}
+									}
+								?>
+								</div>
                 <!--
                 <div class="meta">
                     <a class="users">

@@ -210,6 +210,7 @@ if($_SESSION['lang'] == 'en'){
                     while($comment_data = mysql_fetch_array($comment_query)) {
 						$comment_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$comment_data['user_idx']);
 						$comment_user_data = mysql_fetch_array($comment_user_query);
+            $comment_idx = $comment_data['idx'];
 
 						/*$team_query = mysql_query("SELECT * FROM  `team` WHERE  `team_id` =  '".$comment_user_data['team_id']."'");
 						$team_data = mysql_fetch_array($team_query);*/
@@ -217,7 +218,7 @@ if($_SESSION['lang'] == 'en'){
                         //대댓글가져오기
                         $ccmt_query = mysql_query("SELECT *
                                             FROM  `comment`
-                                            WHERE  `article_idx` = $article_id AND `parent_idx` = ".$comment_data['idx']."
+                                            WHERE  `article_idx` = $article_id AND `parent_idx` = ".$comment_idx."
                                             ORDER BY  `comment`.`idx` ASC ");
                         $ccmt_count = mysql_num_rows($ccmt_query);
 					?>
@@ -230,7 +231,11 @@ if($_SESSION['lang'] == 'en'){
                             <div class="content">
                                 <a class="author"><? echo $comment_user_data['name']; ?></a>
                                 <div class="metadata">
-                                    <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open"><?= $lang_comments ?></a> <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?> <a href="#" onClick="del_comment('<? echo $comment_data['idx']; ?>');">삭제</a> <a href="#" onClick="modify_comment('<?=$comment_data['idx']; ?>','', '<?=$comment_data['content']; ?>');">수정</a><? } ?>
+                                    <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open"><?= $lang_submit ?></a>
+                                    <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
+                                      <a href="#" onClick="del_comment('<?= $comment_idx ?>');"><?= $lang_delete ?></a>
+                                      <a href="#" onClick="modify_comment('<?= $comment_idx ?>','', '<?=$comment_data['content']; ?>');"><?= $lang_modify ?></a>
+                                    <? } ?>
                                 </div>
                                 <div class="text">
                                     <? echo $comment_data['content'];  ?>
@@ -255,7 +260,11 @@ if($_SESSION['lang'] == 'en'){
                                     <div class="content">
                                         <a class="author"><? echo $comment_user_data['name']; ?></a>
                                         <div class="metadata">
-                                              &nbsp;&nbsp;<? if($_SESSION['idx'] == $comment_user_data['idx']) { ?> <a href="#" onClick="del_comment('<? echo $ccmt_data['idx']; ?>');">삭제</a> <a href="#" onClick="modify_comment('<?=$ccmt_data['idx']; ?>','<?=$ccmt_data['parent_idx']; ?>', '<?=$ccmt_data['content']; ?>');">수정</a><? } ?>
+                                              &nbsp;&nbsp;
+                                              <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
+                                                <a href="#" onClick="del_comment('<? echo $ccmt_data['idx']; ?>');"><?= $lang_delete ?></a>
+                                                <a href="#" onClick="modify_comment('<?=$ccmt_data['idx']; ?>','<?=$ccmt_data['parent_idx']; ?>', '<?=$ccmt_data['content']; ?>');"><?= $lang_modify ?></a>
+                                              <? } ?>
                                         </div>
                                         <div class="text">
                                             <? echo $ccmt_data['content'];  ?>

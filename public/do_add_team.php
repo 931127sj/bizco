@@ -25,7 +25,7 @@ if($_SESSION['lang'] == 'en'){
 	$lang_msg = "팀 등록에 성공하였습니다.";
 }
 
-if($team_name == NULL || $team_member == NULL || $bm == NULL) {
+if($team_name == NULL || $bm == NULL) {
 	msg($err_required);
 	back();
 	exit();
@@ -48,7 +48,6 @@ if($_POST['type'] == "edit")
 {
 	$result = mysql_query("UPDATE `team`
 	SET name = '{$team_name}' ,
-	members = '{$team_member}' ,
 	bm_idx = '{$bm}' ,
 	award = '{$award}' ,
 	history = '{$history}' ,
@@ -78,12 +77,12 @@ else
 				`leader_name`
 				)
 				VALUES (
-				NULL ,  '$company_id',  '$team_name',  '$user_idx','$team_member' ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime', '$user_name'
+				NULL ,  '$company_id',  '$team_name',  '$user_idx', NULL ,  '$bm',  '$award',  '$history',  '$ability',  '$progress',  '$datetime', '$user_name'
 				);
 				");
 
 		$team_idx = mysql_insert_id();
-		mysql_query("UPDATE `user` SET `team_idx` = '{$team_idx}', `level`=3 WHERE idx = ".$_SESSION['idx']);
+		mysql_query("UPDATE `user` SET `team_idx` = '{$team_idx}', `level`= 3 WHERE idx = ".$_SESSION['idx']);
 
 		if($result){
 			msg($lang_msg);

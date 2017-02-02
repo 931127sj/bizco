@@ -20,7 +20,7 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
             <input type="text" name="q" placeholder="프로그램 찾기" value="<?=$q?>">
             <i class="search link icon"></i>
         </div>
-        <button class="ui button">검색</button>
+        <button class="ui button"><?= $lang_search ?></button>
     </form>
 
     <table class="ui celled compact striped table">
@@ -71,8 +71,8 @@ if($_GET['company']) $_SESSION['company'] = $_GET['company'];
                 ?>
                 </td>
 				<td class="text-align--center">
-					<button class="mini ui button blue" value="<?=$cdata['idx']?>" onClick="company_edit(this)">수정</button>
-					<button class="mini ui button red" value="<?=$cdata['idx']?>" onClick="check(this)">삭제</button>
+					<button class="mini ui button blue" value="<?=$cdata['idx']?>" onClick="company_edit(this)"><?= $lang_modify ?></button>
+					<button class="mini ui button red" value="<?=$cdata['idx']?>" onClick="check(this)"><?= $lang_delete ?></button>
 				</td>
             </tr>
             <? } ?>
