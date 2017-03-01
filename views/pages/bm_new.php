@@ -161,11 +161,11 @@ if($type == "edit") {
     </div>
     <div class="field inline">
         <label style="margin-left: 10px;"><?= $lang_recruitment ?> <?= $lang_developer ?></label>
-        <input type="number" style="width: 80px;" name="ex_recruit_developer" value="<?=($extend_data['recruit_developer']!='')?$extend_data['recruit_developer']:"0"; ?>"> 명
+        <input type="number" style="width: 80px;" name="ex_recruit_developer" value="<?=($extend_data['recruit_developer']!='')?$extend_data['recruit_developer']:"0"; ?>"> <?= $lang_people ?>
         <label style="margin-left: 10px;"><?= $lang_designer ?></label>
-        <input type="number" style="width: 80px;" name="ex_recruit_designer" value="<?=($extend_data['recruit_designer']!='')?$extend_data['recruit_designer']:"0"; ?>"> 명
+        <input type="number" style="width: 80px;" name="ex_recruit_designer" value="<?=($extend_data['recruit_designer']!='')?$extend_data['recruit_designer']:"0"; ?>"> <?= $lang_people ?>
         <label style="margin-left: 10px;"><?= $lang_planner ?></label>
-        <input type="number" style="width: 80px;" name="ex_recruit_planner" value="<?=($extend_data['recruit_planner']!='')?$extend_data['recruit_planner']:"0"; ?>"> 명
+        <input type="number" style="width: 80px;" name="ex_recruit_planner" value="<?=($extend_data['recruit_planner']!='')?$extend_data['recruit_planner']:"0"; ?>"> <?= $lang_people ?>
     </div>
 
     <div class="ui divider"></div>

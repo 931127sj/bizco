@@ -214,7 +214,7 @@ small.ui.text {
 }
 
 a > .ui.horizontal.label {
-    width: 60px;
+    width: 80px;
     border-radius: 50em;
 }
 
@@ -357,10 +357,11 @@ h1.ui.top.attached.header.basic {
         padding: 36px 32px;
     }
 }
-.ui.bottom.attached.segment p{
-    padding:0;
-    margin:0;
-}
+
+.ui.bottom.attached.segment p {
+  padding: 0;
+  margin: 5px 0; }
+
 .ui.segments.basic {
     border-color: #eaeaea;
     border-radius: 0;

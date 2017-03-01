@@ -9,6 +9,7 @@ if($board_id == 'business_model'){
 	if($team_num > 0){
 		msg("해당 비즈니스 모델을 사용하는 팀이 개설되어 있습니다.");
 		back();
+		exit();
 	}
 }
 

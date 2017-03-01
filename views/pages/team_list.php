@@ -20,6 +20,8 @@ if ($q) {
 	$search_query = "";
 }
 
+$team_query = mysql_query("SELECT * FROM  `team` WHERE `company_id`='$company_id' {$search_query} ORDER BY `idx` DESC");
+
 if($_SESSION['lang'] == "en"){
 	$lang_title = "Team List";
 	$lang_join = "Join";
@@ -30,91 +32,61 @@ if($_SESSION['lang'] == "en"){
 	$lang_register = "팀 등록";
 }
 ?>
+
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_title ?></h2>
-    <a href="/public/team_new" class="ui right floated blue button"><?= $lang_register ?></a>
-    <a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
+    <h2 class="ui header" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_title ?></h2>
+</div>
+<div class="ui grid" style="margin-bottom: 30px;">
+  <div class="four wide column"></div>
+  <form class="eight wide column ui center aligned container">
+      <div class="ui icon input">
+          <input type="hidden" name="id" value="<?=$board_id?>">
+          <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
+          <i class="search link icon"></i>
+      </div>
+  </form>
+  <div class="right aligned four wide column">
+		<a href="/public/team_new" class="ui right floated blue button"><?= $lang_register ?></a>
+		<a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
+  </div>
 </div>
 
-<form class="ui clearing segment selene-basic">
-    <div class="ui icon input">
-        <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
-        <i class="search link icon"></i>
+<div class="ui grid">
+	<?
+	    while($team_data = mysql_fetch_array($team_query)) {
+	        $list_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$team_data['leader_idx']);
+	        $list_user_data = mysql_fetch_array($list_user_query);
+
+			$bm_query= mysql_query("SELECT * FROM  `article` WHERE  `idx` =".$team_data['bm_idx']);
+			$bm_data = mysql_fetch_array($bm_query);
+
+	?>
+  <div class="right aligned four wide column">
+    <div class="ui attached segment" style="padding:0px;">
+      <img class="ui image" src="<?= get_profile_url($list_user_data['idx']);  ?>">
     </div>
-    <button class="ui right floated button"><?= $lang_search ?></button>
-</form>
-
-<div class="ui selene-basic segment">
-    <div class="ui large feed">
-<?
-    $count = 1;
-	$team_query = mysql_query("SELECT * FROM  `team` WHERE `company_id`='$company_id' {$search_query} ORDER BY `idx` DESC");
-
-	$team_total = mysql_num_rows($team_query);
-	if($team_total == 0){
-?>
-        <div class="event bm">
-		<?
-			if($q){
-				echo "<span style='margin:auto;'>{$no_result}</span>";
-			}else{
-				echo "<span style='margin:auto;'>{$please_write}</span>";
-			}
-		?>
-        </div>
-<?
-	}
-
-    while($team_data = mysql_fetch_array($team_query)) {
-        $list_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$team_data['leader_idx']);
-        $list_user_data = mysql_fetch_array($list_user_query);
-
-		$bm_query= mysql_query("SELECT * FROM  `article` WHERE  `idx` =".$team_data['bm_idx']);
-		$bm_data = mysql_fetch_array($bm_query);
-
-?>
-        <? if($count > 1) { ?><div class="ui divider"></div><? } ?>
-        <div class="event bm">
-            <div class="label">
-                <img src="<?=get_profile_url($list_user_data['idx']);  ?>">
-            </div>
-            <div class="content">
-                <div class="summary">
-                    <a class="user"  href="/public/team_info?idx=<?=$team_data['idx']; ?>">
-                        <?=$list_user_data['name']?>
-                    </a><a href="/public/team_info?idx=<?=$team_data['idx']; ?>"> “<?=xssHtmlProtect($team_data['name'])?>”</a>
-										<? if($team_data['idx'] == $my_team){ ?>
-											<a class="ui horizontal mini green label">참여중</a>
-										<? } ?>
-
-                </div>
-                <div style="font-size:12px; color:#3f63bf">
-                	<a style=" color:#3f63bf"; href="/public/bm_grade?board_id=business_model&article_id=<?=$bm_data['idx']; ?>">@<?=$bm_data['title']; ?></a>
-								</div>
-                <div class="extra text" style="margin-top:10px;">
-								<?
-									$tm_query = mysql_query("SELECT `name`, `level` FROM `user` WHERE `team_idx` = {$team_data['idx']} ORDER BY `level` DESC");
-									$tm_num = mysql_num_rows($tm_query);
-									if($tm_num == 0) echo "{$team_data['members']}";
-									while($tm_data = mysql_fetch_array($tm_query)){
-											if($tm_data['level'] == 2){
-												echo ", {$tm_data['name']}";
-											}else{
-												echo "{$tm_data['name']} (Leader)";
-											}
-									}
-								?>
-								</div>
-                <!--
-                <div class="meta">
-                    <a class="users">
-                        <i class="users icon"></i> 팀원 0명
-                    </a>
-                </div>
-                -->
-            </div>
-        </div>
-    <? $count++; } ?>
+    <div class="ui bottom attached segment">
+      <p class="ui center aligned container">
+	      <a href="/public/team_info?idx=<?=$team_data['idx']; ?>"><?=xssHtmlProtect($team_data['name'])?></a>
+      </p>
+      <p class="ui center aligned container">
+				<?
+					$tm_query = mysql_query("SELECT `name`, `level` FROM `user` WHERE `team_idx` = {$team_data['idx']} ORDER BY `level` DESC");
+					$tm_num = mysql_num_rows($tm_query);
+					if($tm_num == 0) echo "{$team_data['members']}";
+					while($tm_data = mysql_fetch_array($tm_query)){
+							if($tm_data['level'] == 2){
+								echo ", {$tm_data['name']}";
+							}else{
+								echo "{$tm_data['name']} (Leader)";
+							}
+					}
+				?>
+      </p>
+      <p class="ui center aligned container">
+        <a class="ui primary button" href="/public/team_info?idx=<?=$team_data['idx']; ?>">VIEW</a>
+      </p>
     </div>
+  </div>
+  <? } ?>
 </div>

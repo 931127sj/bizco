@@ -68,88 +68,68 @@ if($_SESSION['lang'] == 'en'){
 }
 ?>
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_bml ?></h2>
-    <a href="/public/bm_new?id=business_model" class="ui right floated blue button"><?= $lang_bmr ?></a>
-    <a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
+    <h2 class="ui header" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_bml ?></h2>
 </div>
-<form class="ui clearing segment selene-basic">
-    <div class="ui icon input">
-        <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
-        <i class="search link icon"></i>
+<div class="ui grid" style="margin-bottom: 30px;">
+  <div class="four wide column">
+    <div class="ui basic buttons">
+      <div class="ui button"><a href="/public/bm_list?id=business_model&order=recent"><?= $lang_latest ?></a></div>
+      <div class="ui button"><a href="/public/bm_list?id=business_model&order=hot"><?= $lang_popular ?></a></div>
     </div>
-    <select name="order" class="ui dropdown">
-        <option value="recent" <?=$order === 'hot'?'':'selected'?>><?= $lang_latest ?></option>
-        <option value="hot" <?=$order === 'hot'?'selected':''?>><?= $lang_popular ?></option>
-    </select>
-    <button class="ui right floated button"><?= $lang_search ?></button>
-</form>
-<div class="ui selene-basic segment">
-    <div class="ui large feed">
-<?
-    $count = 1;
-    $bm_total = mysql_num_rows($article_query);
+  </div>
+  <form class="eight wide column ui center aligned container">
+      <div class="ui icon input">
+          <input type="hidden" name="id" value="<?=$board_id?>">
+          <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
+          <i class="search link icon"></i>
+      </div>
+  </form>
+  <div class="right aligned four wide column">
+      <a href="/public/bm_new?id=business_model" class="ui right floated blue button"><?= $lang_bmr ?></a>
+      <a href="/public/board_list?board_id=together" class="ui right floated blue button"><?= $lang_join ?></a>
+  </div>
+</div>
 
-    if($bm_total == 0){
-    	?>
-            <div class="event bm">
-    		<?
-    			if($q){
-    				echo "<span style='margin:auto;'>{$no_result}</span>";
-    			}else{
-    				echo "<span style='margin:auto;'>{$please_write}</span>";
-    			}
-    		?>
-            </div>
-    <?
-    }
-
+<div class="ui grid">
+  <?
     while($article_data = mysql_fetch_array($article_query)) {
-        $score_query    = mysql_query("SELECT *
-                                       FROM  `bm_grade`
-                                       WHERE  `article_idx` =".$article_data['idx']."
-                                       AND  `user_idx` =".$_SESSION['idx']);
-?>
-        <? if($count > 1) { ?><div class="ui divider"></div><? } ?>
-        <div class="event bm">
-            <div class="label">
-                <img src="<?=get_profile_url($article_data['user_idx']);  ?>">
-            </div>
-            <div class="content">
-                <div class="summary">
-                    <a class="user">
-                        <?=$article_data['user_name']?>
-                    </a><a href="/public/bm_grade?board_id=<?=$board_id?>&article_id=<?=$article_data['idx'] ?>"> “<?=xssHtmlProtect($article_data['title'])?>”</a>
-                    <div class="date">
-                        <?=dateToSNSString($article_data['write_datetime'])?>
-                    </div>
-                    <? if(mysql_num_rows($score_query) >= 1): ?>
-                    <a class="ui horizontal mini green label"><?= $lang_complete ?></a>
- 					<? else: ?>
-                    <a class="ui horizontal mini orange label"><?= $lang_incomplete ?></a>
-                    <? endif; ?>
-                    <a class="ui horizontal mini teal label"><?= $lang_planner ?> <div class="detail"><?=$article_data['planner_count']?:0?></div></a>
-                    <a class="ui horizontal mini blue label"><?= $lang_designer ?> <div class="detail"><?=$article_data['designer_count']?:0?></div></a>
-                    <a class="ui horizontal mini green label"><?= $lang_developer ?> <div class="detail"><?=$article_data['developer_count']?:0?></div></a>
-                </div>
-                <div class="extra text"><?=xssHtmlProtect($article_data['message'])?></div>
-                <div class="meta">
-                	<!--
-                    <a class="star">
-                        <i class="star icon"></i> 즐겨찾기
-                    </a>
-                    -->
-                    <a class="users">
-                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
-                    </a>
-                    <!--
-                    <a class="comment">
-                        <i class="comment icon"></i> 20개의 토론
-                    </a>
-                    -->
-                </div>
-            </div>
-        </div>
-    <? $count++; } ?>
+          $score_query = mysql_query("SELECT * FROM  `bm_grade`
+                                      WHERE  `article_idx` =".$article_data['idx']." AND  `user_idx` =".$_SESSION['idx']);
+  ?>
+  <div class="right aligned four wide column">
+    <div class="ui mini label">
+          <?= substr($article_data['write_datetime'], 0, 10) ?>
     </div>
+    <div class="ui four top attached item mini menu">
+      <? if(mysql_num_rows($score_query) >= 1): ?>
+      <a class="active item"><?= $lang_complete ?></a>
+      <? else: ?>
+      <a class="active item"><?= $lang_incomplete ?></a>
+      <? endif; ?>
+      <a class="item"><?= $lang_planner ?> <div class="detail"><?=$article_data['planner_count']?:0?></div></a>
+      <a class="item"><?= $lang_designer ?> <div class="detail"><?=$article_data['designer_count']?:0?></div></a>
+      <a class="item"><?= $lang_developer ?> <div class="detail"><?=$article_data['developer_count']?:0?></div></a>
+    </div>
+    <div class="ui attached segment" style="padding:0px;">
+      <img class="ui image" src="<?=get_profile_url($article_data['user_idx']);  ?>">
+    </div>
+    <div class="ui bottom attached segment">
+      <p class="ui center aligned container">
+      <a class="header" href="/public/bm_grade?board_id=<?=$board_id?>&article_id=<?=$article_data['idx'] ?>">
+        <?=xssHtmlProtect($article_data['title'])?>
+      </a>
+      </p>
+      <p class="ui center aligned container">
+      <span class="user"><?=($article_data['user_name'])? $article_data['user_name'] : '&nbsp;'?></span>
+      </p>
+      <p class="ui center aligned container">
+        <a class="ui primary button" href="/public/bm_grade?board_id=<?=$board_id?>&article_id=<?=$article_data['idx'] ?>">VIEW</a>
+      </p>
+      <p class="ui container">
+      <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
+      </p>
+
+    </div>
+  </div>
+  <? } ?>
 </div>

@@ -76,17 +76,21 @@ if($_SESSION['lang'] == 'en'){
 
 
 <section>
+    <!-- contents start -->
     <div class="ui segment padding--0 selene-basic noline" style="min-height:500px;">
-        <div class="ui internally celled grid">
+      <div class="ui internally celled grid">
             <div class="row">
-                <div class="twelve wide column line">
+					<? if($isYoutube){ ?>
+                <div class="nine wide column" style="padding: 0 10px 0 0; margin:0px;">
+                  <div class="ui embed" data-source="youtube" data-id="<?=$article_data['youtube_link']?>"></div>
+                </div>
+                <div class="seven wide column line" style="box-shadow: none;">
+          <? }else{ ?>
+                <div class="sixteen wide column line">
+          <? } ?>
                     <h2 class="ui header apost"><?=$article_data['title']?></h2>
 
                     <p><?=$article_data['content']?></p>
-
-					<? if($isYoutube): ?>
-                    <div class="ui embed" data-source="youtube" data-id="<?=$article_data['youtube_link']?>"></div>
-                	<? endif; ?>
                     <div>
                     <?
                         $file = mysql_query("SELECT *
@@ -102,205 +106,157 @@ if($_SESSION['lang'] == 'en'){
 
                     </div>
                 </div>
-                <div class="four wide column cmt_style" style="position: relative; padding-bottom: 0px; padding-top: 0px">
-                    <? if($_SESSION['idx'] == $article_data['user_idx']) { ?>
-                    <div class="two ui buttons mini">
-                        <div class="ui fade animated green button fluid edit" tabindex="0" onClick="edit_article('<?=$article_id; ?>', '<?= $board_id ?>', '<?= $board_type ?>');">
-                            <div class="visible content"><?= $lang_modify ?></div>
-                            <div class="hidden content">
-                                <i class="wizard icon"></i>
-                            </div>
-                        </div>
-                        <div class="ui fade animated red button fluid del" tabindex="0" onClick="del_article('<?=$article_id; ?>', '<?= $board_id ?>', '<?= $board_type ?>');">
-                            <div class="visible content"><?= $lang_delete ?></div>
-                            <div class="hidden content">
-                                <i class="trash outline icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui divider basic"></div>
-                    <? } ?>
-
-                    <? if($board_id == "{$company_id}_cur") { ?><p><?= $lang_notice1 ?><br /><?= $lang_notice2 ?></p><? } ?>
-                    <? if($board_id !== "etc_question") { ?>
-                    <div class="two ui buttons">
-                    	<? if($board_id == "{$company_id}_cur") {
-
-							$homework_query= mysql_query("SELECT * FROM  `homework` WHERE  `user_idx` =".$_SESSION['idx']." AND  `article_idx` =".$article_data['idx']." AND state = 1");
-							if(mysql_num_rows($homework_query) > 0) {
-						?>
-                        <div class="ui green button fluid" tabindex="0">
-                            <div class="visible content"><?= $lang_complete1 ?></div>
-
-                        </div>
-                        <?
-							} else {
-						?>
-                        <div onClick="location.href='/public/do_homework.php?idx=<?=$article_data['idx']; ?>'" class="ui fade animated primary button basic fluid" tabindex="0">
-                            <div class="visible content"><?= $lang_incomplete1 ?></div>
-                            <div class="hidden content">
-                                <i class="write icon"></i>
-                            </div>
-                        </div>
-                        <?
-							}
-						?>
-
-
-                        <? } ?>
-                        <?
-							// 내가 좋아요 했는지 여부 가지고 오기
-							$my_like = mysql_query("SELECT *
-										FROM  `like`
-										WHERE  `user_idx` =".$_SESSION['idx']."
-										AND  `article_idx` =$article_id");
-							if(mysql_num_rows($my_like) >= 1) {
-								$is_liked = true;
-							} else {
-								$is_liked = false;
-							}
-
-							// 전체 좋아요 개수 가지고 오기
-							$all_like = mysql_query("SELECT *
-													FROM  `like`
-													WHERE  `article_idx` =$article_id");
-							$like_count = mysql_num_rows($all_like);
-
-						?>
-
-                        <div onClick="location.href='/public/do_like.php?idx=<?=$article_id?>'" class="ui fade animated red button fluid <?=$is_liked?'':'basic'?>" tabindex="0">
-
-                            <div class="visible content"><?= $lang_like ?> <?=$is_liked?"{$lang_cancel}":""?> <strong><? echo $like_count; ?></strong></div>
-                            <div class="hidden content">
-                                <i class="heart icon"></i>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                    <!-- Comments -->
-                    <? } ?>
-                    <?
-					 // COMMENT SERVER
-					$comment_query = mysql_query("SELECT *
-												FROM  `comment`
-												WHERE  `article_idx` = $article_id AND ( `parent_idx` IS NULL OR `parent_idx` = 0)
-												ORDER BY  `comment`.`idx` DESC");
-					?>
-
-                    <h3 class="ui dividing header">Comments</h3>
-                    <div>
-                    <form class="ui reply form" action="/public/do_add_comment.php" method="post" style="padding: 0 10px;">
-                        <div class="field">
-                            <textarea rows="3" name="content" style="height:100px;"></textarea>
-                        </div>
-                        <input type="hidden" name="article_id" value="<? echo $article_id; ?>">
-												<input type="hidden" name="to_user_idx" value="<? echo $article_data['user_idx']; ?>">
-                        <a href="#" onclick="$(this).closest('form').submit()">
-                            <div class="ui blue submit icon button fluid">
-                                	<?= $lang_comments ?>
-                            </div>
-                        </a>
-                    </form>
-                    </div>
-
-                    <div class="ui comments scrollable" style="min-height:500px; height:auto">
-					<?
-                    while($comment_data = mysql_fetch_array($comment_query)) {
-						$comment_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$comment_data['user_idx']);
-						$comment_user_data = mysql_fetch_array($comment_user_query);
-            $comment_idx = $comment_data['idx'];
-
-						/*$team_query = mysql_query("SELECT * FROM  `team` WHERE  `team_id` =  '".$comment_user_data['team_id']."'");
-						$team_data = mysql_fetch_array($team_query);*/
-
-                        //대댓글가져오기
-                        $ccmt_query = mysql_query("SELECT *
-                                            FROM  `comment`
-                                            WHERE  `article_idx` = $article_id AND `parent_idx` = ".$comment_idx."
-                                            ORDER BY  `comment`.`idx` ASC ");
-                        $ccmt_count = mysql_num_rows($ccmt_query);
-					?>
-
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="<?= get_profile_url($comment_user_data['idx']);  ?>">
-                            </a>
-
-                            <div class="content">
-                                <a class="author"><? echo $comment_user_data['name']; ?></a>
-                                <div class="metadata">
-                                    <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open"><?= $lang_submit ?></a>
-                                    <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
-                                      <a href="#" onClick="del_comment('<?= $comment_idx ?>');"><?= $lang_delete ?></a>
-                                      <a href="#" onClick="modify_comment('<?= $comment_idx ?>','', '<?=$comment_data['content']; ?>');"><?= $lang_modify ?></a>
-                                    <? } ?>
-                                </div>
-                                <div class="text">
-                                    <? echo $comment_data['content'];  ?>
-                                </div>
-                            </div>
-
-                            <?
-
-                            ?>
-                            <? // 대댓글 출력 ?>
-                            <div class="ui comments ccmt" style="height:auto;margin:0; <? if($ccmt_count < 1) { ?>display:none;<? } ?>" >
-                                <? while($ccmt_data = mysql_fetch_array($ccmt_query)) {
-                                    $comment_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$ccmt_data['user_idx']);
-                                    $comment_user_data = mysql_fetch_array($comment_user_query);
-
-                                    ?>
-                                <div class="comment">
-                                    <a class="avatar">
-                                        <img src="<?= get_profile_url($comment_user_data['idx']);  ?>">
-                                    </a>
-
-                                    <div class="content">
-                                        <a class="author"><? echo $comment_user_data['name']; ?></a>
-                                        <div class="metadata">
-                                              &nbsp;&nbsp;
-                                              <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
-                                                <a href="#" onClick="del_comment('<? echo $ccmt_data['idx']; ?>');"><?= $lang_delete ?></a>
-                                                <a href="#" onClick="modify_comment('<?=$ccmt_data['idx']; ?>','<?=$ccmt_data['parent_idx']; ?>', '<?=$ccmt_data['content']; ?>');"><?= $lang_modify ?></a>
-                                              <? } ?>
-                                        </div>
-                                        <div class="text">
-                                            <? echo $ccmt_data['content'];  ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <? } ?>
-                            </div>
-                            <form class="ui reply form ccmtreply" style="display:none;" action="/public/do_add_comment.php" method="post">
-                                    <div class="field" style="padding:0;">
-                                        <textarea rows="3" style="height:100px;" name="content"></textarea>
-                                    </div>
-                                    <input type="hidden" name="article_id" value="<? echo $article_id; ?>">
-                                    <input type="hidden" name="comment_id" value="<? echo $comment_data['idx']; ?>">
-																		<input type="hidden" name="to_user_idx" value="<? echo $comment_user_data['idx']; ?>">
-                                    <a href="#" onclick="$(this).closest('form').submit()">
-                                        <div class="ui blue mini submit button fluid">
-                                           	 <?= $lang_comments ?>
-                                        </div>
-                                    </a>
-                             </form>
-
-
-					<?
-
-
-                        }
-
-                    ?>
- 					</div>
-                    <!-- Comments End -->
-
-                </div>
-            </div>
         </div>
     </div>
+    <!-- contents end -->
+
+    <div class="ui clearing segment">
+      <p class="ui left floated header"><?= $lang_notice1 ?><?= $lang_notice2 ?></p>
+      <? if($board_id !== "etc_question") { ?>
+      <div class="ui two right floated buttons" style="width:30%;">
+        <? if($board_id == "{$company_id}_cur") {
+
+          $homework_query= mysql_query("SELECT * FROM  `homework` WHERE  `user_idx` =".$_SESSION['idx']." AND  `article_idx` =".$article_data['idx']." AND state = 1");
+          // homwork complete
+          if(mysql_num_rows($homework_query) > 0) {
+          ?>
+                    <div class="ui green button fluid" tabindex="0">
+                        <div class="visible content"><?= $lang_complete1 ?></div>
+
+                    </div>
+                    <?
+          // homework incomplete
+          } else { ?>
+          <div onClick="location.href='/public/do_homework.php?idx=<?=$article_data['idx']; ?>'" class="ui fade animated primary button basic fluid" tabindex="0">
+              <div class="visible content"><?= $lang_incomplete1 ?></div>
+              <div class="hidden content">
+                  <i class="write icon"></i>
+              </div>
+          </div>
+          <? } ?>
+          <? } // curriculum board end ?>
+          <?
+          // 내가 좋아요 했는지 여부 가지고 오기
+          $my_like = mysql_query("SELECT *
+                FROM  `like`
+                WHERE  `user_idx` =".$_SESSION['idx']."
+                AND  `article_idx` =$article_id");
+          if(mysql_num_rows($my_like) >= 1) {
+            $is_liked = true;
+          } else {
+            $is_liked = false;
+          }
+
+          // 전체 좋아요 개수 가지고 오기
+          $all_like = mysql_query("SELECT *
+                      FROM  `like`
+                      WHERE  `article_idx` =$article_id");
+          $like_count = mysql_num_rows($all_like);
+
+        ?>
+          <div onClick="location.href='/public/do_like.php?idx=<?=$article_id?>'" class="ui fade animated red button fluid <?=$is_liked?'':'basic'?>" tabindex="0">
+              <div class="visible content"><?= $lang_like ?> <?=$is_liked?"{$lang_cancel}":""?> <strong><? echo $like_count; ?></strong></div>
+              <div class="hidden content">
+                  <i class="heart icon"></i>
+              </div>
+          </div>
+      </div>
+      <? } ?>
+    </div>
+
+    <?
+    // COMMENT SERVER
+    $comment_query = mysql_query("SELECT *
+            FROM  `comment`
+            WHERE  `article_idx` = $article_id AND ( `parent_idx` IS NULL OR `parent_idx` = 0)
+            ORDER BY  `comment`.`idx` DESC");
+    ?>
+    <!-- comments start -->
+    <div class="ui comments">
+      <h3 class="ui dividing header">Comments</h3>
+
+      <form class="ui reply form" action="/public/do_add_comment.php" method="post">
+        <input type="hidden" name="article_id" value="<? echo $article_id; ?>">
+        <input type="hidden" name="to_user_idx" value="<? echo $article_data['user_idx']; ?>">
+
+        <div class="ui action input" style="width:100%;">
+          <textarea rows="3" name="content"></textarea>
+          <button class="ui button" onclick="$(this).closest('form').submit()"><?= $lang_comments ?></button>
+        </div>
+      </form>
+
+      <?
+      while($comment_data = mysql_fetch_array($comment_query)) {
+        $comment_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$comment_data['user_idx']);
+        $comment_user_data = mysql_fetch_array($comment_user_query);
+        $comment_idx = $comment_data['idx'];
+
+          //대댓글가져오기
+          $ccmt_query = mysql_query("SELECT * FROM  `comment`
+                                    WHERE  `article_idx` = '{$article_id}' AND `parent_idx` = '{$comment_idx}'
+                                    ORDER BY  `comment`.`idx` ASC ");
+          $ccmt_count = mysql_num_rows($ccmt_query);
+      ?>
+      <div class="comment">
+        <a class="avatar">
+          <img src="<?= get_profile_url($comment_user_data['idx']);  ?>">
+        </a>
+        <div class="content">
+          <a class="author"><? echo $comment_user_data['name']; ?></a>
+          <div class="metadata">
+              <span class="team"><? echo $team_data['name']; ?></span><a class="ccmt_open"><?= $lang_submit ?></a>
+              <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
+                <a href="#" onClick="del_comment('<?= $comment_idx ?>');"><?= $lang_delete ?></a>
+                <a href="#" onClick="modify_comment('<?= $comment_idx ?>','', '<?=$comment_data['content']; ?>');"><?= $lang_modify ?></a>
+              <? } ?>
+          </div>
+          <div class="text">
+              <? echo $comment_data['content'];  ?>
+          </div>
+        </div>
+      </div>
+      <? // 대댓글 출력 ?>
+      <div class="ui comments ccmt" style="<? if($ccmt_count < 1) { ?>display:none;<? } ?>" >
+          <? while($ccmt_data = mysql_fetch_array($ccmt_query)) {
+              $comment_user_query= mysql_query("SELECT * FROM  `user` WHERE  `idx` =".$ccmt_data['user_idx']);
+              $comment_user_data = mysql_fetch_array($comment_user_query);
+
+              ?>
+          <div class="comment">
+              <a class="avatar">
+                  <img src="<?= get_profile_url($comment_user_data['idx']);  ?>">
+              </a>
+
+              <div class="content">
+                  <a class="author"><? echo $comment_user_data['name']; ?></a>
+                  <div class="metadata">
+                        &nbsp;&nbsp;
+                        <? if($_SESSION['idx'] == $comment_user_data['idx']) { ?>
+                          <a href="#" onClick="del_comment('<? echo $ccmt_data['idx']; ?>');"><?= $lang_delete ?></a>
+                          <a href="#" onClick="modify_comment('<?=$ccmt_data['idx']; ?>','<?=$ccmt_data['parent_idx']; ?>', '<?=$ccmt_data['content']; ?>');"><?= $lang_modify ?></a>
+                        <? } ?>
+                  </div>
+                  <div class="text">
+                      <? echo $ccmt_data['content'];  ?>
+                  </div>
+              </div>
+          </div>
+          <? } ?>
+        </div>
+
+        <form class="ui reply form ccmtreply" style="display:none;" action="/public/do_add_comment.php" method="post">
+          <input type="hidden" name="article_id" value="<? echo $article_id; ?>">
+          <input type="hidden" name="comment_id" value="<? echo $comment_data['idx']; ?>">
+          <input type="hidden" name="to_user_idx" value="<? echo $comment_user_data['idx']; ?>">
+          <div class="ui action input" style="width:100%;">
+            <textarea rows="3" name="content"></textarea>
+            <button class="ui button" onclick="$(this).closest('form').submit()"><?= $lang_comments ?></button>
+          </div>
+         </form>
+      <? } ?>
+    </div>
+    <!-- comments end -->
+
 </section>
 <script>
 //댓글 삭제 스크립트
@@ -383,12 +339,6 @@ if(mysql_num_rows($progress_query) >= 1) {
 					");
 
 }
-
-
-
-
-
-
 
 } ?>
 <script>

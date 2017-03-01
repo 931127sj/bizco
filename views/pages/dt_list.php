@@ -35,73 +35,56 @@ if($_SESSION['lang'] == "en"){
 }
 ?>
 <div class="clearfix">
-    <h2 class="ui header floated left" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_dt_list ?></h2>
-    <a href="/public/dt_article?id=design_thinking" class="ui right floated blue button"><?= $lang_write_dt ?></a>
+    <h2 class="ui header" style="margin-bottom: 0; margin-top: 5px;"><?= $lang_dt_list ?></h2>
 </div>
-<form class="ui clearing segment selene-basic">
-    <div class="ui icon input">
-        <input type="hidden" name="id" value="<?=$board_id?>">
-        <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
-        <i class="search link icon"></i>
+<div class="ui grid" style="margin-bottom: 30px;">
+  <div class="four wide column">
+    <div class="ui basic buttons">
+      <div class="ui button"><a href="/public/dt_list?id=business_model&order=recent"><?= $lang_latest ?></a></div>
+      <div class="ui button"><a href="/public/dt_list?id=business_model&order=hot"><?= $lang_popular ?></a></div>
     </div>
-    <select name="order" class="ui dropdown">
-        <option value="recent" <?=$order === 'hot'?'':'selected'?>><?= $lang_latest ?></option>
-        <option value="hot" <?=$order === 'hot'?'selected':''?>><?= $lang_popular ?></option>
-    </select>
-    <button class="ui right floated button"><?= $lang_search ?></button>
-</form>
-<div class="ui selene-basic segment">
-    <div class="ui large feed">
-<?
-    $count = 1;
-    while($article_data = mysql_fetch_array($article_query)) {
-		$score_query    = mysql_query("SELECT *
-									   FROM  `bm_grade`
-									   WHERE  `article_idx` =".$article_data['idx']."
-									   AND  `user_idx` =".$_SESSION['idx']);
-?>
-        <? if($count > 1) { ?><div class="ui divider"></div><? } ?>
-        <div class="event">
-            <div class="label">
-                <img src="<?=get_profile_url($article_data['user_idx']);  ?>">
-            </div>
-            <div class="content">
-                <div class="summary">
-                    <a class="user">
-                        <?=$article_data['user_name']?>
-                    </a><a href="/public/dt_grade?id=<?=$article_data['idx'] ?>"><?= $lang_dt ?></a>
-                    <div class="date">
-                        <?=dateToSNSString($article_data['datetime'])?>
-                    </div>
-                    <? if(mysql_num_rows($score_query) >= 1): ?>
-                    <a class="ui horizontal mini green label"><?= $lang_complete ?></a>
- 					<? else: ?>
-                    <a class="ui horizontal mini orange label"><?= $lang_incomplete ?></a>
-                    <? endif; ?>
-                </div>
-                <div class="extra text blank"><?=xssHtmlProtect($article_data['message'])?></div>
-                <div class="meta">
-                	<!--
-                    <a class="star">
-                        <i class="star icon"></i> 즐겨찾기
-                    </a>
-                    -->
-                    <a class="users">
-                        <i class="users icon"></i> <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
-                    </a>
-                    <!--
-                    <a class="comment">
-                        <i class="comment icon"></i> 20개의 토론
-                    </a>
-                    -->
-                </div>
-            </div>
-        </div>
-    <? $count++; } ?>
-    </div>
+  </div>
+  <form class="eight wide column ui center aligned container">
+      <div class="ui icon input">
+          <input type="hidden" name="id" value="<?=$board_id?>">
+          <input type="text" name="q" placeholder="<?= $lang_keywords ?>" value="<?=$q?>">
+          <i class="search link icon"></i>
+      </div>
+  </form>
+  <div class="right aligned four wide column">
+      <a href="/public/dt_article?id=design_thinking" class="ui right floated blue button"><?= $lang_write_dt ?></a>
+  </div>
 </div>
-<script>
-$(document).ready(function(){
 
-})
-</script>
+<div class="ui grid">
+  <?
+      $count = 1;
+      while($article_data = mysql_fetch_array($article_query)) {
+  		$score_query    = mysql_query("SELECT *
+  									   FROM  `bm_grade`
+  									   WHERE  `article_idx` =".$article_data['idx']."
+  									   AND  `user_idx` =".$_SESSION['idx']);
+  ?>
+  <div class="right aligned four wide column">
+    <div class="ui right floated mini label" style="margin-bottom:5px;">
+          <?= substr($article_data['datetime'], 0, 10) ?>
+    </div>
+    <div class="ui attached segment" style="padding:0px;">
+      <img class="ui image" src="<?= get_profile_url($article_data['user_idx']);  ?>">
+    </div>
+    <div class="ui bottom attached segment">
+      <p class="ui center aligned container">
+        <a class="user">
+            <?=$article_data['user_name']?>
+        </a><a href="/public/dt_grade?id=<?=$article_data['idx'] ?>"><?= $lang_dt ?></a>
+      </p>
+      <p class="ui center aligned container">
+        <?=number_format($article_data['grade_count'])?><?= $lang_ratings ?>
+      </p>
+      <p class="ui center aligned container">
+        <a class="ui primary button" href="/public/dt_grade?id=<?=$article_data['idx'] ?>">VIEW</a>
+      </p>
+    </div>
+  </div>
+  <? } ?>
+</div>

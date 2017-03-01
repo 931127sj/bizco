@@ -161,7 +161,7 @@ small.ui.text {
   float: left; }
 
 a > .ui.horizontal.label {
-  width: 60px;
+  width: 80px;
   border-radius: 50em; }
 
 .ui.vertical.menu.basic {
@@ -272,7 +272,7 @@ h1.ui.top.attached.header.basic {
 
 .ui.bottom.attached.segment p {
   padding: 0;
-  margin: 0; }
+  margin: 5px 0; }
 
 .ui.segments.basic {
   border-color: #eaeaea;
